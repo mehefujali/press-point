@@ -125,9 +125,7 @@ const Navbar = () => {
                   </svg>
                 )}
               </IconButton>
-              <Typography
-                as="a"
-                href="#"
+              <Link to="/"
                 className="mr-4 cursor-pointer py-1.5 font-medium"
               >
                 <img
@@ -135,7 +133,7 @@ const Navbar = () => {
                   src="https://i.ibb.co/d7y22m0/pp-color.png"
                   alt=""
                 />
-              </Typography>
+              </Link>
             </div>
 
             <div className="flex items-center gap-4">
@@ -145,12 +143,12 @@ const Navbar = () => {
                   <UserProfileDropdown />
                 </div>
               ) : (
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center gap-x-1 text-nowrap">
                   <Link to="/login">
                     <Button
                       variant="text"
                       size="sm"
-                      className=" xl:inline-block rounded"
+                      className=" xl:inline-block rounded text-nowrap"
                     >
                       Log In
                     </Button>
@@ -159,7 +157,7 @@ const Navbar = () => {
                     <Button
                       //     variant="gradient"
                       size="sm"
-                      className=" xl:inline-block bg-primary-color rounded"
+                      className=" xl:inline-block bg-primary-color text-white rounded "
                     >
                       <span>Sign Up</span>
                     </Button>
@@ -170,18 +168,7 @@ const Navbar = () => {
           </div>
           <MobileNav open={openNav}>
             {navList}
-            <div className="flex items-center justify-end gap-x-1">
-              <Link onClick={() => setOpenNav(!openNav)} to="/login">
-                <Button variant="text" size="sm" className=" rounded">
-                  Log In
-                </Button>
-              </Link>
-              <Link onClick={() => setOpenNav(!openNav)} to="/signup">
-                <Button variant="gradient" size="sm" className=" rounded">
-                  <span>Sign Up</span>
-                </Button>
-              </Link>
-            </div>
+            
           </MobileNav>
         </MTNav>
       </div>

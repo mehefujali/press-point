@@ -1,51 +1,50 @@
 import React from "react";
-import useAuth from './../../Hooks/useAuth';
+import useAuth from "./../../Hooks/useAuth";
 import {
-      Avatar,
-      Button,
-      Menu,
-      MenuHandler,
-      MenuItem,
-      MenuList,
-      Typography,
-    } from "@material-tailwind/react";
-    import {
-    
+  Avatar,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+  Typography,
+} from "@material-tailwind/react";
+import {
   Cog6ToothIcon,
-      InboxArrowDownIcon,
-      LifebuoyIcon,
-      PowerIcon,
-      UserCircleIcon,
-    } from "@heroicons/react/24/solid";
-     
-    // profile menu component
-    const profileMenuItems = [
-      {
-        label: "My Profile",
-        icon: UserCircleIcon,
-      },
-      {
-        label: "Edit Profile",
-        icon: Cog6ToothIcon,
-      },
-      {
-        label: "Inbox",
-        icon: InboxArrowDownIcon,
-      },
-      {
-        label: "Help",
-        icon: LifebuoyIcon,
-      },
-      {
-        label: "Sign Out",
-        icon: PowerIcon,
-      },
-    ];
+  InboxArrowDownIcon,
+  LifebuoyIcon,
+  PowerIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
+
+// profile menu component
+const profileMenuItems = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+  },
+  {
+    label: "Edit Profile",
+    icon: Cog6ToothIcon,
+  },
+  {
+    label: "Inbox",
+    icon: InboxArrowDownIcon,
+  },
+  {
+    label: "Help",
+    icon: LifebuoyIcon,
+  },
+  {
+    label: "Sign Out",
+    icon: PowerIcon,
+  },
+];
 
 const UserProfileDropdown = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const {user} = useAuth()
- console.log(user)
+  const { user, signOutUser } = useAuth();
+  console.log(user);
   const closeMenu = () => setIsMenuOpen(false);
   return (
     <div>
@@ -58,7 +57,6 @@ const UserProfileDropdown = () => {
           >
             <Avatar
               variant="circular"
-              
               alt={user?.displayName}
               withBorder={true}
               color="blue-gray"
@@ -73,7 +71,12 @@ const UserProfileDropdown = () => {
             return (
               <MenuItem
                 key={label}
-                onClick={closeMenu}
+                onClick={() => {
+                  if (label === "Sign Out") {
+                    signOutUser();
+                  }
+                  closeMenu();
+                }}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"

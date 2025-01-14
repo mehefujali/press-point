@@ -2,6 +2,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
 
 } from "firebase/auth";
 import PropTypes from "prop-types";
@@ -24,11 +25,15 @@ const AuthProvider = ({ children }) => {
       unSubscribe();
     };
   });
+  const signOutUser = () =>{
+    return   signOut(auth)
+  }
   console.log(user)
   const authInfo = {
     SininWithGoogle,
     user,
     setUser,
+    signOutUser,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
