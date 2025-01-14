@@ -2,7 +2,7 @@ import PlanCard from "../PlanCard/PlanCard";
 
 const Plans = () => {
   return (
-    <div className=" container mx-auto flex gap-4 items-start justify-center">
+    <div className=" container mx-auto flex flex-col md:flex-row w-11/12 gap-4 items-start justify-center">
       {/* Free Plan  */}
       <PlanCard
         title={"Free Plan"}
@@ -14,7 +14,7 @@ const Plans = () => {
           "Basic statistics on user activity.",
           "Standard user experience with ads.",
         ]}
-        btnText="try for free "
+        btnText="Start for Free"
       />
 
       {/*  Standard Plan */}
@@ -28,7 +28,7 @@ const Plans = () => {
           "Personalized news recommendations.",
           "Priority support for queries and issues.",
         ]}
-        btnText="try for free 1 month" 
+        btnText="Upgrade to Standard" 
         fill={true}
       />
       {/* Premium Plan */}
@@ -42,7 +42,7 @@ const Plans = () => {
           
           "Early access to new features and premium tools.",
         ]}
-        btnText="try for free 1 month"
+        btnText="Go Premium"
       />
     </div>
   );

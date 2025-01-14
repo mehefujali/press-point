@@ -44,7 +44,7 @@ const TrendingSwiper = () => {
         spaceBetween={60}
         pagination={{
           dynamicBullets: true,
-          clickable:true
+          clickable: true,
         }}
         loop={true}
         modules={[Pagination, Autoplay]}
@@ -81,8 +81,22 @@ const TrendingSwiper = () => {
                   {news?.description.slice(0, 100)}...
                 </p>
                 <Link className=" w-fit">
-                  <Button variant="text" className=" rounded ">
-                    See details
+                  <Button size="sm" variant="text" className="flex rounded items-center gap-2">
+                    Read More{" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                      />
+                    </svg>
                   </Button>
                 </Link>
               </div>
