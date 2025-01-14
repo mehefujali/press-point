@@ -2,18 +2,31 @@ import { Button, Card, Typography, Input } from "@material-tailwind/react";
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const SignUp = () => {
-      const [fileName, setFileName] = useState("Upload your photo");
+  const { SininWithGoogle } = useAuth();
+  const [fileName, setFileName] = useState("Upload your photo");
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setFileName(file.name.slice(0,16)+'...'); 
+      setFileName(file.name.slice(0, 16) + "...");
     } else {
-      setFileName("Upload your photo"); 
+      setFileName("Upload your photo");
     }
   };
+
+  const handleGoogleSignIn = () => {
+    SininWithGoogle()
+      .then((data) => {
+        console.log("User ", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
       <div className="  p-3 rounded-md  flex flex-col justify-center items-center ">
@@ -69,11 +82,10 @@ const SignUp = () => {
               <Button
                 fullWidth
                 variant="outlined"
-                className="flex p-0 items-center gap-3 border-primary-color text-primary-color cursor-default"
+                className="flex p-0 rounded items-center gap-3 border-primary-color text-primary-color cursor-default"
               >
                 <label
                   htmlFor="register-image"
-                  
                   className=" w-full h-full cursor-pointer flex items-center gap-3 px-4 py-3"
                 >
                   <svg
@@ -93,7 +105,12 @@ const SignUp = () => {
                   {fileName}
                 </label>
               </Button>
-              <input onChange={handleFileChange} type="file" id="register-image" className=" hidden" />
+              <input
+                onChange={handleFileChange}
+                type="file"
+                id="register-image"
+                className=" hidden"
+              />
             </div>
 
             <Button className="mt-6 bg-primary-color rounded" fullWidth>
@@ -101,6 +118,7 @@ const SignUp = () => {
             </Button>
 
             <Button
+              onClick={handleGoogleSignIn}
               size="sm"
               variant="outlined"
               fullWidth

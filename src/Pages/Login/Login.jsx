@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
-  const { SininWithGoogle , user } = useAuth();
-   console.log(user)
+  const { SininWithGoogle } = useAuth();
+
   const handleGoogleSignIn = () => {
     SininWithGoogle()
-    .then(data => {
-      console.log('User ',data)
-    }).catch(err => {
-      console.log(err)
-    })
-    
+      .then((data) => {
+        console.log("User ", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
