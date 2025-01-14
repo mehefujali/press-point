@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 
 const Main = () => {
       return (
-            <div>
+            <div className=" bg-primary-color bg-opacity-5 min-h-[100vh]">
                   <div>
                         <Navbar/>
                   </div>
@@ -11,7 +11,7 @@ const Main = () => {
                         <Outlet/>
                   </div>
                   <div>
-                        
+
                   </div>
             </div>
       );
