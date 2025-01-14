@@ -89,7 +89,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <MTNav className="sticky top-0 z-10 shadow-none border-b-2 border-b-gray-200 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
+      <MTNav className="sticky top-0 z-10 shadow-none border-b-2 border-b-gray-200 h-max max-w-full rounded-none px-4 py-0 lg:px-8 lg:py-2">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography
             as="a"
