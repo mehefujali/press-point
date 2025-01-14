@@ -6,6 +6,7 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
+import PropTypes from "prop-types";
 
 function CheckIcon() {
   return (
@@ -26,13 +27,12 @@ function CheckIcon() {
   );
 }
 
-const PlanCard = ({title,price,features=[],btnText,fill}) => {
+const PlanCard = ({ title, price, features = [], btnText, fill }) => {
   return (
     <div>
       <Card
-        color={fill?"gray":"white"}
-        
-        className={`w-full max-w-[20rem] p-8 ${fill&&"bg-primary-color"}`}
+        color={fill ? "gray" : "white"}
+        className={`w-full max-w-[20rem] p-8 ${fill && "bg-primary-color"}`}
       >
         <CardHeader
           floated={false}
@@ -42,36 +42,53 @@ const PlanCard = ({title,price,features=[],btnText,fill}) => {
         >
           <Typography
             variant="lead"
-            color={fill&&"white"}
-            className={`font-normal uppercase ${fill?"text-white":"text-primary-color"}`}
+            color={fill && "white"}
+            className={`font-normal uppercase ${
+              fill ? "text-white" : "text-primary-color"
+            }`}
           >
             {title}
           </Typography>
           <Typography
             variant="h1"
-            color={fill&&"white"}
-            className={`mt-3 flex justify-center gap-1 text-6xl font-normal ${fill?"text-white":"text-primary-color"}`}
+            color={fill && "white"}
+            className={`mt-3 flex justify-center gap-1 text-6xl font-normal ${
+              fill ? "text-white" : "text-primary-color"
+            }`}
           >
-            <span className="mt-2 text-3xl">$</span>{price}{" "}
-            <span className="self-end text-3xl">/mo</span>
+            <span className="mt-2 text-3xl">$</span>
+            {price} <span className="self-end text-3xl">/mo</span>
           </Typography>
         </CardHeader>
         <CardBody className="p-0">
           <ul className="flex flex-col gap-2">
-            {features.map((feature,idx) =><li key={idx} className="flex items-center gap-4">
-              <span className={`rounded-full border ${fill?" border-white/20 bg-white/20":"bg-primary-color border-white text-white"} p-1`}>
-                <CheckIcon />
-              </span>
-              <Typography className="font-normal text-sm">{feature}</Typography>
-            </li>)}
-            
+            {features.map((feature, idx) => (
+              <li key={idx} className="flex items-center gap-4">
+                <span
+                  className={`rounded-full border ${
+                    fill
+                      ? " border-white/20 bg-white/20"
+                      : "bg-primary-color border-white text-white"
+                  } p-1`}
+                >
+                  <CheckIcon />
+                </span>
+                <Typography className="font-normal text-sm">
+                  {feature}
+                </Typography>
+              </li>
+            ))}
           </ul>
         </CardBody>
         <CardFooter className="mt-12 p-0">
           <Button
             size="md"
-            color={fill?"gray":"white"}
-            className={`hover:scale-[1.02] rounded focus:scale-[1.02] active:scale-100 ${fill?'bg-white text-primary-color ':'bg-primary-color text-white'}`}
+            color={fill ? "gray" : "white"}
+            className={`hover:scale-[1.02] rounded focus:scale-[1.02] active:scale-100 ${
+              fill
+                ? "bg-white text-primary-color "
+                : "bg-primary-color text-white"
+            }`}
             ripple={false}
             fullWidth={true}
           >
@@ -81,6 +98,13 @@ const PlanCard = ({title,price,features=[],btnText,fill}) => {
       </Card>
     </div>
   );
+};
+PlanCard.propTypes = {
+  title: PropTypes.node.isRequired,
+  price: PropTypes.node.isRequired,
+  features: PropTypes.node.isRequired,
+  btnText: PropTypes.node.isRequired,
+  fill: PropTypes.node.isRequired,
 };
 
 export default PlanCard;
