@@ -1,13 +1,19 @@
-import {
-  Card,
-  Input,
-  
-  Button,
-  Typography,
-} from "@material-tailwind/react";
+import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
+  const { SininWithGoogle , user } = useAuth();
+   console.log(user)
+  const handleGoogleSignIn = () => {
+    SininWithGoogle()
+    .then(data => {
+      console.log('User ',data)
+    }).catch(err => {
+      console.log(err)
+    })
+    
+  };
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
       <div className="  p-3 rounded-md  flex flex-col justify-center items-center ">
@@ -55,6 +61,7 @@ const Login = () => {
             </Button>
 
             <Button
+              onClick={handleGoogleSignIn}
               size="sm"
               variant="outlined"
               fullWidth
@@ -67,7 +74,11 @@ const Login = () => {
               />
               Continue with Google
             </Button>
-            <Typography color="gray" variant="small" className="mt-4 text-center font-normal">
+            <Typography
+              color="gray"
+              variant="small"
+              className="mt-4 text-center font-normal"
+            >
               Don’t Have an Account?{" "}
               <Link to="/signup" className="font-medium text-gray-900">
                 Sign Up

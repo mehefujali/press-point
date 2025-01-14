@@ -1,19 +1,38 @@
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+
+} from "firebase/auth";
 import PropTypes from "prop-types";
-import { createContext } from "react";
-import { auth } from "../Firebase/firebase.config";
+import { createContext, useEffect, useState } from "react";
+import { auth } from "../Firebase/firebase.init";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-      const googleProvider = new GoogleAuthProvider()
-      const SininWithGoogle = ()=>{
-            return signInWithRedirect(auth,googleProvider)
-      }
+  const [user, setUser] = useState(null);
+  const googleProvider = new GoogleAuthProvider();
+  const SininWithGoogle = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => {
+      unSubscribe();
+    };
+  });
+  console.log(user)
   const authInfo = {
-            SininWithGoogle
-  }
-  return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
+    SininWithGoogle,
+    user,
+    setUser,
+  };
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 AuthProvider.propTypes = {
