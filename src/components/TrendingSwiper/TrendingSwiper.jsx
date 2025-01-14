@@ -79,8 +79,8 @@ const TrendingSwiper = () => {
                 <p className=" text-xs text-gray-600">
                   {news?.description.slice(0, 100)}...
                 </p>
-                <Link>
-                  <Button className=" rounded bg-primary-color">
+                <Link className=" w-fit">
+                  <Button variant="text" className=" rounded ">
                     See details
                   </Button>
                 </Link>
