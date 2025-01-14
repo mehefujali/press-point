@@ -60,7 +60,7 @@ const UserProfileDropdown = () => {
               alt={user?.displayName}
               withBorder={true}
               color="blue-gray"
-              className=" w-8 h-8 p-0.5"
+              className=" w-8 h-8 lg:w-10 lg:h-10 p-0.5"
               src={user?.photoURL}
             />
           </Button>

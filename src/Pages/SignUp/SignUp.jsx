@@ -1,11 +1,11 @@
 import { Button, Card, Typography, Input } from "@material-tailwind/react";
 import { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 
 const SignUp = () => {
-  const { SininWithGoogle } = useAuth();
+  const { SininWithGoogle , user } = useAuth();
   const [fileName, setFileName] = useState("Upload your photo");
 
   const handleFileChange = (event) => {
@@ -26,7 +26,9 @@ const SignUp = () => {
         console.log(err);
       });
   };
-
+  if(user&&user.email){
+    return <Navigate to={'/'}/>
+  }
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
       <div className="  p-3 rounded-md  flex flex-col justify-center items-center ">

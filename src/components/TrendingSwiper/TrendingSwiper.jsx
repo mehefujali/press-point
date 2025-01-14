@@ -43,7 +43,8 @@ const TrendingSwiper = () => {
         }}
         spaceBetween={60}
         pagination={{
-          clickable: true,
+          dynamicBullets: true,
+          clickable:true
         }}
         loop={true}
         modules={[Pagination, Autoplay]}
