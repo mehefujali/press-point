@@ -109,9 +109,10 @@ const Navbar = () => {
                 <span>Log In</span>
               </Button>
               <Button
-                variant="gradient"
+            //     variant="gradient"
                 size="sm"
-                className="hidden xl:inline-block"
+                className="hidden xl:inline-block bg-primary-color rounded"
+                
               >
                 <span>Sign Up</span>
               </Button>
