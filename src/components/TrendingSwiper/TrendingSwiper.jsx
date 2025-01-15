@@ -7,16 +7,18 @@ import "./trendingswiper.css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useEffect, useState } from "react";
-import axios from "axios";
+
 import { Link } from "react-router-dom";
 import { Button, Chip } from "@material-tailwind/react";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 const TrendingSwiper = () => {
+  const axiosPublic = useAxiosPublic()
   const [trendingNews, setTrendingNews] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:8080/articles").then((res) => {
+    axiosPublic.get("/articles").then((res) => {
       setTrendingNews(res.data);
     });
-  }, []);
+  }, [axiosPublic]);
 
   return (
     <div className=" container mx-auto my-14 w-11/12 lg:w-full">
