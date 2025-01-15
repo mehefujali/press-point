@@ -1,10 +1,26 @@
-import { Card, Input, Button, Typography, Textarea } from "@material-tailwind/react";
+import {
+  Card,
+  Input,
+  Button,
+  Typography,
+  Textarea,
+} from "@material-tailwind/react";
 import { useState } from "react";
-
+import { useForm } from "react-hook-form";
 import Select from "react-select";
-
+import axios from "axios";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
+  import.meta.env.VITE_IMAGE_BB_API_KEY
+}`;
 const Addarticles = () => {
+  const { user } = useAuth();
   const [fileName, setFileName] = useState("Upload image");
+  const [articleImage, setImage] = useState(null);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const axiosSecure = useAxiosSecure();
   const tagOptions = [
     { value: "breaking-news", label: "Breaking News" },
     { value: "technology", label: "Technology" },
@@ -28,38 +44,86 @@ const Addarticles = () => {
     { value: "crime", label: "Crime" },
   ];
 
-  const handleFileChange = (event) => {
+  const {
+    register,
+    handleSubmit,
+
+    
+  } = useForm();
+
+  const onSubmit = async (data) => {
+      if(!articleImage){
+            toast.error('Please select an image to proceed.')
+            return
+      }
+    const imageFile = { image: articleImage };
+
+    try {
+      const res = await axios.post(imageHostingApi, imageFile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.data.success) {
+        const newArticle = {
+          title: data?.title,
+          image: res?.data?.data.display_url,
+          publisher: user?.displayName,
+          tags: selectedTags,
+          description: data?.description,
+        };
+        try {
+          const res = await axiosSecure.post("/article", newArticle);
+          console.log(res.data);
+        } catch (eror) {
+          console.log(eror);
+        }
+      }
+    } catch (eror) {
+      console.log(eror);
+    }
+  };
+
+  const handleImageFileChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
+      setImage(file);
       setFileName(file.name.slice(0, 16) + "...");
     } else {
       setFileName("Upload image");
     }
   };
+  const handleChange = (selectedOptions) => {
+    const values = selectedOptions
+      ? selectedOptions.map((option) => option.value)
+      : [];
+    setSelectedTags(values);
+  };
   return (
     <div className=" h-[calc(100vh-61px)] md:w-full w-11/12 mx-auto flex justify-center items-center">
       <div className="  p-3 rounded-md  lg:w-9/12 xl:w-7/12 2xl:w-6/12  flex flex-col justify-center items-center ">
         <Typography variant="h5" color="blue-gray">
-        Create and Publish
+          Create and Publish
         </Typography>
         <Typography
           variant="small"
           color="gray"
           className=" font-normal text-wrap text-center"
         >
-          Share your voice with the world by publishing your articles on our platform. Whether you&apos;re breaking the latest news, sharing insightful opinions, or showcasing your expertise, this is the place to make your content shine.
+          Share your voice with the world by publishing your articles on our
+          platform. Whether you&apos;re breaking the latest news, sharing
+          insightful opinions, or showcasing your expertise, this is the place
+          to make your content shine.
         </Typography>
-        <Card
-          color="white"
-          shadow={true}
-          className=" mt-9 w-full  rounded-md"
-        >
-          <form className="   md:w-full p-6 ">
+        <Card color="white" shadow={true} className=" mt-9 w-full  rounded-md">
+          <form onSubmit={handleSubmit(onSubmit)} className="   md:w-full p-6 ">
             <div className=" flex flex-col gap-3">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Title
               </Typography>
               <Input
+                {...register("title", {required:true})}
                 size="lg"
                 placeholder="Ariticle title"
                 className=" !border-t-primary-color !border-primary-color text-primary-color  rounded"
@@ -71,22 +135,22 @@ const Addarticles = () => {
                 Tags
               </Typography>
               <Select
+                onChange={handleChange}
                 isMulti
                 name="tags"
-                styles={{border:'#003366' }}
+                styles={{ border: "#003366" }}
                 options={tagOptions}
                 className="basic-multi-select border focus:!border-primary-color focus:!outline-none rounded !border-primary-color  hover:outline-none"
                 classNamePrefix="select"
               />
 
               <Button
-                onChange={handleFileChange}
                 fullWidth
                 variant="outlined"
                 className="flex p-0 rounded items-center gap-3 border-primary-color text-primary-color cursor-default"
               >
                 <label
-                  htmlFor="register-image"
+                  htmlFor="article-image"
                   className=" w-full h-full cursor-pointer flex items-center gap-3 px-4 py-3"
                 >
                   <svg
@@ -106,17 +170,26 @@ const Addarticles = () => {
                   {fileName}
                 </label>
               </Button>
-              <input type="file" id="register-image" className=" hidden" />
+              <input
+                onChange={handleImageFileChange}
+                type="file"
+                id="article-image"
+                className=" hidden"
+                name="image"
+              />
               <div className=" w-full">
-                <Textarea color="blue-gray" label="Description"  />
+                <Textarea
+                  {...register("description" , {required:true})}
+                  color="blue-gray"
+                  label="Description"
+                />
               </div>
             </div>
-
-            <Button className="mt-6 bg-primary-color rounded" fullWidth>
-            upload article
-            </Button>
-
-            
+            <button className=" w-full">
+              <Button className="mt-6 bg-primary-color rounded" fullWidth>
+                upload article
+              </Button>
+            </button>
           </form>
         </Card>
       </div>
