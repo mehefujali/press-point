@@ -12,15 +12,18 @@ import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
 const Addarticles = () => {
   const { user } = useAuth();
+  const [uplodLoading, setUplodeLoading] = useState(false);
   const [fileName, setFileName] = useState("Upload image");
   const [articleImage, setImage] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const tagOptions = [
     { value: "breaking-news", label: "Breaking News" },
     { value: "technology", label: "Technology" },
@@ -44,21 +47,18 @@ const Addarticles = () => {
     { value: "crime", label: "Crime" },
   ];
 
-  const {
-    register,
-    handleSubmit,
-
-    
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-      if(!articleImage){
-            toast.error('Please select an image to proceed.')
-            return
-      }
+    if (!articleImage) {
+      toast.error("Please select an image to proceed.");
+      return;
+    }
+
     const imageFile = { image: articleImage };
 
     try {
+      setUplodeLoading(true);
       const res = await axios.post(imageHostingApi, imageFile, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -74,13 +74,19 @@ const Addarticles = () => {
         };
         try {
           const res = await axiosSecure.post("/article", newArticle);
-          console.log(res.data);
+          if (res.data.insertedId) {
+            setUplodeLoading(false);
+            toast.success("Article uploded");
+            navigate('/')
+          }
         } catch (eror) {
           console.log(eror);
+          setUplodeLoading(false);
         }
       }
     } catch (eror) {
       console.log(eror);
+      setUplodeLoading(false);
     }
   };
 
@@ -123,7 +129,7 @@ const Addarticles = () => {
                 Title
               </Typography>
               <Input
-                {...register("title", {required:true})}
+                {...register("title", { required: true })}
                 size="lg"
                 placeholder="Ariticle title"
                 className=" !border-t-primary-color !border-primary-color text-primary-color  rounded"
@@ -179,15 +185,20 @@ const Addarticles = () => {
               />
               <div className=" w-full">
                 <Textarea
-                  {...register("description" , {required:true})}
+                  {...register("description", { required: true })}
                   color="blue-gray"
                   label="Description"
                 />
               </div>
             </div>
-            <button className=" w-full">
-              <Button className="mt-6 bg-primary-color rounded" fullWidth>
-                upload article
+            <button className=" w-full ">
+              <Button
+                size="lg"
+                loading={uplodLoading}
+                className="mt-6 bg-primary-color rounded items-center justify-center"
+                fullWidth
+              >
+                {uplodLoading ? "uploading" : "upload article"}
               </Button>
             </button>
           </form>
