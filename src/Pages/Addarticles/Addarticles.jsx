@@ -52,6 +52,7 @@ const Addarticles = () => {
           publisher: {
             name: user?.displayName,
             photo: user?.photoURL,
+            email: user?.eamil,
           },
           tags: selectedTags,
           description: data?.description,

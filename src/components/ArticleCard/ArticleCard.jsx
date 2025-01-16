@@ -2,7 +2,7 @@ import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 
-const ArticleCard = ({ news }) => {
+const ArticleCard = ({ news,premium }) => {
   return (
     <div>
       <div className=" text-start shadow-md flex flex-col md:flex-row bg-white  rounded relative overflow-hidden border-2 ">
@@ -20,7 +20,8 @@ const ArticleCard = ({ news }) => {
         </div>
         <img className="  w-full md:w-64 xl:w-80" src={news?.image} alt="" />
         <div className="p-3 flex gap-2  flex-col lg:gap-1  justify-between ">
-          <h3 className=" font-semibold text-sm md:text-xl ">{news?.title}</h3>
+          <h3 className=" font-semibold text-sm md:text-xl flex items-end ">{news?.title} {premium&&<span className=" text-sm font-normal ml-4 text-golden-color border-2 rounded-full border-golden-color  px-1 text-nowrap
+          ">{"Premium"}</span>}</h3>
 
           <div className=" flex items-center gap-1">
             <img
@@ -76,5 +77,6 @@ const ArticleCard = ({ news }) => {
 };
 ArticleCard.propTypes = {
   news: PropTypes.object,
+  premium: PropTypes.string,
 };
 export default ArticleCard;

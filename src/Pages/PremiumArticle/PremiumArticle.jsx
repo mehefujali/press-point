@@ -23,7 +23,7 @@ const PremiumArticle = () => {
       </h3>
       <div className="  mx-auto w-11/12 md:w-full flex flex-col gap-4 mt-6">
         {articles.map((news) => (
-          <ArticleCard key={news._id} news={news} />
+          <ArticleCard key={news._id} news={news} premium={true} />
         ))}
       </div>
     </div>
