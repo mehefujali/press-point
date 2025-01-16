@@ -77,7 +77,11 @@ const TrendingSwiper = () => {
               <div className="p-3 flex flex-col lg:gap-1  justify-between h-[178px]">
                 <h3 className=" font-semibold text-sm ">{news?.title}</h3>
                 <div className=" flex items-center gap-1">
-                  <img className="h-6 w-6 rounded-full" src={news.publisher.photo} alt="" />
+                  <img
+                    className="h-6 w-6 rounded-full"
+                    src={news.publisher.photo}
+                    alt=""
+                  />
                   <p className=" text-nowrapa text-xs font-medium ">
                     {news?.publisher?.name}
                   </p>
@@ -85,7 +89,7 @@ const TrendingSwiper = () => {
                 <p className=" text-xs text-gray-600">
                   {news?.description.slice(0, 100)}...
                 </p>
-                <Link className=" w-fit">
+                <Link to={`/article-details/${news._id}`} className=" w-fit">
                   <Button
                     size="sm"
                     variant="text"

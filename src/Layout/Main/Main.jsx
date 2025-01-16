@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 
 const Main = () => {
       return (
-            <div className=" bg-primary-color bg-opacity-5 min-h-[100vh]">
+            <div className=" bg-primary-color bg-opacity-5 min-h-[100vh]  font-poppins">
                   <div>
                         <Navbar/>
                   </div>

@@ -18,24 +18,32 @@ const ArticleCard = ({ news }) => {
                   }
                 /> */}
         </div>
-        <img
-          className=" lg:h-40 h-48 xl:h-48  w-full md:w-64 xl:w-80"
-          src={news?.image}
-          alt=""
-        />
-        <div className="p-3 flex flex-col lg:gap-1  justify-between h-[178px]">
-          <h3 className=" font-semibold text-sm ">{news?.title}</h3>
+        <img className="  w-full md:w-64 xl:w-80" src={news?.image} alt="" />
+        <div className="p-3 flex gap-2  flex-col lg:gap-1  justify-between ">
+          <h3 className=" font-semibold text-sm md:text-xl ">{news?.title}</h3>
+
           <div className=" flex items-center gap-1">
             <img
               className="h-6 w-6 rounded-full"
               src={news.publisher.photo}
               alt=""
             />
-            <p className=" text-nowrapa text-xs font-medium ">
+
+            <p className=" text-nowrapa text-xs md:text-sm font-medium ">
               {news?.publisher?.name}
             </p>
           </div>
-          <p className=" text-xs text-gray-600">
+          <p className=" flex flex-wrap gap-2">
+            {news?.tags?.map((tag, idx) => (
+              <p
+                key={idx}
+                className=" bg-primary-color bg-opacity-10 text-primary-color my-1 px-1 rounded-sm text-xs md:text-sm"
+              >
+                #{tag}
+              </p>
+            ))}
+          </p>
+          <p className=" text-xs md:text-sm text-gray-600">
             {news?.description.slice(0, 200)}...
           </p>
           <Link to={`/article-details/${news._id}`} className=" w-fit">
