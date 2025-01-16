@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
   const signOutUser = () => {
     return signOut(auth);
   };
-  console.log(user);
+  
   const authInfo = {
     SininWithGoogle,
     user,

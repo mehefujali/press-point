@@ -44,7 +44,7 @@ const profileMenuItems = [
 const UserProfileDropdown = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { user, signOutUser } = useAuth();
-  console.log(user);
+  
   const closeMenu = () => setIsMenuOpen(false);
   return (
     <div>

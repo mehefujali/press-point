@@ -6,6 +6,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Addarticles from "../Pages/Addarticles/Addarticles";
 import PrivateRoute from "../Private/PrivateRoute";
 import AllArticles from "../Pages/AllArticles/AllArticles";
+import ArticleDetails from "../Pages/ArticleDetails/ArticleDetails";
 
 const AppRouter = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const AppRouter = createBrowserRouter([
       {
         path:'articles',
         element: <AllArticles/>
+      },
+      {
+        path:'article-details/:id',
+        element: <ArticleDetails/>
       }
     ],
   },

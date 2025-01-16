@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
+import tagOptions from "../../../public/tagOptions";
 const Addarticles = () => {
   const { user } = useAuth();
   const [uplodLoading, setUplodeLoading] = useState(false);
@@ -24,28 +25,8 @@ const Addarticles = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const tagOptions = [
-    { value: "breaking-news", label: "Breaking News" },
-    { value: "technology", label: "Technology" },
-    { value: "business", label: "Business" },
-    { value: "health", label: "Health" },
-    { value: "sports", label: "Sports" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "politics", label: "Politics" },
-    { value: "world", label: "World" },
-    { value: "science", label: "Science" },
-    { value: "environment", label: "Environment" },
-    { value: "education", label: "Education" },
-    { value: "lifestyle", label: "Lifestyle" },
-    { value: "travel", label: "Travel" },
-    { value: "food", label: "Food" },
-    { value: "fashion", label: "Fashion" },
-    { value: "finance", label: "Finance" },
-    { value: "culture", label: "Culture" },
-    { value: "opinion", label: "Opinion" },
-    { value: "weather", label: "Weather" },
-    { value: "crime", label: "Crime" },
-  ];
+ 
+  
 
   const { register, handleSubmit } = useForm();
 
@@ -68,7 +49,10 @@ const Addarticles = () => {
         const newArticle = {
           title: data?.title,
           image: res?.data?.data.display_url,
-          publisher: user?.displayName,
+          publisher: {
+            name: user?.displayName,
+            photo: user?.photoURL,
+          },
           tags: selectedTags,
           description: data?.description,
         };
@@ -77,7 +61,7 @@ const Addarticles = () => {
           if (res.data.insertedId) {
             setUplodeLoading(false);
             toast.success("Article uploded");
-            navigate('/')
+            navigate("/");
           }
         } catch (eror) {
           console.log(eror);

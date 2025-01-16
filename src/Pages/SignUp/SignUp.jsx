@@ -19,12 +19,7 @@ const SignUp = () => {
 
   const handleGoogleSignIn = () => {
     SininWithGoogle()
-      .then((data) => {
-        console.log("User ", data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      
   };
   if(user&&user.email){
     return <Navigate to={'/'}/>
