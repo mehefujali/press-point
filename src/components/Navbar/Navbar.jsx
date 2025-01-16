@@ -9,7 +9,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import UserProfileDropdown from "../UserProfileDropdown/UserProfileDropdown";
-
+import './navbar.css'
 const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
   const { user } = useAuth();
@@ -22,14 +22,14 @@ const Navbar = () => {
   }, []);
 
   const navList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul id="navLinks" className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink className="flex items-center">Home</NavLink>
+        <NavLink  to="/" className="flex items-center">Home</NavLink>
       </Typography>
       <Typography
         as="li"
@@ -53,7 +53,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink className="flex items-center">Subscription</NavLink>
+        <NavLink to={'/subscription'} className="flex items-center">Subscription</NavLink>
       </Typography>
       <Typography
         as="li"
@@ -61,7 +61,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink className="flex items-center">Dashboard</NavLink>
+        <NavLink to={'dashboard'} className="flex items-center">Dashboard</NavLink>
       </Typography>
       <Typography
         as="li"
@@ -69,7 +69,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink className="flex items-center">My Articles</NavLink>
+        <NavLink to={'my-articles'} className="flex items-center">My Articles</NavLink>
       </Typography>
       <Typography
         as="li"
@@ -77,7 +77,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink className="flex items-center">Premium Articles</NavLink>
+        <NavLink to={'premium-articles'} className="flex items-center">Premium Articles</NavLink>
       </Typography>
     </ul>
   );

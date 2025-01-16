@@ -17,8 +17,9 @@ const AllArticles = () => {
       });
   }, [axiosSecure]);
   return (
-    <div>
-      <div className=" container mx-auto">{
+    <div className="container mx-auto mt-6">
+      <h3 className=" text-xl border-l-4 border-primary-color pl-2 ">All article</h3>
+      <div className="  mx-auto w-11/12 md:w-full flex flex-col gap-4 mt-6">{
             articles.map(news => <ArticleCard key={news._id} news={news}/>)}</div>
     </div>
   );
