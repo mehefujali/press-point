@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import Addarticles from "../Pages/Addarticles/Addarticles";
 import PrivateRoute from "../Private/PrivateRoute";
+import AllArticles from "../Pages/AllArticles/AllArticles";
 
 const AppRouter = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const AppRouter = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:'articles',
+        element: <AllArticles/>
+      }
     ],
   },
 ]);

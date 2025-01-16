@@ -60,10 +60,11 @@ const TrendingSwiper = () => {
             <div className=" text-start shadow-md  rounded relative overflow-hidden border-2 h-[370px]">
               <div className="text-sm absolute right-2 top-1 ">
                 <Chip
-                  variant="ghost"
+                
                   color="red"
                   size="sm"
                   value="Trending"
+                  className="bg-white text-red-800"
                   icon={
                     <span className="mx-auto mt-1 block h-2 w-2 rounded-full  bg-red-800 content-['']" />
                   }

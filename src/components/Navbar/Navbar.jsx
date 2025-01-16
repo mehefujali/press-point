@@ -45,7 +45,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink className="flex items-center">All Articles</NavLink>
+        <NavLink to="/articles" className="flex items-center">All Articles</NavLink>
       </Typography>
       <Typography
         as="li"
