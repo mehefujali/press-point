@@ -61,7 +61,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink to={'dashboard'} className="flex items-center">Dashboard</NavLink>
+        <NavLink to={'/dashboard'} className="flex items-center">Dashboard</NavLink>
       </Typography>
       <Typography
         as="li"

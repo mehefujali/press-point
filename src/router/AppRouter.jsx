@@ -8,6 +8,7 @@ import PrivateRoute from "../Private/PrivateRoute";
 import AllArticles from "../Pages/AllArticles/AllArticles";
 import ArticleDetails from "../Pages/ArticleDetails/ArticleDetails";
 import PremiumArticle from "../Pages/PremiumArticle/PremiumArticle";
+import Dashboard from "../Layout/Main/Dashboard";
 
 const AppRouter = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const AppRouter = createBrowserRouter([
       }
     ],
   },
+  {
+    path:'/dashboard',
+    element: <Dashboard/>
+  }
 ]);
 
 export default AppRouter;
