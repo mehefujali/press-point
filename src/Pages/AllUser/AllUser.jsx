@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+
 import {
   Card,
   CardHeader,
@@ -7,43 +7,44 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
   Avatar,
-  IconButton,
-  Tooltip,
+
 } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const AllUser = () => {
+  const [filterdata,setFilter] = useState('all')
   const axiosSecure = useAxiosSecure();
-  const { refetch, data: users = [] } = useQuery({
+  const { refetch, data: users = [] , isLoading} = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/users");
+      const { data } = await axiosSecure.get(`/users?filter=${filterdata}`);
       return data;
     },
+    
   });
-  // console.log(users)
+  const handleMakeAdmin = async (email, name) => {
+    const { data } = await axiosSecure.patch(`/user/admin/${email}`);
+    refetch();
+    if (data.modifiedCount) {
+      toast.success(`${name} is admin now`);
+    }
+  };
+  const handleFilterUser = (e) => {
+      const filter = e.target.value;
+      setFilter(filter); 
+    };
+  
+    
+    useEffect(() => {
+      refetch();
+    }, [filterdata]);
+
+//   console.log(users)
   return (
     <div className=" px-4">
       <Card className="h-full w-full  px-4">
@@ -57,19 +58,16 @@ const AllUser = () => {
                 See information about all users
               </Typography>
             </div>
-            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              
-            </div>
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row"></div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max">
-              <TabsHeader>
-                <Tab>All</Tab>
-                <Tab>Users</Tab>
-                <Tab>Publisher</Tab>
-                <Tab>Admin</Tab>
-              </TabsHeader>
-            </Tabs>
+            <div>
+              <select name="" id=""  className=" px-5 py-2 rounded border-primary-color border-2 " onChange={handleFilterUser} >
+                <option value="all" >All Users</option>
+                <option value="users">Users</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
             <div className="w-full md:w-72">
               <Input
                 label="Search"
@@ -80,19 +78,17 @@ const AllUser = () => {
         </CardHeader>
         <CardBody className=" overflow-auto px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left ">
-            <thead>
+            <thead className=" text-primary-color">
               <th>#</th>
-              
+
               <th>Name</th>
               <th>Email</th>
               <th>Action</th>
             </thead>
             <tbody className="">
-              {users?.map((user,idx) => (
-                <tr key={user?._id}>
-                  <td>
-                    {idx+1}
-                  </td>
+              {users?.map((user, idx) => (
+                <tr key={user?._id} className="">
+                  <td>{idx + 1}</td>
                   <td>
                     <div className="flex items-center gap-3">
                       <Avatar src={user?.photo} alt={user?.name} size="sm" />
@@ -104,7 +100,6 @@ const AllUser = () => {
                         >
                           {user?.name}
                         </Typography>
-                        
                       </div>
                     </div>
                   </td>
@@ -117,16 +112,41 @@ const AllUser = () => {
                       >
                         {user?.email}
                       </Typography>
-                      
                     </div>
                   </td>
-                  <td>
-                    <div className="w-max">
-                      <Button size="sm" className=" rounded bg-primary-color">Make admin</Button>
+                  <td className=" text-center">
+                    <div className="w-max text-center justify-center">
+                      {user?.role === "admin" ? (
+                        <h1 className=" flex items-center gap-1 text-primary-color">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
+                            />
+                          </svg>
+                          Admin
+                        </h1>
+                      ) : (
+                        <Button
+                          onClick={() =>
+                            handleMakeAdmin(user?.email, user?.name)
+                          }
+                          size="sm"
+                          className=" rounded bg-primary-color"
+                        >
+                          Make admin
+                        </Button>
+                      )}
                     </div>
                   </td>
-                  
-                  
                 </tr>
               ))}
             </tbody>
