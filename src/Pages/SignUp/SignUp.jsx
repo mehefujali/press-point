@@ -3,10 +3,17 @@ import { useState } from "react";
 
 import { Link, Navigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+import useAxiosPublic from "./../../Hooks/useAxiosPublic";
+const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
+  import.meta.env.VITE_IMAGE_BB_API_KEY
+}`;
 const SignUp = () => {
-  const { SininWithGoogle , user } = useAuth();
+  const { SininWithGoogle, user, emailSignUp, updateUser, setUser } = useAuth();
   const [fileName, setFileName] = useState("Upload your photo");
+  const [userCreateLoading, setUserCreateLoading] = useState(false);
+  const axiosPublic = useAxiosPublic();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -18,11 +25,81 @@ const SignUp = () => {
   };
 
   const handleGoogleSignIn = () => {
-    SininWithGoogle()
-      
+    SininWithGoogle();
   };
-  if(user&&user.email){
-    return <Navigate to={'/'}/>
+  const handleEmailSignUp = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const name = form.name?.value;
+    const email = form.email?.value;
+    const password = form.password?.value;
+    const image = form.image?.files[0];
+    // console.log({ name, email, password, image });
+
+    if (!name) {
+      return toast.error("Please input your name");
+    }
+    if (!email) {
+      return toast.error("Please input your email");
+    }
+    if (!password) {
+      return toast.error("Please input your password");
+    }
+    if (password.length < 6) {
+      return toast.error("Password must be at least 6 characters long");
+    }
+    if (!image) {
+      return toast.error("Please uplode your image");
+    }
+
+    setUserCreateLoading(true);
+
+    const res = await axios.post(
+      imageHostingApi,
+      { image },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (res.data.success) {
+      emailSignUp(email, password)
+        .then(() => {
+          updateUser({
+            displayName: name,
+            photoURL: res?.data?.data.display_url,
+          })
+            .then(() => {
+              setUser({
+                email,
+                displayName: name,
+                photoURL: res?.data?.data.display_url,
+              });
+              axiosPublic.post("/user", {
+                name,
+                email,
+                photo: res?.data?.data.display_url,
+              });
+              setUserCreateLoading(false);
+              toast.success(`Welcome ${name} `);
+            })
+            .catch(() => {
+              setUserCreateLoading(false);
+            });
+        })
+        .catch((err) => {
+          setUserCreateLoading(false);
+          // console.log(err.message)
+          if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+            toast.error("This email is already in use");
+          }
+        });
+    }
+  };
+  if (user && user.email) {
+    return <Navigate to={"/"} />;
   }
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
@@ -39,12 +116,13 @@ const SignUp = () => {
           features.
         </Typography>
         <Card color="white" shadow={true} className=" mt-9 w-fit rounded-md">
-          <form className="  w-72  p-6 ">
+          <form onSubmit={handleEmailSignUp} className="  w-72  p-6 ">
             <div className=" flex flex-col gap-3">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Your Name
               </Typography>
               <Input
+                name="name"
                 size="lg"
                 placeholder="Your name"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900 rounded"
@@ -56,6 +134,7 @@ const SignUp = () => {
                 Your Email
               </Typography>
               <Input
+                name="email"
                 size="lg"
                 placeholder="name@mail.com"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900 rounded"
@@ -67,6 +146,7 @@ const SignUp = () => {
                 Password
               </Typography>
               <Input
+                name="password"
                 type="password"
                 size="lg"
                 placeholder="********"
@@ -103,6 +183,7 @@ const SignUp = () => {
                 </label>
               </Button>
               <input
+                name="image"
                 onChange={handleFileChange}
                 type="file"
                 id="register-image"
@@ -110,9 +191,15 @@ const SignUp = () => {
               />
             </div>
 
-            <Button className="mt-6 bg-primary-color rounded" fullWidth>
-              Sign Up
-            </Button>
+            <button className=" w-full">
+              <Button
+                loading={userCreateLoading}
+                className="mt-6 bg-primary-color rounded justify-center"
+                fullWidth
+              >
+                {userCreateLoading ? "creating account" : "Sign Up"}
+              </Button>
+            </button>
 
             <Button
               onClick={handleGoogleSignIn}
