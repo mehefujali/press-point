@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 const AllUser = () => {
-  const [filterdata,setFilter] = useState('all')
+  const [filterdata,setFilter] = useState('all-user')
   const axiosSecure = useAxiosSecure();
   const { refetch, data: users = [] , isLoading} = useQuery({
     queryKey: ["users"],
@@ -47,15 +47,15 @@ const AllUser = () => {
 //   console.log(users)
   return (
     <div className=" px-4">
-      <Card className="h-full w-full  px-4">
+      <Card className="h-full w-full  px-4 shadow-none">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
-              <Typography variant="h5" color="blue-gray">
-                All users
+              <Typography variant="h5"  className=" first-letter:capitalize text-primary-color">
+                {filterdata}
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                See information about all users
+                See information and manage about {filterdata}
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row"></div>
@@ -63,7 +63,7 @@ const AllUser = () => {
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div>
               <select name="" id=""  className=" px-5 py-2 rounded border-primary-color border-2 " onChange={handleFilterUser} >
-                <option value="all" >All Users</option>
+                <option value="all user" >All Users</option>
                 <option value="users">Users</option>
                 <option value="admin">Admin</option>
               </select>
@@ -152,7 +152,7 @@ const AllUser = () => {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
             Page 1 of 10
           </Typography>
@@ -164,7 +164,7 @@ const AllUser = () => {
               Next
             </Button>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
