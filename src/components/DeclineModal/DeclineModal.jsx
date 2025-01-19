@@ -4,13 +4,15 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
-  Input,
+  
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import {  useState } from "react";
 
 const DeclineModal = ({ open, setOpen, handleDecline }) => {
+  const [reason, setReason] = useState(null);
+ 
   const handleOpen = () => setOpen(!open);
   return (
     <div>
@@ -38,7 +40,7 @@ const DeclineModal = ({ open, setOpen, handleDecline }) => {
         </div>
         <DialogBody>
           <div className="grid gap-6">
-            <Textarea label="Justification" />
+            <Textarea onKeyUp={(e)=>setReason(e.target.value)} label="Justification" />
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2">
@@ -48,8 +50,7 @@ const DeclineModal = ({ open, setOpen, handleDecline }) => {
           <Button
             className=" bg-red-700 rounded"
             onClick={() => {
-              
-              handleDecline()
+              handleDecline(reason);
             }}
           >
             Decline

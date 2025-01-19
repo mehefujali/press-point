@@ -8,7 +8,7 @@ const AllArticles = () => {
 
   useEffect(() => {
     axiosSecure
-      .get("/articles")
+      .get("/publishd-articles")
       .then((res) => {
         setArticles(res.data);
       })

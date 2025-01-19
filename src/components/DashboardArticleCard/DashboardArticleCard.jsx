@@ -12,22 +12,29 @@ const DashboardArticleCard = ({ news, refetch }) => {
   const handlePublish = () => {
     axiosSecure.patch(`/article/publish/${news._id}`).then((res) => {
       console.log(res.data);
-      toast.success(`${news.title} Published`)
+      toast.success(`${news.title} Published`);
       refetch();
     });
   };
-  const handleDecline = () => {
-    axiosSecure.patch(`/article/decline/${news._id}`).then((res) => {
-      console.log(res.data);
-      setOpen(false)
-      toast.success(`${news.title} Declined`)
-      refetch();
 
-    });
+  const handleDecline = (reason) => {
+    console.log(reason);
+    axiosSecure
+      .patch(`/article/decline/${news._id}`, { reason: reason })
+      .then((res) => {
+        console.log(res.data);
+        setOpen(false);
+        toast.success(`${news.title} Declined`);
+        refetch();
+      });
   };
   return (
     <div>
-      <DeclineModal open={open} setOpen={setOpen} handleDecline={handleDecline}/>
+      <DeclineModal
+        open={open}
+        setOpen={setOpen}
+        handleDecline={handleDecline}
+      />
       <div>
         <div className=" text-start shadow-md flex flex-col md:flex-row bg-white  rounded relative overflow-hidden border-2 ">
           <div className="text-sm absolute right-2 top-1 ">
@@ -102,8 +109,9 @@ const DashboardArticleCard = ({ news, refetch }) => {
                 </svg>
                 Published
               </p>
-            ) : news.status === "decline" ? <p className=" text-xs md:text-sm flex items-center gap-1 text-red-900">
-              <svg
+            ) : news.status === "decline" ? (
+              <p className=" text-xs md:text-sm flex items-center gap-1 text-red-900">
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -118,7 +126,8 @@ const DashboardArticleCard = ({ news, refetch }) => {
                   />
                 </svg>
                 Decline
-            </p>: (
+              </p>
+            ) : (
               <p className=" text-xs md:text-sm flex items-center gap-1 text-yellow-900">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -137,9 +146,28 @@ const DashboardArticleCard = ({ news, refetch }) => {
                 Pending
               </p>
             )}
+            {news.declineReason&&<p className=" text-xs md:text-sm flex items-center gap-1 text-red-500">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                />
+              </svg>
+              {news?.declineReason}
+            </p>}
             <div className="  flex flex-col md:flex-row gap-2">
               <Button
-                disabled={news.status === "published" || news.status === "decline"}
+                disabled={
+                  news.status === "published" 
+                }
                 onClick={handlePublish}
                 size="sm"
                 variant=""
@@ -162,8 +190,10 @@ const DashboardArticleCard = ({ news, refetch }) => {
                 {news.status === "published" ? "Published" : "Approve"}
               </Button>
               <Button
-              disabled={news.status === "published" || news.status === "decline"}
-              onClick={()=>setOpen(true)}
+                disabled={
+                  news.status === "decline" 
+                }
+                onClick={() => setOpen(true)}
                 size="sm"
                 className="flex rounded items-center gap-3 bg-yellow-800"
               >
@@ -181,7 +211,7 @@ const DashboardArticleCard = ({ news, refetch }) => {
                     d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
                   />
                 </svg>
-               {news.status==="decline"?"declined":"decline"}
+                {news.status === "decline" ? "declined" : "decline"}
               </Button>
               <Button
                 size="sm"
