@@ -15,6 +15,7 @@ const Home = () => {
                   <div>
                         <Plans/>
                   </div>
+                  
             </div>
       );
 };

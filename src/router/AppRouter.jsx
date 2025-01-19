@@ -14,8 +14,12 @@ import AllUser from "../Pages/AllUser/AllUser";
 import AddPublisher from "../Pages/AddPublisher/AddPublisher";
 import AllArticlesDashboard from "../Pages/AllArticlesDashboard/AllArticlesDashboard";
 import AdminRoute from "../Private/AdminRoute";
+import Error from "../Pages/Error/Error";
 
 const AppRouter = createBrowserRouter([
+  {
+    errorElement: <Error/>
+  },
   {
     path: "/",
     element: <Main />,

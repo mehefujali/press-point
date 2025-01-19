@@ -11,8 +11,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Chip } from "@material-tailwind/react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import moment from "moment/moment";
+
 const TrendingSwiper = () => {
   const axiosPublic = useAxiosPublic();
+  let dateNow = moment().format('lll')
+  setTimeout(() => {
+     dateNow = moment().format('lll')
+  }, 1000);
   const [trendingNews, setTrendingNews] = useState([]);
   useEffect(() => {
     axiosPublic.get("/articles").then((res) => {
@@ -21,7 +27,11 @@ const TrendingSwiper = () => {
   }, [axiosPublic]);
 
   return (
-    <div className=" container mx-auto my-14 w-11/12 lg:w-full">
+    <div className=" container mx-auto  w-11/12 lg:w-full">
+      <div className=" my-3  px-4 py-4 bg-primary-color text-white flex justify-between items-center">
+        <h1 className=" text-xl uppercase">Trending articles  </h1>
+        <p>{dateNow}</p>
+      </div>
       <Swiper
         breakpoints={{
           320: {

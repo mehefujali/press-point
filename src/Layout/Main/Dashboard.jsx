@@ -3,6 +3,7 @@ import DashboardSideNav from "../../components/DashboardSideNav/DashboardSideNav
 import { Outlet } from "react-router-dom";
 import DashboardStaticNav from "../../components/DashboardStaticNav/DashboardStaticNav";
 
+
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
@@ -22,6 +23,7 @@ const Dashboard = () => {
       <div className=" lg:col-span-9 xl:col-span-10 lg:overflow-y-auto lg:h-screen">
         <Outlet />
       </div>
+     
     </div>
   );
 };
