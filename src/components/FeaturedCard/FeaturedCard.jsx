@@ -6,16 +6,16 @@ import { Link } from "react-router-dom";
 const FeaturedCard = ({news}) => {
       return (
             <div>
-                 <div className=" text-start shadow-md  rounded relative overflow-hidden border-2 h-full">
+                 <div className=" text-start shadow-md  rounded relative  border-2 h-full">
               <div className="text-sm absolute right-2 top-1 ">
                 
               </div>
               <img
-                className=" lg:h-40 h-48 xl:h-48 w-full"
+                className="  lg:h-40 xl:h-48 w-full"
                 src={news?.image}
                 alt=""
               />
-              <div className="p-3 flex flex-col lg:gap-1  justify-between h-[178px]">
+              <div className="p-3 flex flex-col lg:gap-1  justify-between ">
                 <h3 className=" font-semibold text-sm ">{news?.title}</h3>
                 <div className=" flex items-center gap-1">
                   <img
