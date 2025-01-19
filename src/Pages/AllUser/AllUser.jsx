@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
   CardBody,
-  CardFooter,
+//   CardFooter,
   Avatar,
 
 } from "@material-tailwind/react";
@@ -17,9 +17,9 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 const AllUser = () => {
-  const [filterdata,setFilter] = useState('all-user')
+  const [filterdata,setFilter] = useState('all user')
   const axiosSecure = useAxiosSecure();
-  const { refetch, data: users = [] , isLoading} = useQuery({
+  const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/users?filter=${filterdata}`);
@@ -42,7 +42,7 @@ const AllUser = () => {
     
     useEffect(() => {
       refetch();
-    }, [filterdata]);
+    }, [filterdata, refetch]);
 
 //   console.log(users)
   return (
