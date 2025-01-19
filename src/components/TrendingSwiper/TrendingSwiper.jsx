@@ -21,7 +21,7 @@ const TrendingSwiper = () => {
   }, 1000);
   const [trendingNews, setTrendingNews] = useState([]);
   useEffect(() => {
-    axiosPublic.get("/articles").then((res) => {
+    axiosPublic.get("/top-viewed").then((res) => {
       setTrendingNews(res.data);
     });
   }, [axiosPublic]);

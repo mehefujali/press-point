@@ -49,7 +49,7 @@ const ArticleDetails = () => {
             </p>
 
           </div>
-          <p className=" text-sm md:text-lg text-justify first-letter:text-3xl ">{article.description}</p>
+          <p className=" text-sm md:text-lg text-justify first-letter:text-3xl whitespace-pre-wrap">{article.description}</p>
 
           <div >
             <p className=" flex flex-wrap gap-2">{
