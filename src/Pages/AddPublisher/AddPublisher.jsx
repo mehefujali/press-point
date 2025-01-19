@@ -6,7 +6,7 @@ import axios from "axios";
 
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
@@ -17,7 +17,7 @@ const AddPublisher = () => {
   const [articleImage, setImage] = useState(null);
 
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
+
 
   const { register, handleSubmit } = useForm();
 
@@ -38,7 +38,7 @@ const AddPublisher = () => {
       });
       if (res.data.success) {
         const newPublisher = {
-           publisherName : data.publisher_name,
+           name : data.publisher_name,
            logo: res?.data?.data.display_url
         };
         try {
@@ -46,7 +46,7 @@ const AddPublisher = () => {
           if (res.data.insertedId) {
             setUplodeLoading(false);
             toast.success("Publisher added");
-            navigate("/");
+            
           }
         } catch (eror) {
           console.log(eror);

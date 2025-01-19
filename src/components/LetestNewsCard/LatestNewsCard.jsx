@@ -39,8 +39,8 @@ const LatestNewsCard = () => {
         >
           <h1 className=" text-xl md:text-2xl  font-semibold">{latest_article?.title}</h1>
           <p className=" font-light text-xs md:text-sm">
-            {latest_article?.description?.slice(0, 100)}...
-          </p>
+            {latest_article?.description?.slice(0, 100)} . . . Read more
+          </p> 
         </Link>
       </div>
       <div className=" md:w-4/12 h-full">
