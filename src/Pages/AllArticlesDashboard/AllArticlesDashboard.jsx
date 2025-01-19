@@ -6,7 +6,7 @@ import DashboardArticleCard from "../../components/DashboardArticleCard/Dashboar
 const AllArticlesDashboard = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: articles = [] } = useQuery({
+  const {refetch, data: articles = [] } = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get("/articles");
@@ -17,7 +17,7 @@ const AllArticlesDashboard = () => {
     <div className="p-4">
       <div className=" flex flex-col gap-4">
         {articles.map((article) => (
-          <DashboardArticleCard key={article._id} news={article} />
+          <DashboardArticleCard key={article._id} news={article} refetch={refetch} />
         ))}
       </div>
     </div>

@@ -1,8 +1,18 @@
 import { Button } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
-const DashboardArticleCard = ({ news }) => {
+const DashboardArticleCard = ({ news ,refetch}) => {
+  const axiosSecure = useAxiosSecure()
+
+  const handlePublish = ()=>{
+      axiosSecure.patch(`/article/publish/${news._id}`)
+      .then(res=>{
+        console.log(res.data)
+      })
+      refetch()
+  }
   return (
     <div>
       <div>
@@ -79,16 +89,16 @@ const DashboardArticleCard = ({ news }) => {
 
               {"Pending"}
             </p>
-            <div className="  flex flex-col md:flex-row">
+            <div className="  flex flex-col md:flex-row gap-2">
              
-                <Button size="sm" variant="" className="flex items-center gap-3 rounded bg-green-800">
+                <Button onClick={handlePublish} size="sm" variant="" className="flex items-center gap-3 rounded bg-green-800">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-6"
+                    className="size-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -105,7 +115,7 @@ const DashboardArticleCard = ({ news }) => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-6"
+                    className="size-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -122,7 +132,7 @@ const DashboardArticleCard = ({ news }) => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-6"
+                    className="size-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -139,7 +149,7 @@ const DashboardArticleCard = ({ news }) => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-6"
+                    className="size-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -160,6 +170,7 @@ const DashboardArticleCard = ({ news }) => {
 
 DashboardArticleCard.propTypes = {
   news: PropTypes.object.isRequired,
+  refetch: PropTypes.func.isRequired,
 };
 
 export default DashboardArticleCard;
