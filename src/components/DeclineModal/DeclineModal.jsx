@@ -8,6 +8,7 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
+import PropTypes from "prop-types";
 import {  useState } from "react";
 
 const DeclineModal = ({ open, setOpen, handleDecline }) => {
@@ -60,5 +61,12 @@ const DeclineModal = ({ open, setOpen, handleDecline }) => {
     </div>
   );
 };
+
+DeclineModal.propTypes ={
+      open : PropTypes.bool.isRequired ,
+      setOpen : PropTypes.func.isRequired ,
+      handleDecline : PropTypes.func.isRequired ,
+      
+}
 
 export default DeclineModal;

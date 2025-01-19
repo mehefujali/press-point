@@ -10,9 +10,11 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import UserProfileDropdown from "../UserProfileDropdown/UserProfileDropdown";
 import './navbar.css'
+import useAdmin from "../../Hooks/useAdmin";
 const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
   const { user } = useAuth();
+  const {isAdmin} = useAdmin()
 
   React.useEffect(() => {
     window.addEventListener(
@@ -55,14 +57,14 @@ const Navbar = () => {
       >
         <NavLink to={'/subscription'} className="flex items-center">Subscription</NavLink>
       </Typography>
-      <Typography
+      {isAdmin&&<Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
       >
         <NavLink to={'/dashboard'} className="flex items-center">Dashboard</NavLink>
-      </Typography>
+      </Typography>}
       <Typography
         as="li"
         variant="small"

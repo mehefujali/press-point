@@ -18,10 +18,13 @@ const ArticleCard = ({ news,premium }) => {
                   }
                 /> */}
         </div>
+        
         <img className="  w-full md:w-64 xl:w-80" src={news?.image} alt="" />
         <div className="p-3 flex gap-2  flex-col lg:gap-1  justify-between ">
+        <Link to={`/article-details/${news._id}`} className=" w-fit">
           <h3 className=" font-semibold text-sm md:text-xl flex items-end ">{news?.title} {premium&&<span className=" text-sm font-normal ml-4 text-golden-color border-2 rounded-full border-golden-color  px-1 text-nowrap
           ">{"Premium"}</span>}</h3>
+          </Link>
 
           <div className=" flex items-center gap-1">
             <img
