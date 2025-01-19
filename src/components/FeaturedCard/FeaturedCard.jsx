@@ -28,7 +28,7 @@ const FeaturedCard = ({news}) => {
                   </p>
                 </div>
                 <p className=" text-xs text-gray-600">
-                  {news?.description.slice(0, 100)}...
+                  {news?.description?.slice(0, 100)}...
                 </p>
                 <Link to={`/article-details/${news?._id}`} className=" w-fit">
                   <Button

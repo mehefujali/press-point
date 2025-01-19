@@ -4,10 +4,13 @@ import {
   Button,
   Typography,
   Textarea,
+  Option,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { cloneElement, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
+import { Select as MtSelect } from "@material-tailwind/react";
+
 import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -16,7 +19,10 @@ import { useNavigate } from "react-router-dom";
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
+
 import tagOptions from "../../../public/tagOptions";
+import { useQuery } from "@tanstack/react-query";
+
 const Addarticles = () => {
   const { user } = useAuth();
   const [uplodLoading, setUplodeLoading] = useState(false);
@@ -25,8 +31,6 @@ const Addarticles = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
- 
-  
 
   const { register, handleSubmit } = useForm();
 
@@ -74,13 +78,26 @@ const Addarticles = () => {
       setUplodeLoading(false);
     }
   };
- 
+
+  const { data: publishers = [] } = useQuery({
+    queryKey: ["publisher"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/publisher");
+      return data;
+    },
+  });
+
+
+  
+
   const handleImageFileChange = (event) => {
     const file = event.target.files[0];
 
     if (file) {
       setImage(file);
-      setFileName(file.name.slice(0, 16) + "...");
+      setFileName(
+        file.name.length > 16 ? file.name.slice(0, 16) + "..." : file.name
+      );
     } else {
       setFileName("Upload image");
     }
@@ -134,7 +151,41 @@ const Addarticles = () => {
                 className="basic-multi-select border focus:!border-primary-color focus:!outline-none rounded !border-primary-color  hover:outline-none"
                 classNamePrefix="select"
               />
+              <Typography variant="h6" color="blue-gray" className="-mb-3">
+                Publisher
+              </Typography>
+              <div className=" w-full">
+              <MtSelect
+  className="w-full rounded"
+  size="lg"
+  label="Select Publisher"
+  selected={(element) =>
+    element &&
+    cloneElement(element, {
+      disabled: true,
+      className:
+        "flex items-center opacity-100 rounded px-0 gap-2 pointer-events-none",
+    })
+  }
+>
+  {publishers?.map((publisher) => (
+    <Option
+      key={publisher?._id}
+      value={publisher?.name}
+      className="flex items-center gap-2"
+    >
+      <img
+        src={publisher?.logo}
+        alt={publisher?.name}
+        className="h-5 w-5 rounded-full object-cover"
+      />
+      {publisher?.name}
+    </Option>
+  ))}
+</MtSelect>
 
+              </div>
+                
               <Button
                 fullWidth
                 variant="outlined"
