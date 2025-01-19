@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import DashboardArticleCard from "../../components/DashboardArticleCard/DashboardArticleCard";
 
+
 const AllArticlesDashboard = () => {
   const axiosSecure = useAxiosSecure();
 

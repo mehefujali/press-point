@@ -209,7 +209,9 @@ const tagOptions = [
   { value: "online-privacy", label: "Online Privacy" },
   { value: "web-security", label: "Web Security" },
   { value: "hacker-tools", label: "Hacker Tools" },
-  { value: "network-penetration-testing", label: "Network Penetration Testing" }
+  { value: "network-penetration-testing", label: "Network Penetration Testing" },
+  { value: "movement", label: "movement" },
+  { value: "student-movement", label: "student movement" },
 ];
 
 export default tagOptions;

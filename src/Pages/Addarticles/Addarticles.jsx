@@ -50,9 +50,9 @@ const Addarticles = () => {
           title: data?.title,
           image: res?.data?.data.display_url,
           publisher: {
-            name: user?.displayName,
-            photo: user?.photoURL,
-            email: user?.eamil,
+            name: user.displayName,
+            photo: user.photoURL,
+            email: user.email,
           },
           tags: selectedTags,
           description: data?.description,
@@ -74,7 +74,7 @@ const Addarticles = () => {
       setUplodeLoading(false);
     }
   };
-
+ 
   const handleImageFileChange = (event) => {
     const file = event.target.files[0];
 
