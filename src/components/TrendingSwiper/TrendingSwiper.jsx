@@ -29,8 +29,8 @@ const TrendingSwiper = () => {
   return (
     <div className=" container mx-auto  w-11/12 lg:w-full">
       <div className=" my-3  px-4 py-4 bg-primary-color text-white flex justify-between items-center">
-        <h1 className=" text-xl uppercase">Trending articles  </h1>
-        <p>{dateNow}</p>
+        <h1 className=" text-sm md:text-xl uppercase">Trending articles  </h1>
+        <p className=" text-xs md:text-sm">{dateNow}</p>
       </div>
       <Swiper
         breakpoints={{
