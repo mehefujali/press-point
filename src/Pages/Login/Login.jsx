@@ -3,15 +3,21 @@ import { Link, Navigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
-  const { SininWithGoogle ,user} = useAuth();
+  const { SininWithGoogle, user, emailLogin } = useAuth();
 
   const handleGoogleSignIn = () => {
-    SininWithGoogle()
-    
-      
+    SininWithGoogle();
   };
-  if(user&&user.email){
-    return <Navigate to={'/'}/>
+
+  const handleEmailLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    emailLogin(email, password);
+  };
+  if (user && user.email) {
+    return <Navigate to={"/"} />;
   }
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
@@ -28,13 +34,14 @@ const Login = () => {
           exclusive features.
         </Typography>
         <Card color="white" shadow={true} className=" mt-9 w-fit rounded-md">
-          <form className="  w-72  p-6 ">
+          <form onSubmit={handleEmailLogin} className="  w-72  p-6 ">
             <div className=" flex flex-col gap-3">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Your Email
               </Typography>
               <Input
                 size="lg"
+                name="email"
                 placeholder="name@mail.com"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900 rounded"
                 labelProps={{
@@ -45,6 +52,7 @@ const Login = () => {
                 Password
               </Typography>
               <Input
+                name="password"
                 type="password"
                 size="lg"
                 placeholder="********"
@@ -55,9 +63,11 @@ const Login = () => {
               />
             </div>
 
-            <Button className="mt-6 bg-primary-color rounded" fullWidth>
-              Login
-            </Button>
+            <button className=" w-full">
+              <Button className="mt-6 bg-primary-color rounded" fullWidth>
+                Login
+              </Button>
+            </button>
 
             <Button
               onClick={handleGoogleSignIn}

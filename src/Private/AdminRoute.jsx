@@ -3,7 +3,10 @@ import useAdmin from "../Hooks/useAdmin";
 import PropTypes from "prop-types";
 
 const AdminRoute = ({ children }) => {
-  const { isAdmin } = useAdmin();
+  const { isAdmin,isAdminLoading } = useAdmin();
+  if(isAdminLoading){
+      return <h1>loading...</h1>
+  }
   if (isAdmin) {
     return children;
   } else {

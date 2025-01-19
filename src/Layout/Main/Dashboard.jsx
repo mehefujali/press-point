@@ -19,7 +19,7 @@ const Dashboard = () => {
       <div className=" hidden lg:block  lg:col-span-3 xl:col-span-2">
         <DashboardStaticNav />
       </div>
-      <div className=" lg:col-span-9 xl:col-span-10 lg:overflow-y-scroll lg:h-screen">
+      <div className=" lg:col-span-9 xl:col-span-10 lg:overflow-y-auto lg:h-screen">
         <Outlet />
       </div>
     </div>

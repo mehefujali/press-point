@@ -13,6 +13,7 @@ import ChildDashboard from "../Pages/Dashboard/Dashboard";
 import AllUser from "../Pages/AllUser/AllUser";
 import AddPublisher from "../Pages/AddPublisher/AddPublisher";
 import AllArticlesDashboard from "../Pages/AllArticlesDashboard/AllArticlesDashboard";
+import AdminRoute from "../Private/AdminRoute";
 
 const AppRouter = createBrowserRouter([
   {
@@ -55,28 +56,48 @@ const AppRouter = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
     children: [
       {
-        path:'/dashboard',
-        element : <Navigate to="/dashboard/analytics" replace/>
+        path: "/dashboard",
+        element: <Navigate to="/dashboard/analytics" replace />,
       },
       {
         path: "/dashboard/analytics",
-        element: <ChildDashboard />,
+        element: (
+          <AdminRoute>
+            <ChildDashboard />
+          </AdminRoute>
+        ),
       },
       {
-        path:'/dashboard/all-user',
-        element: <AllUser/>
+        path: "/dashboard/all-user",
+        element: (
+          <AdminRoute>
+            <AllUser />
+          </AdminRoute>
+        ),
       },
       {
-        path:'/dashboard/all-articles',
-        element: <AllArticlesDashboard/>
+        path: "/dashboard/all-articles",
+        element: (
+          <AdminRoute>
+            <AllArticlesDashboard />
+          </AdminRoute>
+        ),
       },
       {
-        path:'/dashboard/add-publisher',
-        element: <AddPublisher/>
-      }
+        path: "/dashboard/add-publisher",
+        element: (
+          <AdminRoute>
+            <AddPublisher />
+          </AdminRoute>
+        ),
+      },
     ],
   },
 ]);
