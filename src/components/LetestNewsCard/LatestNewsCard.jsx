@@ -26,9 +26,9 @@ const LatestNewsCard = () => {
   console.log(topViewd)
 
   return (
-    <div className=" mt-4 flex gap-5 ">
+    <div className=" mt-4 flex  mx-auto flex-col md:flex-row gap-5 ">
       <div
-        className=" w-8/12 flex items-end justify-start p-8  bg-cover bg-center"
+        className=" md:w-8/12 flex min-h-72  items-end justify-start p-2 md:p-8  bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(0deg, black, transparent), url(${latest_article?.image})`,
         }}
@@ -37,13 +37,13 @@ const LatestNewsCard = () => {
           to={`/article-details/${latest_article?._id}`}
           className="text-white"
         >
-          <h1 className=" text-2xl  font-semibold">{latest_article?.title}</h1>
-          <p className=" font-light">
-            {latest_article?.description.slice(0, 100)}
+          <h1 className=" text-xl md:text-2xl  font-semibold">{latest_article?.title}</h1>
+          <p className=" font-light text-xs md:text-sm">
+            {latest_article?.description.slice(0, 100)}...
           </p>
         </Link>
       </div>
-      <div className=" w-4/12 h-full">
+      <div className=" md:w-4/12 h-full">
         <FeaturedCard news={topViewdArticle} />
       </div>
     </div>

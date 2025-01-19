@@ -5,8 +5,13 @@ const FeaturedSection = () => {
   return (
     <div>
       <div className="container mx-auto  grid lg:grid-cols-12 min-h-[2000px] my-10 relative ">
-        <div className="lg:col-span-9 ">
-          <FeaturedLeftSide />
+        <div className="lg:col-span-9 w-11/12 md:w-full mx-auto">
+          <div>
+            <FeaturedLeftSide />
+          </div>
+          <div>
+
+          </div>
         </div>
         <div className="lg:col-span-3 sticky top-[61px]  h-fit">
           <div className=" h-full">
