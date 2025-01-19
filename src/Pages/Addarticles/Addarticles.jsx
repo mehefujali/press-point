@@ -31,15 +31,15 @@ const Addarticles = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
+  const [publisher, setPublisher] = useState("");
   const { register, handleSubmit } = useForm();
-
+  console.log(publisher);
   const onSubmit = async (data) => {
     if (!articleImage) {
       toast.error("Please select an image to proceed.");
       return;
     }
-
+   
     const imageFile = { image: articleImage };
 
     try {
@@ -53,14 +53,19 @@ const Addarticles = () => {
         const newArticle = {
           title: data?.title,
           image: res?.data?.data.display_url,
-          publisher: {
+          author: {
             name: user.displayName,
             photo: user.photoURL,
             email: user.email,
           },
+          publisher: {
+            ...publisher,
+          },
+
           tags: selectedTags,
           description: data?.description,
         };
+        console.log(newArticle);
         try {
           const res = await axiosSecure.post("/article", newArticle);
           if (res.data.insertedId) {
@@ -86,9 +91,6 @@ const Addarticles = () => {
       return data;
     },
   });
-
-
-  
 
   const handleImageFileChange = (event) => {
     const file = event.target.files[0];
@@ -127,21 +129,14 @@ const Addarticles = () => {
         <Card color="white" shadow={true} className=" mt-9 w-full  rounded-md">
           <form onSubmit={handleSubmit(onSubmit)} className="   md:w-full p-6 ">
             <div className=" flex flex-col gap-3">
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Title
-              </Typography>
               <Input
                 {...register("title", { required: true })}
                 size="lg"
+                label="Title"
                 placeholder="Ariticle title"
-                className=" !border-t-primary-color !border-primary-color text-primary-color  rounded"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
+                className=" rounded"
               />
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Tags
-              </Typography>
+
               <Select
                 onChange={handleChange}
                 isMulti
@@ -151,41 +146,40 @@ const Addarticles = () => {
                 className="basic-multi-select border focus:!border-primary-color focus:!outline-none rounded !border-primary-color  hover:outline-none"
                 classNamePrefix="select"
               />
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Publisher
-              </Typography>
-              <div className=" w-full">
-              <MtSelect
-  className="w-full rounded"
-  size="lg"
-  label="Select Publisher"
-  selected={(element) =>
-    element &&
-    cloneElement(element, {
-      disabled: true,
-      className:
-        "flex items-center opacity-100 rounded px-0 gap-2 pointer-events-none",
-    })
-  }
->
-  {publishers?.map((publisher) => (
-    <Option
-      key={publisher?._id}
-      value={publisher?.name}
-      className="flex items-center gap-2"
-    >
-      <img
-        src={publisher?.logo}
-        alt={publisher?.name}
-        className="h-5 w-5 rounded-full object-cover"
-      />
-      {publisher?.name}
-    </Option>
-  ))}
-</MtSelect>
 
+              <div className=" w-full">
+                <MtSelect
+                  
+                  className="w-full rounded"
+                  size="lg"
+                  onChange={(e) => setPublisher(e)}
+                  label="Select Publisher"
+                  selected={(element) =>
+                    element &&
+                    cloneElement(element, {
+                      disabled: true,
+                      className:
+                        "flex items-center opacity-100 rounded px-0 gap-2 pointer-events-none",
+                    })
+                  }
+                >
+                  {publishers?.map((publisher) => (
+                    <Option
+                      key={publisher?._id}
+                      value={{ name: publisher?.name, logo: publisher.logo }}
+                      className="flex items-center gap-2"
+                    >
+                      <img
+                        src={publisher?.logo}
+                        alt={publisher?.name}
+                        className="h-5 w-5 rounded-full object-cover"
+                      />
+                      {publisher?.name}
+                    </Option>
+                  ))}
+                </MtSelect>
               </div>
-                
+
               <Button
                 fullWidth
                 variant="outlined"

@@ -89,7 +89,7 @@ const TrendingSwiper = () => {
                 <div className=" flex items-center gap-1">
                   <img
                     className="h-6 w-6 rounded-full"
-                    src={news.publisher.photo}
+                    src={news.publisher.logo}
                     alt=""
                   />
                   <p className=" text-nowrapa text-xs font-medium ">
@@ -97,7 +97,7 @@ const TrendingSwiper = () => {
                   </p>
                 </div>
                 <p className=" text-xs text-gray-600">
-                  {news?.description.slice(0, 100)}...
+                  {news?.description?.slice(0, 100)}...
                 </p>
                 <Link to={`/article-details/${news._id}`} className=" w-fit">
                   <Button

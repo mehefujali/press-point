@@ -65,7 +65,7 @@ const AddPublisher = () => {
     if (file) {
       setImage(file);
       setFileName(
-        file.name.length > 16 ? file.name.slice(0, 16) + "..." : file.name
+        file.name.length > 16 ? file?.name?.slice(0, 16) + "..." : file.name
       );
     } else {
       setFileName("Upload image");

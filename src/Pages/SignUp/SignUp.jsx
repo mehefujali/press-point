@@ -18,7 +18,7 @@ const SignUp = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setFileName(file.name.slice(0, 16) + "...");
+      setFileName(file.name?.slice(0, 16) + "...");
     } else {
       setFileName("Upload your photo");
     }

@@ -41,7 +41,7 @@ const ArticleDetails = () => {
           <div className=" flex items-center gap-1">
             <img
               className=" w-8 h-8 md:h-10 md:w-10 rounded-full"
-              src={article?.publisher?.photo}
+              src={article?.publisher?.logo}
               alt=""
             />
             <p className=" text-nowrap md:text-lg xl:text-xl font-semibold  ">

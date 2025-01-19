@@ -20,7 +20,7 @@ const FeaturedCard = ({news}) => {
                 <div className=" flex items-center gap-1">
                   <img
                     className="h-6 w-6 rounded-full"
-                    src={news?.publisher?.photo}
+                    src={news?.publisher?.logo}
                     alt=""
                   />
                   <p className=" text-nowrapa text-xs font-medium ">

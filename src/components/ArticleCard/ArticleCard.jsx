@@ -29,7 +29,7 @@ const ArticleCard = ({ news,premium }) => {
           <div className=" flex items-center gap-1">
             <img
               className="h-6 w-6 rounded-full"
-              src={news.publisher.photo}
+              src={news.publisher.logo}
               alt=""
             />
 
@@ -48,7 +48,7 @@ const ArticleCard = ({ news,premium }) => {
             ))}
           </p>
           <p className=" text-xs md:text-sm text-gray-600">
-            {news?.description.slice(0, 200)}...
+            {news?.description?.slice(0, 200)}...
           </p>
           <Link to={`/article-details/${news._id}`} className=" w-fit">
             <Button
