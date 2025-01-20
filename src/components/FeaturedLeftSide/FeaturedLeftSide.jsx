@@ -1,4 +1,5 @@
 import LatestNewsCard from "../LetestNewsCard/LatestNewsCard";
+import SecendSuggestedArticle from "../SecendSuggestedArticle/SecendSuggestedArticle";
 import SuggestedArticle from "../SuggestedArticle/SuggestedArticle";
 
 const FeaturedLeftSide = () => {
@@ -14,6 +15,9 @@ const FeaturedLeftSide = () => {
         {/* Suggested Article Sections  */}
         <div>
                 <SuggestedArticle/>
+        </div>
+        <div>
+          <SecendSuggestedArticle/>
         </div>
       </div>
     </div>
