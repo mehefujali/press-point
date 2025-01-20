@@ -13,27 +13,29 @@ const AllArticlesDashboard = () => {
     },
   });
   return (
-    <div className="p-4">
-      <div className=" flex justify-between w-11/12 md:w-full mx-auto my-4">
-        <h3 className=" text-xl border-l-4 border-primary-color pl-2 ">
-          All article
-        </h3>
-        <div>
-          <label
-            className=" text-sm border rounded-md p-2 bg-white"
-            htmlFor=".filter-select"
-          >
-            Short by :
-            <select
-              name=""
-              id=""
-              className=" md:px-3 filter-select select select-sm  focus:border-none focus:outline-none"
+    <div className="p-4 relative">
+      <div className=" sticky  py-4 top-0 z-50 w-full bg-white">
+        <div className=" flex justify-between w-11/12 md:w-full mx-auto  ">
+          <h3 className=" text-xl border-l-4 border-primary-color pl-2 ">
+            All article
+          </h3>
+          <div>
+            <label
+              className=" text-sm border rounded-md p-2 bg-white"
+              htmlFor=".filter-select"
             >
-              <option value="All">New</option>
-              <option value="Easy">Old</option>
-              <option value="Medium">Top viewd</option>
-            </select>
-          </label>
+              Short by :
+              <select
+                name=""
+                id=""
+                className=" md:px-3 filter-select select select-sm  focus:border-none focus:outline-none"
+              >
+                <option value="All">New</option>
+                <option value="Easy">Old</option>
+                <option value="Medium">Top viewd</option>
+              </select>
+            </label>
+          </div>
         </div>
       </div>
       <div className=" flex flex-col gap-4">

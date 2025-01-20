@@ -214,6 +214,9 @@ const tagOptions = [
   { value: "student-movement", label: "student movement" },
   { value: "revolution", label: "revolution" },
   { value: "universe", label: "universe" },
+  { value: "child-labour", label: "Child Labour" },
+  { value: "social-issues", label: "social issues" },
+  { value: "women-harassment", label: "Women Harassment" },
 ];
 
 export default tagOptions;

@@ -15,10 +15,11 @@ import AddPublisher from "../Pages/AddPublisher/AddPublisher";
 import AllArticlesDashboard from "../Pages/AllArticlesDashboard/AllArticlesDashboard";
 import AdminRoute from "../Private/AdminRoute";
 import Error from "../Pages/Error/Error";
+import MyArticles from "../Pages/MyArticles/MyArticles";
 
 const AppRouter = createBrowserRouter([
   {
-    errorElement: <Error/>
+    errorElement: <Error />,
   },
   {
     path: "/",
@@ -50,11 +51,23 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: "article-details/:id",
-        element: <ArticleDetails />,
+        element: (
+          <PrivateRoute>
+            <ArticleDetails />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "premium-articles",
-        element: <PremiumArticle />,
+        element: (
+          <PrivateRoute>
+            <PremiumArticle />,
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-articles",
+        element: <PrivateRoute><MyArticles/></PrivateRoute>,
       },
     ],
   },

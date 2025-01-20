@@ -13,7 +13,7 @@ const AllPublisher = () => {
   });
   return (
     <div className=" container mx-auto ">
-      <div className=" w-11/12 mx-auto">
+      <div className=" w-11/12 mx-auto md:w-full">
         <h3 className=" first-letter:capitalize  px-2 text-xl font-bold my-6  border-l-4 border-red-500">
           All Publisher
         </h3>
