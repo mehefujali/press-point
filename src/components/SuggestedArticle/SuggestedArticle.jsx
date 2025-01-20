@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import FeaturedCard from "../FeaturedCard/FeaturedCard";
 import { useState } from "react";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SuggestedArticle = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic()
   const [tag] = useState('movement')
   const { data: articles = [] } = useQuery({
     queryKey: ["suggested-article"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/tag-article/${tag}`);
+      const { data } = await axiosPublic.get(`/tag-article/${tag}`);
       return data;
     },
   });

@@ -1,21 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
 import { Link } from "react-router-dom";
 import FeaturedCard from "../FeaturedCard/FeaturedCard";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const LatestNewsCard = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic()
   const { data: news = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/latest-articles`);
+      const { data } = await axiosPublic.get(`/latest-articles`);
       return data;
     },
   });
   const { data: topViewd = [] } = useQuery({
     queryKey: ["top-viewd"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/top-viewed`);
+      const { data } = await axiosPublic.get(`/top-viewed`);
       return data;
     },
   });

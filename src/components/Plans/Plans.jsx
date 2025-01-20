@@ -2,7 +2,7 @@ import PlanCard from "../PlanCard/PlanCard";
 
 const Plans = () => {
   return (
-    <div className=" container mx-auto flex flex-col md:flex-row w-11/12 gap-4 items-start justify-center">
+    <div className=" container mx-auto flex flex-col lg:flex-row w-11/12  gap-4 items-center justify-center ">
       {/* Free Plan  */}
       <PlanCard
         title={"Free Plan"}

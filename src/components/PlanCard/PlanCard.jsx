@@ -41,8 +41,9 @@ const PlanCard = ({ title, price, features = [], btnText, fill }) => {
           className="m-0 mb-8 rounded-none border-b border-white/10 pb-8 text-center"
         >
           <Typography
-            variant="lead"
+            variant="paragraph"
             color={fill && "white"}
+
             className={`font-normal uppercase ${
               fill ? "text-white" : "text-primary-color"
             }`}
@@ -50,14 +51,14 @@ const PlanCard = ({ title, price, features = [], btnText, fill }) => {
             {title}
           </Typography>
           <Typography
-            variant="h1"
+            variant="h6"
             color={fill && "white"}
-            className={`mt-3 flex justify-center gap-1 text-6xl font-normal ${
+            className={`mt-3 flex justify-center gap-1 text-4xl font-normal ${
               fill ? "text-white" : "text-primary-color"
             }`}
           >
-            <span className="mt-2 text-3xl">$</span>
-            {price} <span className="self-end text-3xl">/mo</span>
+            <span className="mt-2 text-2xl">$</span>
+            {price} <span className="self-end text-2xl">/mo</span>
           </Typography>
         </CardHeader>
         <CardBody className="p-0">
@@ -73,7 +74,7 @@ const PlanCard = ({ title, price, features = [], btnText, fill }) => {
                 >
                   <CheckIcon />
                 </span>
-                <Typography className="font-normal text-sm">
+                <Typography className="font-normal text-xs">
                   {feature}
                 </Typography>
               </li>
