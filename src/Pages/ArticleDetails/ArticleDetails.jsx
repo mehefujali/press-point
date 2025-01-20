@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import SocalLinks from "../../components/SocalLinks/SocalLinks";
 
 const ArticleDetails = () => {
   const { id } = useParams();
@@ -15,9 +16,9 @@ const ArticleDetails = () => {
   
   return (
     <div className=" pb-14">
-      <div className=" w-11/12 md:w-full container mx-auto my-14">
-        <div className=" xl:w-9/12 mx-auto space-y-4">
-          <h1 className=" text-lg md:text-3xl font-semibold flex items-start gap-1">
+      <div className=" w-11/12 md:w-full container mx-auto my-14 flex flex-col md:flex-row gap-5 relative">
+        <div className=" md:w-8/12 mx-auto space-y-4">
+          <h1 className=" text-lg md:text-xl lg:text-2xl  xl:text-3xl font-semibold flex items-start gap-1">
             <span className="  text-primary-color">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +57,11 @@ const ArticleDetails = () => {
                   article?.tags?.map((tag,idx) => <p key={idx} className=" bg-primary-color bg-opacity-10 text-primary-color px-1 rounded-sm">#{tag}</p>)}</p>
           </div>
         </div>
+        <div className=" md:w-3/12 sticky top-[63px] h-fit">
+        <SocalLinks/>
+        </div>
       </div>
+      
     </div>
   );
 };

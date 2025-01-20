@@ -212,6 +212,7 @@ const tagOptions = [
   { value: "network-penetration-testing", label: "Network Penetration Testing" },
   { value: "movement", label: "movement" },
   { value: "student-movement", label: "student movement" },
+  { value: "revolution", label: "revolution" },
 ];
 
 export default tagOptions;

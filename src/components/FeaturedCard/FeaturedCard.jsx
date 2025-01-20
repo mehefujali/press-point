@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const FeaturedCard = ({news}) => {
       return (
             <div>
-                 <div className=" text-start shadow-md  rounded relative  border-2 h-full">
+                 <div className=" text-start shadow-md  bg-white rounded relative  border-2 h-full">
               <div className="text-sm absolute right-2 top-1 ">
                 
               </div>
