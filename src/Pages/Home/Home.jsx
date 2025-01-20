@@ -1,3 +1,4 @@
+import AllPublisher from "../../components/AllPublisher/AllPublisher";
 import FeaturedSection from "../../components/FeaturedSection/FeaturedSection";
 import Plans from "../../components/Plans/Plans";
 import Statistic from "../../components/Statistic/Statistic";
@@ -12,6 +13,9 @@ const Home = () => {
                   </div>
                   <div>
                         <FeaturedSection/>
+                  </div>
+                  <div>
+                        <AllPublisher/>
                   </div>
                   <div>
                         <Statistic/>
