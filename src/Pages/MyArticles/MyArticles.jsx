@@ -25,13 +25,15 @@ const MyArticles = () => {
   const [openReason, setOpenReason] = useState("");
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [updateArticleId, setUpdateArticleId] = useState("");
-  const {refetch, data: myArticles = [] } = useQuery({
+  const { refetch, data: myArticles = [] } = useQuery({
     queryKey: ["my-articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/my-article/${user.email}`);
       return data;
     },
   });
+
+  // console.log(updateArticleId)
 
   const handleOpen = (reason) => {
     setOpenReason(reason);
@@ -57,7 +59,7 @@ const MyArticles = () => {
               icon: "success",
             });
           }
-          refetch()
+          refetch();
         });
       }
     });
@@ -223,9 +225,10 @@ const MyArticles = () => {
                       </td>
                       <td className=" text-center">
                         <div className="w-max text-center justify-center flex gap-3 items-center">
+                          {/* update  */}
                           <IconButton
                             onClick={() => {
-                              setUpdateArticleId(article._id);
+                              setUpdateArticleId(article);
                               setOpenUpdateModal(true);
                             }}
                             variant="text"
@@ -308,11 +311,13 @@ const MyArticles = () => {
           </Button>
         </DialogFooter>
       </Dialog>
-      <UpdateArticleModal
-        openUpdateModal={openUpdateModal}
-        setOpenUpdateModal={setOpenUpdateModal}
-        updateArticleId={updateArticleId}
-      />
+      {openUpdateModal && (
+        <UpdateArticleModal
+          openUpdateModal={openUpdateModal}
+          setOpenUpdateModal={setOpenUpdateModal}
+          updateArticleId={updateArticleId}
+        />
+      )}
     </div>
   );
 };

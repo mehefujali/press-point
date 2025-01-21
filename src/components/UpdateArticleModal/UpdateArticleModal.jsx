@@ -33,7 +33,7 @@ import {
 const UpdateArticleModal = ({
   openUpdateModal,
   setOpenUpdateModal,
-  updateArticleId,
+  updateArticleId : article,
 }) => {
 
   const { user } = useAuth();
@@ -46,22 +46,10 @@ const UpdateArticleModal = ({
   const [publisher, setPublisher] = useState("");
   const { register, handleSubmit } = useForm();
 
+ console.log(article)
 
 
-//   for default article 
 
-  const {  data: article } = useQuery({
-
-    queryKey: ["update-default-article", updateArticleId],
-    queryFn: async () => {
-      if (openUpdateModal) {
-        const { data } = await axiosSecure.get(
-          `/update-default-article/${updateArticleId}`
-        );
-        return data;
-      }
-    },
-  });
 
 
 
@@ -147,7 +135,9 @@ const UpdateArticleModal = ({
     setSelectedTags(values);
   };
 
-  console.log(article);
+  if (!openUpdateModal){
+      return ""
+  }
   return (
     <div>
       
