@@ -31,14 +31,14 @@ const LatestNewsCard = () => {
       <div
         className=" md:w-8/12 flex min-h-72  items-end justify-start p-2 md:p-8  bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(0deg, black, transparent), url(${latest_article?.image})`,
+          backgroundImage: `linear-gradient(0deg, black,transparent), url(${latest_article?.image})`,
         }}
       >
         <Link
           to={`/article-details/${latest_article?._id}`}
           className="text-white"
         >
-          <h1 className=" text-xl md:text-2xl  font-semibold">{latest_article?.title}</h1>
+          <h1 className=" text-lg md:text-2xl  font-semibold">{latest_article?.title}</h1>
           <p className=" font-light text-xs md:text-sm">
             {latest_article?.description?.slice(0, 100)} . . . Read more
           </p> 

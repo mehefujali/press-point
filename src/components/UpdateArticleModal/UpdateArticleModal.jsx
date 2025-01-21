@@ -57,14 +57,14 @@ const UpdateArticleModal = ({
         tags: selectedTags.length === 0 ? article.tags : selectedTags,
         description: data?.description,
       };
-      console.log(newArticle);
+  
 
       try {
         const res = await axiosSecure.put(
           `/update-article/${article._id}`,
           newArticle
         );
-        console.log(res.data);
+       
         if (res.data.modifiedCount) {
           setUplodeLoading(false);
           toast.success("Article updated");

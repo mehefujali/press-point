@@ -9,12 +9,12 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import UserProfileDropdown from "../UserProfileDropdown/UserProfileDropdown";
-import './navbar.css'
+import "./navbar.css";
 import useAdmin from "../../Hooks/useAdmin";
 const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
   const { user } = useAuth();
-  const {isAdmin} = useAdmin()
+  const { isAdmin } = useAdmin();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -24,46 +24,29 @@ const Navbar = () => {
   }, []);
 
   const navList = (
-    <ul id="navLinks" className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul
+      id="navLinks"
+      className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6"
+    >
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink  to="/" className="flex items-center">Home</NavLink>
+        <NavLink to="/" className="flex items-center">
+          Home
+        </NavLink>
       </Typography>
-      <Typography
+      {user&&<Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink to="/addarticles" className="flex items-center">Add Articles</NavLink>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <NavLink to="/articles" className="flex items-center">All Articles</NavLink>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <NavLink to={'/subscription'} className="flex items-center">Subscription</NavLink>
-      </Typography>
-      {isAdmin&&<Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <NavLink to={'/dashboard'} className="flex items-center">Dashboard</NavLink>
+        <NavLink to="/addarticles" className="flex items-center">
+          Add Articles
+        </NavLink>
       </Typography>}
       <Typography
         as="li"
@@ -71,16 +54,56 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink to={'my-articles'} className="flex items-center">My Articles</NavLink>
+        <NavLink to="/articles" className="flex items-center">
+          All Articles
+        </NavLink>
       </Typography>
-      <Typography
+      {user&&<Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <NavLink to={'premium-articles'} className="flex items-center">Premium Articles</NavLink>
-      </Typography>
+        <NavLink to={"/subscription"} className="flex items-center">
+          Subscription
+        </NavLink>
+      </Typography>}
+      {isAdmin && (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <NavLink to={"/dashboard"} className="flex items-center">
+            Dashboard
+          </NavLink>
+        </Typography>
+      )}
+      {user  && (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <NavLink to={"my-articles"} className="flex items-center">
+            My Articles
+          </NavLink>
+        </Typography>
+      )}
+      {user && (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <NavLink to={"premium-articles"} className="flex items-center">
+            Premium Articles
+          </NavLink>
+        </Typography>
+      )}
     </ul>
   );
 
@@ -127,9 +150,7 @@ const Navbar = () => {
                   </svg>
                 )}
               </IconButton>
-              <Link to="/"
-                className="mr-4 cursor-pointer py-1.5 font-medium"
-              >
+              <Link to="/" className="mr-4 cursor-pointer py-1.5 font-medium">
                 <img
                   className=" w-24"
                   src="https://i.ibb.co/d7y22m0/pp-color.png"
@@ -168,10 +189,7 @@ const Navbar = () => {
               )}
             </div>
           </div>
-          <MobileNav open={openNav}>
-            {navList}
-            
-          </MobileNav>
+          <MobileNav open={openNav}>{navList}</MobileNav>
         </MTNav>
       </div>
     </div>
