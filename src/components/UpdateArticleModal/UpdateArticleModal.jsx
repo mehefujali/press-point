@@ -14,33 +14,30 @@ import Select from "react-select";
 import { Select as MtSelect } from "@material-tailwind/react";
 
 import axios from "axios";
-import useAuth from "../../Hooks/useAuth";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
 
 import tagOptions from "../../../public/tagOptions";
+import toast from "react-hot-toast";
 
 const UpdateArticleModal = ({
   openUpdateModal,
   setOpenUpdateModal,
   updateArticleId: article,
+  refetchMyarticle,
 }) => {
-  const { user } = useAuth();
   const [uplodLoading, setUplodeLoading] = useState(false);
   const [fileName, setFileName] = useState("Upload new image");
   const [articleImage, setImage] = useState(article.image);
   const [selectedTags, setSelectedTags] = useState([]);
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
-  const [publisher, setPublisher] = useState("");
+
+  const [publisher, setPublisher] = useState(article.publisher);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    
-
     const imageFile = { image: articleImage };
 
     try {
@@ -50,34 +47,33 @@ const UpdateArticleModal = ({
           "Content-Type": "multipart/form-data",
         },
       });
-      if (res.data.success) {
-        const newArticle = {
-          title: data?.title,
-          image: res?.data?.data.display_url,
-          author: {
-            name: user.displayName,
-            photo: user.photoURL,
-            email: user.email,
-          },
-          publisher: {
-            ...publisher,
-          },
 
-          tags: selectedTags,
-          description: data?.description,
-        };
+      const newArticle = {
+        title: data?.title,
+        image: res?.data?.data.display_url || article.image,
+        publisher: {
+          ...publisher,
+        },
+        tags: selectedTags.length === 0 ? article.tags : selectedTags,
+        description: data?.description,
+      };
+      console.log(newArticle);
 
-        try {
-          const res = await axiosSecure.post("/article", newArticle);
-          if (res.data.insertedId) {
-            setUplodeLoading(false);
-            toast.success("Article uploded");
-            navigate("/");
-          }
-        } catch (eror) {
-          console.log(eror);
+      try {
+        const res = await axiosSecure.put(
+          `/update-article/${article._id}`,
+          newArticle
+        );
+        console.log(res.data);
+        if (res.data.modifiedCount) {
           setUplodeLoading(false);
+          toast.success("Article updated");
         }
+        refetchMyarticle();
+        setOpenUpdateModal(false)
+      } catch (eror) {
+        console.log(eror);
+        setUplodeLoading(false);
       }
     } catch (eror) {
       console.log(eror);
@@ -116,6 +112,13 @@ const UpdateArticleModal = ({
   const selectedArticleTags = tagOptions.filter((tag) =>
     articleTags?.includes(tag.value)
   );
+  const handleSetPublihser = (publisherName) => {
+    const newPublisher = publishers.find((publ) => (publ.name = publisherName));
+    setPublisher({
+      name: newPublisher.name,
+      logo: newPublisher.logo,
+    });
+  };
 
   return (
     <div>
@@ -123,7 +126,7 @@ const UpdateArticleModal = ({
         <DialogHeader className=" flex justify-between items-center">
           {" "}
           <h1>Update article</h1>{" "}
-          <button onClick={()=>setOpenUpdateModal(false)}>
+          <button onClick={() => setOpenUpdateModal(false)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -141,11 +144,7 @@ const UpdateArticleModal = ({
           </button>
         </DialogHeader>
         <DialogBody>
-          <Card
-            color="white"
-            shadow={false}
-            className="  w-full  rounded-md"
-          >
+          <Card color="white" shadow={false} className="  w-full  rounded-md">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="   md:w-full  px-5 "
@@ -176,7 +175,7 @@ const UpdateArticleModal = ({
                     value={article.publisher.name}
                     className="w-full rounded"
                     size="lg"
-                    onChange={(e) => setPublisher(e)}
+                    onChange={(e) => handleSetPublihser(e)}
                     label="Select Publisher"
                     selected={(element) =>
                       element &&

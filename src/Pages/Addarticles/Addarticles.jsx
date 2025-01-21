@@ -71,7 +71,7 @@ const Addarticles = () => {
           if (res.data.insertedId) {
             setUplodeLoading(false);
             toast.success("Article uploded");
-            navigate("/");
+            navigate("/my-articles");
           }
         } catch (eror) {
           console.log(eror);

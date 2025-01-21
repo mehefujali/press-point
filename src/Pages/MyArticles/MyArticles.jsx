@@ -25,7 +25,7 @@ const MyArticles = () => {
   const [openReason, setOpenReason] = useState("");
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [updateArticleId, setUpdateArticleId] = useState("");
-  const { refetch, data: myArticles = [] } = useQuery({
+  const { refetch : refetchMyarticle, data: myArticles = [] } = useQuery({
     queryKey: ["my-articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/my-article/${user.email}`);
@@ -43,23 +43,23 @@ const MyArticles = () => {
   const handleDeleteArticle = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "you want to delete this article?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#003366",
+      confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/delete-article/${id}`).then((res) => {
           if (res.data.deletedCount) {
             Swal.fire({
               title: "Deleted!",
-              text: "Your file has been deleted.",
+              text: "Your article has been deleted.",
               icon: "success",
             });
           }
-          refetch();
+          refetchMyarticle();
         });
       }
     });
@@ -313,6 +313,7 @@ const MyArticles = () => {
       </Dialog>
       {openUpdateModal && (
         <UpdateArticleModal
+        refetchMyarticle={refetchMyarticle}
           openUpdateModal={openUpdateModal}
           setOpenUpdateModal={setOpenUpdateModal}
           updateArticleId={updateArticleId}
