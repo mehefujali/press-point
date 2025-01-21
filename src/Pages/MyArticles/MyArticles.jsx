@@ -157,7 +157,7 @@ const MyArticles = () => {
                                     d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
                                   />
                                 </svg>
-                                Published
+                                Approved
                               </p>
                             ) : article.status === "decline" ? (
                               <p className=" text-xs md:text-sm flex items-center gap-1 text-red-900">
@@ -175,7 +175,7 @@ const MyArticles = () => {
                                     d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
                                   />
                                 </svg>
-                                Decline{" "}
+                                Declined{" "}
                                 <span
                                   className=" cursor-pointer"
                                   onClick={() =>
@@ -220,7 +220,7 @@ const MyArticles = () => {
                           </Typography>
                         </div>
                       </td>
-                      <td className=" text-center">
+                      <td className={` text-center ${article.isPremium && " text-golden-color"}`}>
                         {article.isPremium ? "Yes" : "No"}
                       </td>
                       <td className=" text-center">

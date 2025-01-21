@@ -6,29 +6,73 @@ import DeclineModal from "../DeclineModal/DeclineModal";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
 
 const DashboardArticleCard = ({ news, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const [open, setOpen] = useState(false);
   const handlePublish = () => {
-    axiosSecure.patch(`/article/publish/${news._id}`).then((res) => {
-      
-      toast.success(`${news.title} Published`);
-      refetch();
-    });
+    axiosSecure
+      .patch(`/article/publish/${news._id}`)
+      .then(() => {
+        toast.success(`${news.title} Published`);
+        refetch();
+      })
+      .catch(() => {
+        toast.error("Somthing is wrong");
+      });
   };
 
   const handleDecline = (reason) => {
-   
     axiosSecure
       .patch(`/article/decline/${news._id}`, { reason: reason })
-      .then((res) => {
-       
+      .then(() => {
         setOpen(false);
         toast.success(`${news.title} Declined`);
         refetch();
+      })
+      .catch(() => {
+        toast.error("Somthing is wrong");
       });
   };
+  const handleMakePremium = () => {
+    axiosSecure
+      .patch(`/article/premium/${news._id}`)
+      .then(() => {
+        setOpen(false);
+        toast.success(`${news.title} is premium now`);
+        refetch();
+      })
+      .catch(() => {
+        toast.error("Somthing is wrong");
+      });
+  };
+
+  const handleDeleteArticle = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "you want to delete this article?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#003366",
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/delete-article/${id}`).then((res) => {
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your article has been deleted.",
+              icon: "success",
+            });
+          }
+          refetch();
+        });
+      }
+    });
+  };
+
   return (
     <div>
       <DeclineModal
@@ -65,13 +109,11 @@ const DashboardArticleCard = ({ news, refetch }) => {
             </Link>
 
             <div className=" flex items-center gap-1">
-              
-
               <p className=" text-nowrapa text-xs md:text-sm font-medium ">
                 {news?.publisher?.name}
               </p>
             </div>
-            
+
             <div className=" flex items-center gap-1">
               <img
                 className="h-6 w-6 rounded-full"
@@ -83,7 +125,7 @@ const DashboardArticleCard = ({ news, refetch }) => {
                 {news?.author?.name}
               </p>
             </div>
-             
+
             <p className=" flex items-center gap-2 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -101,10 +143,23 @@ const DashboardArticleCard = ({ news, refetch }) => {
               </svg>
               {news?.author?.email}
             </p>
-            <p className=" flex items-center gap-2 "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-</svg>
-{format(new Date(news.createdAt), "MM/dd/yyyy")}</p>
+            <p className=" flex items-center gap-2 ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+                />
+              </svg>
+              {format(new Date(news.createdAt), "MM/dd/yyyy")}
+            </p>
             {news?.status === "published" ? (
               <p className="flex items-center text-green-700">
                 <svg
@@ -121,7 +176,7 @@ const DashboardArticleCard = ({ news, refetch }) => {
                     d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
                   />
                 </svg>
-                Published
+                Approved
               </p>
             ) : news.status === "decline" ? (
               <p className=" text-xs md:text-sm flex items-center gap-1 text-red-900">
@@ -139,7 +194,7 @@ const DashboardArticleCard = ({ news, refetch }) => {
                     d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
                   />
                 </svg>
-                Decline
+                Declined
               </p>
             ) : (
               <p className=" text-xs md:text-sm flex items-center gap-1 text-yellow-900">
@@ -160,28 +215,28 @@ const DashboardArticleCard = ({ news, refetch }) => {
                 Pending
               </p>
             )}
-            {news.declineReason&&<p className=" text-xs md:text-sm flex items-center gap-1 text-red-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                />
-              </svg>
-              {news?.declineReason}
-            </p>}
+            {news.declineReason && (
+              <p className=" text-xs md:text-sm flex items-center gap-1 text-red-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                  />
+                </svg>
+                {news?.declineReason}
+              </p>
+            )}
             <div className="  flex flex-col md:flex-row gap-2">
               <Button
-                disabled={
-                  news.status === "published" 
-                }
+                disabled={news.status === "published"}
                 onClick={handlePublish}
                 size="sm"
                 variant=""
@@ -201,12 +256,10 @@ const DashboardArticleCard = ({ news, refetch }) => {
                     d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                   />
                 </svg>
-                {news.status === "published" ? "Published" : "Approve"}
+                {news.status === "published" ? "Approved" : "Approve"}
               </Button>
               <Button
-                disabled={
-                  news.status === "decline" 
-                }
+                disabled={news.status === "decline"}
                 onClick={() => setOpen(true)}
                 size="sm"
                 className="flex rounded items-center gap-3 bg-yellow-800"
@@ -225,9 +278,10 @@ const DashboardArticleCard = ({ news, refetch }) => {
                     d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
                   />
                 </svg>
-                {news.status === "decline" ? "declined" : "decline"}
+                {news.status === "decline" ? "Declined" : "decline"}
               </Button>
               <Button
+                onClick={() => handleDeleteArticle(news._id)}
                 size="sm"
                 className="flex rounded items-center gap-3 bg-red-600"
               >
@@ -248,6 +302,8 @@ const DashboardArticleCard = ({ news, refetch }) => {
                 Delete{" "}
               </Button>
               <Button
+               disabled={news.isPremium}
+                onClick={handleMakePremium}
                 size="sm"
                 className="flex rounded items-center gap-3 bg-golden-color"
               >

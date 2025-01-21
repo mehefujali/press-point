@@ -76,17 +76,14 @@ const AddPublisher = () => {
     <div className=" h-[calc(100vh-61px)] md:w-full w-11/12 mx-auto flex justify-center items-center">
       <div className="  p-3 rounded-md  lg:w-9/12 xl:w-7/12 2xl:w-6/12  flex flex-col justify-center items-center ">
         <Typography variant="h5" color="blue-gray">
-          Add publisher
+          Add new publisher
         </Typography>
         <Typography
           variant="small"
           color="gray"
           className=" font-normal text-wrap text-center"
         >
-          Share your voice with the world by publishing your articles on our
-          platform. Whether you&apos;re breaking the latest news, sharing
-          insightful opinions, or showcasing your expertise, this is the place
-          to make your content shine.
+         
         </Typography>
         <Card color="white" shadow={true} className=" mt-9 w-full  rounded-md">
           <form onSubmit={handleSubmit(onSubmit)} className="   md:w-full p-6 ">

@@ -17,7 +17,7 @@ const Home = () => {
                         <FeaturedSection/>
                   </div>
                   <div>
-                        <AllPublisher/>
+                        <AllPublisher color={"#F2F5F7"}/>
                   </div>
                   <div>
                         <Statistic/>
