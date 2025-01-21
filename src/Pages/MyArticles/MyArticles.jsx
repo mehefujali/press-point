@@ -16,15 +16,16 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import UpdateArticleModal from "../../components/UpdateArticleModal/UpdateArticleModal";
+import Swal from "sweetalert2";
 
 const MyArticles = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [openReasonModal, setOpenReasonModal] = useState(false);
   const [openReason, setOpenReason] = useState("");
-  const [openUpdateModal,setOpenUpdateModal] = useState(false)
-  const [updateArticleId , setUpdateArticleId] = useState('')
-  const { data: myArticles = [] } = useQuery({
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [updateArticleId, setUpdateArticleId] = useState("");
+  const {refetch, data: myArticles = [] } = useQuery({
     queryKey: ["my-articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/my-article/${user.email}`);
@@ -35,6 +36,31 @@ const MyArticles = () => {
   const handleOpen = (reason) => {
     setOpenReason(reason);
     setOpenReasonModal(true);
+  };
+
+  const handleDeleteArticle = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/delete-article/${id}`).then((res) => {
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+          refetch()
+        });
+      }
+    });
   };
 
   return (
@@ -197,9 +223,14 @@ const MyArticles = () => {
                       </td>
                       <td className=" text-center">
                         <div className="w-max text-center justify-center flex gap-3 items-center">
-                          <IconButton onClick={()=> {
-                              setUpdateArticleId(article._id)
-                              setOpenUpdateModal(true)}} variant="text" className=" rounded">
+                          <IconButton
+                            onClick={() => {
+                              setUpdateArticleId(article._id);
+                              setOpenUpdateModal(true);
+                            }}
+                            variant="text"
+                            className=" rounded"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -216,6 +247,7 @@ const MyArticles = () => {
                             </svg>
                           </IconButton>
                           <IconButton
+                            onClick={() => handleDeleteArticle(article._id)}
                             variant="text"
                             className=" rounded text-red-700"
                           >
@@ -276,7 +308,11 @@ const MyArticles = () => {
           </Button>
         </DialogFooter>
       </Dialog>
-      <UpdateArticleModal openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} updateArticleId={updateArticleId}/>
+      <UpdateArticleModal
+        openUpdateModal={openUpdateModal}
+        setOpenUpdateModal={setOpenUpdateModal}
+        updateArticleId={updateArticleId}
+      />
     </div>
   );
 };
