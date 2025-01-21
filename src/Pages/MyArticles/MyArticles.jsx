@@ -18,6 +18,7 @@ import { useState } from "react";
 import UpdateArticleModal from "../../components/UpdateArticleModal/UpdateArticleModal";
 import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
+import { Helmet } from "react-helmet";
 
 const MyArticles = () => {
   const axiosSecure = useAxiosSecure();
@@ -72,6 +73,9 @@ const MyArticles = () => {
 
   return (
     <div className="container mx-auto mt-6">
+      <Helmet>
+        <title>Press point - My article</title>
+      </Helmet>
       <div className="   py-3 px-2  w-full ">
         <div className=" flex justify-between w-11/12 md:w-full mx-auto  ">
           <h3 className=" text-xl border-l-4 border-primary-color pl-2 ">

@@ -22,6 +22,7 @@ const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
 
 import tagOptions from "../../../public/tagOptions";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet";
 
 const Addarticles = () => {
   const { user } = useAuth();
@@ -112,6 +113,9 @@ const Addarticles = () => {
   };
   return (
     <div className=" h-[calc(100vh-61px)] md:w-full w-11/12 mx-auto flex justify-center items-center">
+      <Helmet>
+        <title>Press point - Add article</title>
+      </Helmet>
       <ScrollRestoration/>
       <div className="  p-3 rounded-md  lg:w-9/12 xl:w-7/12 2xl:w-6/12  flex flex-col justify-center items-center ">
         <Typography variant="h5" color="blue-gray">

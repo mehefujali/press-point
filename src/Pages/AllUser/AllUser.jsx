@@ -16,6 +16,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
+import { Helmet } from "react-helmet";
 
 const AllUser = () => {
   const [filterdata,setFilter] = useState('all user')
@@ -52,6 +53,9 @@ if(isLoading){
 }
   return (
     <div className=" px-4">
+      <Helmet>
+        <title>Dashboard | all Users</title>
+      </Helmet>
       <Card className="h-full w-full  px-4 shadow-none">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">

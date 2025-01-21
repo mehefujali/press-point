@@ -6,6 +6,7 @@ import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useAxiosPublic from "./../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet";
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
@@ -104,6 +105,9 @@ const SignUp = () => {
   }
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
+      <Helmet>
+        <title>Press point - Signup</title>
+      </Helmet>
       <div className="  p-3 rounded-md  flex flex-col justify-center items-center ">
         <Typography variant="h5" color="blue-gray">
           Create Your Account

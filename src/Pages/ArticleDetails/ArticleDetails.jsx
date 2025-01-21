@@ -3,12 +3,14 @@ import { ScrollRestoration, useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import SocalLinks from "../../components/SocalLinks/SocalLinks";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../../components/Loader/Loader";
+import { Helmet } from "react-helmet";
 
 const ArticleDetails = () => {
   const { id } = useParams();
   
   const axiosSecure = useAxiosSecure();
-  const {data : article ={}} = useQuery({
+  const {data : article ={} , isLoading} = useQuery({
     queryKey:["article-details",id] ,
     queryFn: async()=>{
      const {data} = await  axiosSecure.get(`article/${id}`)
@@ -16,10 +18,15 @@ const ArticleDetails = () => {
     }
   })
   
-
+  if(isLoading){
+    return <Loader/>
+  }
   
   return (
     <div className=" pb-14">
+      <Helmet>
+        <title>Press point - {article.title}</title>
+      </Helmet>
       <ScrollRestoration/>
       <div className=" w-11/12 md:w-full container mx-auto my-14 flex flex-col md:flex-row gap-5 relative">
         <div className=" md:w-8/12 mx-auto space-y-4">

@@ -6,6 +6,7 @@ import axios from "axios";
 
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
@@ -74,6 +75,9 @@ const AddPublisher = () => {
 
   return (
     <div className=" h-[calc(100vh-61px)] md:w-full w-11/12 mx-auto flex justify-center items-center">
+      <Helmet>
+        <title>Dashboard | add publisher</title>
+      </Helmet>
       <div className="  p-3 rounded-md  lg:w-9/12 xl:w-7/12 2xl:w-6/12  flex flex-col justify-center items-center ">
         <Typography variant="h5" color="blue-gray">
           Add new publisher

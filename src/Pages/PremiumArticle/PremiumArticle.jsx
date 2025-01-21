@@ -4,6 +4,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../components/Loader/Loader";
+import { Helmet } from "react-helmet";
 
 const PremiumArticle = () => {
   const axiosSecure = useAxiosSecure();
@@ -21,6 +22,9 @@ const PremiumArticle = () => {
   }
   return (
     <div className="container mx-auto mt-6">
+      <Helmet>
+        <title>Press point - Premium article</title>
+      </Helmet>
       <ScrollRestoration/>
       <h3 className=" text-xl border-l-4 border-golden-color pl-2 text-golden-color ">
         Premium articles

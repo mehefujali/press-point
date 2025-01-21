@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { ScrollRestoration } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import { Helmet } from "react-helmet";
 
 const AllArticles = () => {
   const axiosPublic = useAxiosPublic()
@@ -21,6 +22,9 @@ const AllArticles = () => {
   }
   return (
     <div className="container mx-auto mt-6">
+      <Helmet>
+        <title>Press point - All article</title>
+      </Helmet>
       <ScrollRestoration/>
       <div className=" sticky  py-3 px-2 top-[63px] z-50 w-full bg-white">
         <div className=" flex justify-between w-11/12 md:w-full mx-auto  ">

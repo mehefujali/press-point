@@ -254,7 +254,7 @@ const UpdateArticleModal = ({
                   className="mt-6 bg-primary-color rounded items-center justify-center"
                   fullWidth
                 >
-                  {uplodLoading ? "uploading" : "upload article"}
+                  {uplodLoading ? "updating" : "update"}
                 </Button>
               </button>
             </form>
