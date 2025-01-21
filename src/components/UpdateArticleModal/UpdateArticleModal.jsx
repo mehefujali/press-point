@@ -3,13 +3,12 @@ import {
   Dialog,
   DialogHeader,
   DialogBody,
-  DialogFooter,
 } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import PropTypes from "prop-types";
 import { Card, Input, Textarea, Option } from "@material-tailwind/react";
-import { cloneElement, useEffect, useState } from "react";
+import { cloneElement, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import { Select as MtSelect } from "@material-tailwind/react";
@@ -31,8 +30,8 @@ const UpdateArticleModal = ({
 }) => {
   const { user } = useAuth();
   const [uplodLoading, setUplodeLoading] = useState(false);
-  const [fileName, setFileName] = useState("Upload image");
-  const [articleImage, setImage] = useState(null);
+  const [fileName, setFileName] = useState("Upload new image");
+  const [articleImage, setImage] = useState(article.image);
   const [selectedTags, setSelectedTags] = useState([]);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
@@ -40,10 +39,7 @@ const UpdateArticleModal = ({
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    if (!articleImage) {
-      toast.error("Please select an image to proceed.");
-      return;
-    }
+    
 
     const imageFile = { image: articleImage };
 
@@ -124,20 +120,39 @@ const UpdateArticleModal = ({
   return (
     <div>
       <Dialog open={openUpdateModal} handler={() => setOpenUpdateModal(false)}>
-        <DialogHeader>Update article </DialogHeader>
+        <DialogHeader className=" flex justify-between items-center">
+          {" "}
+          <h1>Update article</h1>{" "}
+          <button onClick={()=>setOpenUpdateModal(false)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-7"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </DialogHeader>
         <DialogBody>
           <Card
             color="white"
-            shadow={true}
-            className=" mt-9 w-full  rounded-md"
+            shadow={false}
+            className="  w-full  rounded-md"
           >
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="   md:w-full p-6 "
+              className="   md:w-full  px-5 "
             >
               <div className=" flex flex-col gap-3">
                 <Input
-                  value={article?.title}
+                  defaultValue={article?.title}
                   {...register("title", { required: true })}
                   size="lg"
                   label="Title"
@@ -146,7 +161,7 @@ const UpdateArticleModal = ({
                 />
 
                 <Select
-                  value={selectedArticleTags}
+                  defaultValue={selectedArticleTags}
                   onChange={handleChange}
                   isMulti
                   name="tags"
@@ -158,9 +173,7 @@ const UpdateArticleModal = ({
 
                 <div className=" w-full">
                   <MtSelect
-                    value={{name:article.publisher.name ,
-                        logo: article.publisher.logo
-                    }}
+                    value={article.publisher.name}
                     className="w-full rounded"
                     size="lg"
                     onChange={(e) => setPublisher(e)}
@@ -177,7 +190,7 @@ const UpdateArticleModal = ({
                     {publishers?.map((publisher) => (
                       <Option
                         key={publisher?._id}
-                        value={{ name: publisher?.name, logo: publisher.logo }}
+                        value={publisher?.name}
                         className="flex items-center gap-2"
                       >
                         <img
@@ -190,7 +203,9 @@ const UpdateArticleModal = ({
                     ))}
                   </MtSelect>
                 </div>
-
+                {articleImage === article.image && (
+                  <img className=" rounded w-40" src={article.image} alt="" />
+                )}
                 <Button
                   fullWidth
                   variant="outlined"
@@ -226,7 +241,7 @@ const UpdateArticleModal = ({
                 />
                 <div className=" w-full">
                   <Textarea
-                    value={article?.description}
+                    defaultValue={article?.description}
                     {...register("description", { required: true })}
                     color="blue-gray"
                     label="Description"
