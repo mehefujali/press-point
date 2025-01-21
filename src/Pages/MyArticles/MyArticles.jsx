@@ -80,7 +80,7 @@ const MyArticles = () => {
           <Card className="h-full w-full  px-4 shadow-none">
             <CardBody className=" overflow-auto ">
               <table className="mt-4  w-full min-w-max table-auto text-left ">
-                <thead className=" text-primary-color">
+                <thead className=" text-primary-color border-b-2  border-primary-color/20">
                   <th>#</th>
 
                   <th>Title</th>
@@ -89,9 +89,9 @@ const MyArticles = () => {
                   <th className=" text-center">Is premium</th>
                   <th></th>
                 </thead>
-                <tbody className="">
+                <tbody className=" mt-3">
                   {myArticles.map((article, idx) => (
-                    <tr key={article?._id}>
+                    <tr key={article?._id} className={`${idx%2 === 0 && "bg-primary-color/5"} `}>
                       <td>{idx + 1}</td>
                       <td>
                         <div className="flex items-center gap-3">
