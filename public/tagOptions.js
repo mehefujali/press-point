@@ -217,6 +217,7 @@ const tagOptions = [
   { value: "child-labour", label: "Child Labour" },
   { value: "social-issues", label: "social issues" },
   { value: "women-harassment", label: "Women Harassment" },
+  { value: "graphics-design", label: "Graphics design" },
 ];
 
 export default tagOptions;

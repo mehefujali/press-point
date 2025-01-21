@@ -24,7 +24,7 @@ const LatestNewsCard = () => {
   const latest_article = news[0];
   const topViewdArticle = topViewd[0]
 
-  console.log(topViewd)
+  
 
   return (
     <div className=" mt-4 flex  mx-auto flex-col md:flex-row gap-5 ">

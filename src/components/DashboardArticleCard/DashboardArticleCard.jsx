@@ -12,18 +12,18 @@ const DashboardArticleCard = ({ news, refetch }) => {
   const [open, setOpen] = useState(false);
   const handlePublish = () => {
     axiosSecure.patch(`/article/publish/${news._id}`).then((res) => {
-      console.log(res.data);
+      
       toast.success(`${news.title} Published`);
       refetch();
     });
   };
 
   const handleDecline = (reason) => {
-    console.log(reason);
+   
     axiosSecure
       .patch(`/article/decline/${news._id}`, { reason: reason })
       .then((res) => {
-        console.log(res.data);
+       
         setOpen(false);
         toast.success(`${news.title} Declined`);
         refetch();

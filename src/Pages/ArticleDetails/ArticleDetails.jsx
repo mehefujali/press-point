@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import SocalLinks from "../../components/SocalLinks/SocalLinks";
+import { useQuery } from "@tanstack/react-query";
 
 const ArticleDetails = () => {
   const { id } = useParams();
-  const [article, setArticle] = useState({});
+  
   const axiosSecure = useAxiosSecure();
-  useEffect(() => {
-    axiosSecure.get(`/article/${id}`).then((res) => {
-      setArticle(res.data);
-    });
-  }, [axiosSecure, id]);
+  const {data : article ={}} = useQuery({
+    queryKey:["article-details",id] ,
+    queryFn: async()=>{
+     const {data} = await  axiosSecure.get(`article/${id}`)
+     return data
+    }
+  })
+  
 
   
   return (

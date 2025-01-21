@@ -33,7 +33,7 @@ const Addarticles = () => {
   const navigate = useNavigate();
   const [publisher, setPublisher] = useState("");
   const { register, handleSubmit } = useForm();
-  console.log(publisher);
+
   const onSubmit = async (data) => {
     if (!articleImage) {
       toast.error("Please select an image to proceed.");
@@ -65,7 +65,7 @@ const Addarticles = () => {
           tags: selectedTags,
           description: data?.description,
         };
-        console.log(newArticle);
+   
         try {
           const res = await axiosSecure.post("/article", newArticle);
           if (res.data.insertedId) {

@@ -15,12 +15,15 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import UpdateArticleModal from "../../components/UpdateArticleModal/UpdateArticleModal";
 
 const MyArticles = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [openReasonModal, setOpenReasonModal] = useState(false);
   const [openReason, setOpenReason] = useState("");
+  const [openUpdateModal,setOpenUpdateModal] = useState(false)
+  const [updateArticleId , setUpdateArticleId] = useState('')
   const { data: myArticles = [] } = useQuery({
     queryKey: ["my-articles"],
     queryFn: async () => {
@@ -194,7 +197,9 @@ const MyArticles = () => {
                       </td>
                       <td className=" text-center">
                         <div className="w-max text-center justify-center flex gap-3 items-center">
-                          <IconButton variant="text" className=" rounded">
+                          <IconButton onClick={()=> {
+                              setUpdateArticleId(article._id)
+                              setOpenUpdateModal(true)}} variant="text" className=" rounded">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -271,6 +276,7 @@ const MyArticles = () => {
           </Button>
         </DialogFooter>
       </Dialog>
+      <UpdateArticleModal openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} updateArticleId={updateArticleId}/>
     </div>
   );
 };
