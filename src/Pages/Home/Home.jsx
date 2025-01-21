@@ -1,3 +1,4 @@
+import { ScrollRestoration } from "react-router-dom";
 import AllPublisher from "../../components/AllPublisher/AllPublisher";
 import FeaturedSection from "../../components/FeaturedSection/FeaturedSection";
 import Plans from "../../components/Plans/Plans";
@@ -8,6 +9,7 @@ import TrendingSwiper from "../../components/TrendingSwiper/TrendingSwiper";
 const Home = () => {
       return (
             <div>
+                  <ScrollRestoration/>
                   <div>
                         <TrendingSwiper/>
                   </div>

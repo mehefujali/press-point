@@ -1,5 +1,5 @@
 
-import { useParams } from "react-router-dom";
+import { ScrollRestoration, useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import SocalLinks from "../../components/SocalLinks/SocalLinks";
 import { useQuery } from "@tanstack/react-query";
@@ -20,6 +20,7 @@ const ArticleDetails = () => {
   
   return (
     <div className=" pb-14">
+      <ScrollRestoration/>
       <div className=" w-11/12 md:w-full container mx-auto my-14 flex flex-col md:flex-row gap-5 relative">
         <div className=" md:w-8/12 mx-auto space-y-4">
           <h1 className=" text-lg md:text-xl lg:text-2xl  xl:text-3xl font-semibold flex items-start gap-1">

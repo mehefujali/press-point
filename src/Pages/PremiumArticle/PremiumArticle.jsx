@@ -1,4 +1,5 @@
 
+import { ScrollRestoration } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import { useQuery } from "@tanstack/react-query";
@@ -17,6 +18,7 @@ const PremiumArticle = () => {
   
   return (
     <div className="container mx-auto mt-6">
+      <ScrollRestoration/>
       <h3 className=" text-xl border-l-4 border-golden-color pl-2 text-golden-color ">
         Premium articles
       </h3>

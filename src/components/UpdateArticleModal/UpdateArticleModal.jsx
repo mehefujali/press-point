@@ -286,6 +286,7 @@ UpdateArticleModal.propTypes = {
   openUpdateModal: PropTypes.bool.isRequired,
   setOpenUpdateModal: PropTypes.func.isRequired,
   updateArticleId: PropTypes.string.isRequired,
+  refetchMyarticle: PropTypes.func.isRequired,
 };
 
 export default UpdateArticleModal;
