@@ -2,13 +2,21 @@ import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { Helmet } from "react-helmet";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Login = () => {
   const { SininWithGoogle, user, emailLogin } = useAuth();
   const {state} = useLocation()
+  const axiosPublic = useAxiosPublic()
 
   const handleGoogleSignIn = () => {
-    SininWithGoogle();
+    SininWithGoogle().then((res) => {
+      axiosPublic.post("/user", {
+        name: res.user.displayName,
+        email: res.user.email,
+        photo: res.user.photoURL,
+      })
+    });
   };
 
   const handleEmailLogin = (e) => {

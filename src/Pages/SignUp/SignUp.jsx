@@ -11,7 +11,7 @@ const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
 const SignUp = () => {
-  const {state} = useLocation()
+  const { state } = useLocation();
   const { SininWithGoogle, user, emailSignUp, updateUser, setUser } = useAuth();
   const [fileName, setFileName] = useState("Upload your photo");
   const [userCreateLoading, setUserCreateLoading] = useState(false);
@@ -27,7 +27,13 @@ const SignUp = () => {
   };
 
   const handleGoogleSignIn = () => {
-    SininWithGoogle();
+    SininWithGoogle().then((res) => {
+      axiosPublic.post("/user", {
+        name: res.user.displayName,
+        email: res.user.email,
+        photo: res.user.photoURL,
+      })
+    });
   };
   const handleEmailSignUp = async (e) => {
     e.preventDefault();
@@ -101,7 +107,7 @@ const SignUp = () => {
     }
   };
   if (user && user.email) {
-    return <Navigate to={state||"/"} replace />;
+    return <Navigate to={state || "/"} replace />;
   }
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
