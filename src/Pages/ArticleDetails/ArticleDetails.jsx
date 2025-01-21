@@ -1,5 +1,4 @@
-
-import { ScrollRestoration, useParams } from "react-router-dom";
+import { Link, ScrollRestoration, useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import SocalLinks from "../../components/SocalLinks/SocalLinks";
 import { useQuery } from "@tanstack/react-query";
@@ -8,26 +7,35 @@ import { Helmet } from "react-helmet";
 
 const ArticleDetails = () => {
   const { id } = useParams();
-  
+
   const axiosSecure = useAxiosSecure();
-  const {data : article ={} , isLoading} = useQuery({
-    queryKey:["article-details",id] ,
-    queryFn: async()=>{
-     const {data} = await  axiosSecure.get(`article/${id}`)
-     return data
-    }
-  })
-  
-  if(isLoading){
-    return <Loader/>
+  const { data: article = {}, isLoading } = useQuery({
+    queryKey: ["article-details", id],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`article/${id}`);
+      return data;
+    },
+  });
+  const { data: suggestarticles = [] , isLoading:sugIsLoding } = useQuery({
+    queryKey: ["suggested-article-indetails"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/tag-article/${article.tags[0]}`);
+      return data;
+    },
+  });
+
+  console.log(suggestarticles);
+
+  if (isLoading) {
+    return <Loader />;
   }
-  
+
   return (
     <div className=" pb-14">
       <Helmet>
         <title>Press point - {article.title}</title>
       </Helmet>
-      <ScrollRestoration/>
+      <ScrollRestoration />
       <div className=" w-11/12 md:w-full container mx-auto my-14 flex flex-col md:flex-row gap-5 relative">
         <div className=" md:w-8/12 mx-auto space-y-4">
           <h1 className=" text-lg md:text-xl lg:text-2xl  xl:text-3xl font-semibold flex items-start gap-1">
@@ -60,20 +68,46 @@ const ArticleDetails = () => {
             <p className=" text-nowrap md:text-lg xl:text-xl font-semibold  ">
               {article?.publisher?.name}
             </p>
-
           </div>
-          <p className=" text-sm md:text-lg text-justify first-letter:text-3xl whitespace-pre-wrap">{article.description}</p>
+          <p className=" text-sm md:text-lg text-justify first-letter:text-3xl whitespace-pre-wrap">
+            {article.description}
+          </p>
 
-          <div >
-            <p className=" flex flex-wrap gap-2">{
-                  article?.tags?.map((tag,idx) => <p key={idx} className=" bg-primary-color bg-opacity-10 text-primary-color px-1 rounded-sm">#{tag}</p>)}</p>
+          <div>
+            <p className=" flex flex-wrap gap-2">
+              {article?.tags?.map((tag, idx) => (
+                <p
+                  key={idx}
+                  className=" bg-primary-color bg-opacity-10 text-primary-color px-1 rounded-sm"
+                >
+                  #{tag}
+                </p>
+              ))}
+            </p>
           </div>
         </div>
         <div className=" md:w-3/12 sticky top-[63px] h-fit">
-        <SocalLinks/>
+          <SocalLinks />
+          {!sugIsLoding&&<div className=" w-11/12 mx-auto mt-2 flex flex-col gap-2">
+            {suggestarticles.slice(0,3)?.map((article) => (
+              <Link
+                key={article._id}
+                to={`/article-details/${article?._id}`}
+                className="text-white"
+              >
+                <div
+                  className="  flex  min-h-32  items-end justify-start p-2 rounded  bg-cover bg-center"
+                  style={{
+                    backgroundImage: `linear-gradient(0deg, black,transparent), url(${article?.image})`,
+                  }}
+                >
+                  <h1 className=" text-sm   font-semibold">{article?.title}</h1>
+                </div>
+              </Link>
+            ))}
+          </div>}
         </div>
       </div>
-      
     </div>
   );
 };
