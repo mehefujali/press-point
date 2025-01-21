@@ -3,11 +3,12 @@ import { ScrollRestoration } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../../components/Loader/Loader";
 
 const PremiumArticle = () => {
   const axiosSecure = useAxiosSecure();
   
-  const {data:premiumArticle} = useQuery({
+  const {data:premiumArticle,isLoading} = useQuery({
     queryKey:["primium-articles"],
     queryFn: async()=>{
      const {data} = await axiosSecure.get('/premium-articles')
@@ -15,7 +16,9 @@ const PremiumArticle = () => {
     }
   })
 
-  
+  if(isLoading){
+    return <Loader/>
+  }
   return (
     <div className="container mx-auto mt-6">
       <ScrollRestoration/>

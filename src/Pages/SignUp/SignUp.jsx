@@ -1,7 +1,7 @@
 import { Button, Card, Typography, Input } from "@material-tailwind/react";
 import { useState } from "react";
 
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
 }`;
 const SignUp = () => {
+  const {state} = useLocation()
   const { SininWithGoogle, user, emailSignUp, updateUser, setUser } = useAuth();
   const [fileName, setFileName] = useState("Upload your photo");
   const [userCreateLoading, setUserCreateLoading] = useState(false);
@@ -99,7 +100,7 @@ const SignUp = () => {
     }
   };
   if (user && user.email) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={state||"/"} replace />;
   }
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">

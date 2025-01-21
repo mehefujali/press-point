@@ -15,11 +15,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import Loader from "../../components/Loader/Loader";
 
 const AllUser = () => {
   const [filterdata,setFilter] = useState('all user')
   const axiosSecure = useAxiosSecure();
-  const { refetch, data: users = [] } = useQuery({
+  const { refetch, data: users = [] , isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/users?filter=${filterdata}`);
@@ -45,6 +46,10 @@ const AllUser = () => {
     }, [filterdata, refetch]);
 
 //   console.log(users)
+
+if(isLoading){
+  return <Loader/>
+}
   return (
     <div className=" px-4">
       <Card className="h-full w-full  px-4 shadow-none">

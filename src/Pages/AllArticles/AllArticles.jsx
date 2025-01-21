@@ -3,19 +3,22 @@ import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { ScrollRestoration } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 const AllArticles = () => {
   const axiosPublic = useAxiosPublic()
   
 
-  const {data : articles = [] } = useQuery({
+  const {data : articles = [] , isLoading } = useQuery({
     queryKey: ["published-articles"],
     queryFn: async () =>{
       const  {data} = await axiosPublic.get("/publishd-articles")
       return data
     }
   })
-
+  if(isLoading){
+    return <Loader/>
+  }
   return (
     <div className="container mx-auto mt-6">
       <ScrollRestoration/>

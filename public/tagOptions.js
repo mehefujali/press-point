@@ -218,6 +218,9 @@ const tagOptions = [
   { value: "social-issues", label: "social issues" },
   { value: "women-harassment", label: "Women Harassment" },
   { value: "graphics-design", label: "Graphics design" },
+  { value: "success", label: "Success" },
+  { value: "motivational-quotes", label: "Motivational quotes" },
+  { value: "motivation", label: "Motivation" },
 ];
 
 export default tagOptions;

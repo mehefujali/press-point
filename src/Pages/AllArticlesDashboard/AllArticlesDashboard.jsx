@@ -1,17 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import DashboardArticleCard from "../../components/DashboardArticleCard/DashboardArticleCard";
+import Loader from "../../components/Loader/Loader";
 
 const AllArticlesDashboard = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { refetch, data: articles = [] } = useQuery({
+  const { refetch, data: articles = [] ,isLoading} = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get("/articles");
       return data;
     },
   });
+  if(isLoading){
+    return <Loader/>
+  }
   return (
     <div className="p-4 relative">
       <div className=" sticky  py-4 top-0 z-50 w-full bg-white">

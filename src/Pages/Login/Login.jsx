@@ -1,9 +1,10 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
   const { SininWithGoogle, user, emailLogin } = useAuth();
+  const {state} = useLocation()
 
   const handleGoogleSignIn = () => {
     SininWithGoogle();
@@ -16,8 +17,10 @@ const Login = () => {
     const password = form.password.value;
     emailLogin(email, password);
   };
+
+ 
   if (user && user.email) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={state||"/"} replace />;
   }
   return (
     <div className=" h-[calc(100vh-61px)] w-11/12 mx-auto flex justify-center items-center">
@@ -89,7 +92,7 @@ const Login = () => {
               className="mt-4 text-center font-normal"
             >
               Don’t Have an Account?{" "}
-              <Link to="/signup" className="font-medium text-gray-900">
+              <Link state={state} to="/signup" className="font-medium text-gray-900">
                 Sign Up
               </Link>
             </Typography>

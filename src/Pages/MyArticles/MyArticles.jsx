@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import UpdateArticleModal from "../../components/UpdateArticleModal/UpdateArticleModal";
 import Swal from "sweetalert2";
+import Loader from "../../components/Loader/Loader";
 
 const MyArticles = () => {
   const axiosSecure = useAxiosSecure();
@@ -25,7 +26,7 @@ const MyArticles = () => {
   const [openReason, setOpenReason] = useState("");
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [updateArticleId, setUpdateArticleId] = useState("");
-  const { refetch : refetchMyarticle, data: myArticles = [] } = useQuery({
+  const { refetch : refetchMyarticle, data: myArticles = [],isLoading } = useQuery({
     queryKey: ["my-articles"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/my-article/${user.email}`);
@@ -64,6 +65,10 @@ const MyArticles = () => {
       }
     });
   };
+
+  if(isLoading){
+    return <Loader/>
+  }
 
   return (
     <div className="container mx-auto mt-6">
