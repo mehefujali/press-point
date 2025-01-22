@@ -6,14 +6,17 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import React from "react";
+import { HiOutlineLogout } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import UserProfileDropdown from "../UserProfileDropdown/UserProfileDropdown";
 import "./navbar.css";
 import useAdmin from "../../Hooks/useAdmin";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
-  const { user } = useAuth();
+  const { user,signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
 
   React.useEffect(() => {
@@ -22,6 +25,24 @@ const Navbar = () => {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+
+  const handleLogOut = () =>{
+    
+    Swal.fire({
+      title: "Are you sure?",
+      text: "you want to sign out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#003366",
+      confirmButtonText: "Sign out"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOutUser()
+        toast.success("You have successfully signed out")
+      }
+    });
+  }
 
   const navList = (
     <ul
@@ -162,8 +183,9 @@ const Navbar = () => {
             <div className="flex items-center gap-4">
               <div className="mr-4 hidden xl:block">{navList}</div>
               {user ? (
-                <div>
+                <div className=" flex items-center gap-2">
                   <UserProfileDropdown />
+                  <HiOutlineLogout onClick={handleLogOut} className=" text-xl cursor-pointer md:text-2xl text-primary-color" />
                 </div>
               ) : (
                 <div className="flex items-center gap-x-1 text-nowrap">
