@@ -17,6 +17,7 @@ import AdminRoute from "../Private/AdminRoute";
 import Error from "../Pages/Error/Error";
 import MyArticles from "../Pages/MyArticles/MyArticles";
 import MyProfile from "../Pages/MyProfile/MyProfile";
+import Subscription from "../Pages/Subscription/Subscription";
 
 const AppRouter = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const AppRouter = createBrowserRouter([
       {
         path:'my-profile',
         element: <MyProfile/>
+      },
+      {
+        path:'subscription',
+        element: <Subscription/>
       }
     ],
   },

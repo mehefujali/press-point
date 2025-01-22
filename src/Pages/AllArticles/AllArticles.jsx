@@ -91,7 +91,8 @@ const AllArticles = () => {
             </div>
           </div>
           <div className="hidden sm:flex">
-            <Select onChange={(e)=>handleFilterByTag(e)} label="Filter by tag  rounded">
+            <Select onChange={(e)=>handleFilterByTag(e)} label="Filter by tag " >
+              <Option value="">Filter by tag</Option>
               <Option value="nature">Nature</Option>
               <Option value="science">Science</Option>
               <Option value="movement">Movement</Option>

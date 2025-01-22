@@ -2,10 +2,10 @@ import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 
-const ArticleCard = ({ news, premium }) => {
+const ArticleCard = ({ news}) => {
   return (
     <div>
-      <div className=" text-start shadow-md flex flex-col md:flex-row bg-white  rounded relative overflow-hidden border-2 ">
+      <div className={` ${news.isPremium&&"md:border-r-4 border-r-golden-color"} text-start shadow-md flex flex-col md:flex-row bg-white  rounded relative overflow-hidden border-2 `}>
         <div className="text-sm absolute right-2 top-1 ">
           {/* <Chip
                 
@@ -21,10 +21,10 @@ const ArticleCard = ({ news, premium }) => {
 
         <img className="  w-full md:w-64 xl:w-80" src={news?.image} alt="" />
         <div className="p-3 flex gap-2  flex-col lg:gap-1  justify-between ">
-          <Link to={`/article-details/${news._id}`} className=" w-fit">
+          
             <h3 className=" font-semibold text-sm md:text-xl flex items-end  flex-col lg:flex-row ">
               {news?.title}{" "}
-              {premium && (
+              {news.isPremium && (
                 <span
                   className=" text-sm font-normal ml-4 text-golden-color border-2 rounded-full border-golden-color  px-2 text-nowrap flex items-center gap-1 
           "  
@@ -34,7 +34,7 @@ const ArticleCard = ({ news, premium }) => {
                 </span>
               )}
             </h3>
-          </Link>
+          
 
           <div className=" flex items-center gap-1">
             <img
@@ -60,12 +60,14 @@ const ArticleCard = ({ news, premium }) => {
           <p className=" text-xs md:text-sm text-gray-600">
             {news?.description?.slice(0, 200)}...
           </p>
-          <Link to={`/article-details/${news._id}`} className=" w-fit">
+         
             <Button
+             disabled={news.isPremium}
               size="sm"
               variant="text"
-              className="flex rounded items-center gap-2"
+              className="flex rounded items-center gap-2 p-0 w-fit"
             >
+               <Link  to={`/article-details/${news._id}`} className=" px-3 py-1 flex rounded items-center gap-2 w-fit ">
               Read More{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -81,8 +83,9 @@ const ArticleCard = ({ news, premium }) => {
                   d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
                 />
               </svg>
+              </Link>
             </Button>
-          </Link>
+          
         </div>
       </div>
     </div>

@@ -96,7 +96,7 @@ if(isLoading){
             </thead>
             <tbody className="">
               {users?.map((user, idx) => (
-                <tr key={user?._id} className="">
+                <tr key={user?._id} className={`${idx%2 === 1 && "bg-primary-color/5"} `}>
                   <td>{idx + 1}</td>
                   <td>
                     <div className="flex items-center gap-3">
