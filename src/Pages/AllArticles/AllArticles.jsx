@@ -4,26 +4,52 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { ScrollRestoration } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
-import { Input } from "@material-tailwind/react";
-import { useState } from "react";
+import { Input, Option, Select } from "@material-tailwind/react";
+import { cloneElement, useEffect, useState } from "react";
 
 const AllArticles = () => {
   const axiosPublic = useAxiosPublic();
-  const [searchKey , setSearchKey ] = useState('')
+  const [searchKey, setSearchKey] = useState("");
+  const [publisher,setPublisher] = useState('')
+  const [tag,setTag] = useState('')
 
-  const {refetch, data: articles = [], isLoading } = useQuery({
-    queryKey: ["published-articles" ],
+  const {
+    refetch,
+    data: articles = [],
+    isLoading,
+  } = useQuery({
+    queryKey: ["published-articles"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get(`/publishd-articles?search=${searchKey}`);
+      const { data } = await axiosPublic.get(
+        `/published-articles?search=${searchKey}&publisher=${publisher}&tag=${tag}`
+      );
       return data;
     },
   });
 
-  const handleSearch = (key) =>{
-       setSearchKey(key)
-       refetch()
+  const { data: publishers = [] } = useQuery({
+    queryKey: ["publisher"],
+    queryFn: async () => {
+      const { data } = await axiosPublic.get("/publisher");
+      return data;
+    },
+  });
 
+  const handleSearch = (key) => {
+    setSearchKey(key);
+    
+  };
+  const handleFilterByTag = (tag) =>{
+    setTag(tag)
   }
+  const handleFilterByPublisher = (publisher) =>{
+                //  console.log(publisher)
+                 setPublisher(publisher)
+                 
+  }
+  useEffect(()=>{
+    refetch()
+  },[publisher,refetch,searchKey,tag])
 
   if (isLoading) {
     return <Loader />;
@@ -35,14 +61,13 @@ const AllArticles = () => {
       </Helmet>
       <ScrollRestoration />
       <div className=" sticky  py-3 px-2 top-[40px] md:top-[63px] z-10 w-full bg-white">
-        <div className=" flex flex-col md:flex-row md:justify-between w-11/12 md:w-full mx-auto items-center justify-start ">
-          <h3 className=" text-sm md:text-xl xl:text-2xl text-center  border-l-4 border-primary-color hidden md:block pl-2 ">
+        <div className=" flex flex-col gap-3  md:flex-row justify-between w-11/12 md:w-full mx-auto items-center  ">
+          <h3 className=" text-sm md:text-xl xl:text-2xl text-center  border-l-4 border-primary-color hidden lg:block pl-2 ">
             All article
           </h3>
-          <div>
+          <div className=" w-fit">
             <div className=" relative">
               <svg
-              
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -57,8 +82,55 @@ const AllArticles = () => {
                 />
               </svg>
 
-              <Input onChange={(e)=>handleSearch(e.target.value)} size="md" label="search..." className=" rounded pr-8" />
+              <Input
+                onChange={(e) => handleSearch(e.target.value)}
+                size="md"
+                label="search..."
+                className=" rounded pr-8"
+              />
             </div>
+          </div>
+          <div className="hidden sm:flex">
+            <Select onChange={(e)=>handleFilterByTag(e)} label="Filter by tag  rounded">
+              <Option value="nature">Nature</Option>
+              <Option value="science">Science</Option>
+              <Option value="movement">Movement</Option>
+              <Option value="technology">Technology</Option>
+              <Option value="social-issues">Social issues</Option>
+              <Option value="breaking-news">Breaking news</Option>
+              
+            </Select>
+          </div>
+          <div className=" hidden sm:flex">
+            <Select
+              className="w-full rounded"
+              size="lg"
+              onChange={(e)=>handleFilterByPublisher(e)}
+              label="Filter by publisher"
+              selected={(element) =>
+                element &&
+                cloneElement(element, {
+                  disabled: true,
+                  className:
+                    "flex items-center opacity-100 rounded px-0 gap-2 pointer-events-none",
+                })
+              }
+            >
+              {publishers?.map((publisher) => (
+                <Option
+                  key={publisher?._id}
+                  value={publisher?.name}
+                  className="flex items-center gap-2"
+                >
+                  <img
+                    src={publisher?.logo}
+                    alt={publisher?.name}
+                    className="h-5 w-5 rounded-full object-cover"
+                  />
+                  {publisher?.name}
+                </Option>
+              ))}
+            </Select>
           </div>
         </div>
       </div>
