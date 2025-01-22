@@ -22,7 +22,7 @@ const ArticleCard = ({ news, premium }) => {
         <img className="  w-full md:w-64 xl:w-80" src={news?.image} alt="" />
         <div className="p-3 flex gap-2  flex-col lg:gap-1  justify-between ">
           <Link to={`/article-details/${news._id}`} className=" w-fit">
-            <h3 className=" font-semibold text-sm md:text-xl flex items-end ">
+            <h3 className=" font-semibold text-sm md:text-xl flex items-end  flex-col lg:flex-row ">
               {news?.title}{" "}
               {premium && (
                 <span
