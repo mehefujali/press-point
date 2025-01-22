@@ -16,6 +16,7 @@ import AllArticlesDashboard from "../Pages/AllArticlesDashboard/AllArticlesDashb
 import AdminRoute from "../Private/AdminRoute";
 import Error from "../Pages/Error/Error";
 import MyArticles from "../Pages/MyArticles/MyArticles";
+import MyProfile from "../Pages/MyProfile/MyProfile";
 
 const AppRouter = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const AppRouter = createBrowserRouter([
         path: "my-articles",
         element: <PrivateRoute><MyArticles/></PrivateRoute>,
       },
+      {
+        path:'my-profile',
+        element: <MyProfile/>
+      }
     ],
   },
   {

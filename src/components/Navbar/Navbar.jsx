@@ -4,19 +4,20 @@ import {
   Typography,
   Button,
   IconButton,
+  Avatar,
 } from "@material-tailwind/react";
 import React from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import UserProfileDropdown from "../UserProfileDropdown/UserProfileDropdown";
+// import UserProfileDropdown from "../UserProfileDropdown/UserProfileDropdown";
 import "./navbar.css";
 import useAdmin from "../../Hooks/useAdmin";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
-  const { user,signOutUser } = useAuth();
+  const { user, signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
 
   React.useEffect(() => {
@@ -26,8 +27,7 @@ const Navbar = () => {
     );
   }, []);
 
-  const handleLogOut = () =>{
-    
+  const handleLogOut = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "you want to sign out?",
@@ -35,14 +35,14 @@ const Navbar = () => {
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#003366",
-      confirmButtonText: "Sign out"
+      confirmButtonText: "Sign out",
     }).then((result) => {
       if (result.isConfirmed) {
-        signOutUser()
-        toast.success("You have successfully signed out")
+        signOutUser();
+        toast.success("You have successfully signed out");
       }
     });
-  }
+  };
 
   const navList = (
     <ul
@@ -59,16 +59,18 @@ const Navbar = () => {
           Home
         </NavLink>
       </Typography>
-      {user&&<Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <NavLink to="/addarticles" className="flex items-center">
-          Add Articles
-        </NavLink>
-      </Typography>}
+      {user && (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <NavLink to="/addarticles" className="flex items-center">
+            Add Articles
+          </NavLink>
+        </Typography>
+      )}
       <Typography
         as="li"
         variant="small"
@@ -79,16 +81,18 @@ const Navbar = () => {
           All Articles
         </NavLink>
       </Typography>
-      {user&&<Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <NavLink to={"/subscription"} className="flex items-center">
-          Subscription
-        </NavLink>
-      </Typography>}
+      {user && (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <NavLink to={"/subscription"} className="flex items-center">
+            Subscription
+          </NavLink>
+        </Typography>
+      )}
       {isAdmin && (
         <Typography
           as="li"
@@ -101,7 +105,7 @@ const Navbar = () => {
           </NavLink>
         </Typography>
       )}
-      {user  && (
+      {user && (
         <Typography
           as="li"
           variant="small"
@@ -184,8 +188,26 @@ const Navbar = () => {
               <div className="mr-4 hidden xl:block">{navList}</div>
               {user ? (
                 <div className=" flex items-center gap-2">
-                  <UserProfileDropdown />
-                  <HiOutlineLogout onClick={handleLogOut} className=" text-xl cursor-pointer md:text-2xl text-primary-color" />
+                  {/* <UserProfileDropdown /> */}
+                  <Link to="my-profile">
+                  <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="flex items-center rounded-full p-0"
+                  >
+                    <Avatar
+                      variant="circular"
+                      alt={user?.displayName}
+                      withBorder={true}
+                      color="blue-gray"
+                      className=" w-8 h-8 lg:w-10 lg:h-10 p-0.5"
+                      src={user?.photoURL}
+                    />
+                  </Button></Link>
+                  <HiOutlineLogout
+                    onClick={handleLogOut}
+                    className=" text-xl cursor-pointer md:text-2xl text-primary-color"
+                  />
                 </div>
               ) : (
                 <div className="flex items-center gap-x-1 text-nowrap">
