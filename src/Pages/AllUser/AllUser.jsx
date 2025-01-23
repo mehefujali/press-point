@@ -7,9 +7,8 @@ import {
   Typography,
   Button,
   CardBody,
-//   CardFooter,
+  //   CardFooter,
   Avatar,
-
 } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -19,15 +18,18 @@ import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
 
 const AllUser = () => {
-  const [filterdata,setFilter] = useState('all user')
+  const [filterdata, setFilter] = useState("all user");
   const axiosSecure = useAxiosSecure();
-  const { refetch, data: users = [] , isLoading } = useQuery({
+  const {
+    refetch,
+    data: users = [],
+    isLoading,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/users?filter=${filterdata}`);
       return data;
     },
-    
   });
   const handleMakeAdmin = async (email, name) => {
     const { data } = await axiosSecure.patch(`/user/admin/${email}`);
@@ -37,20 +39,19 @@ const AllUser = () => {
     }
   };
   const handleFilterUser = (e) => {
-      const filter = e.target.value;
-      setFilter(filter); 
-    };
-  
-    
-    useEffect(() => {
-      refetch();
-    }, [filterdata, refetch]);
+    const filter = e.target.value;
+    setFilter(filter);
+  };
 
-//   console.log(users)
+  useEffect(() => {
+    refetch();
+  }, [filterdata, refetch]);
 
-if(isLoading){
-  return <Loader/>
-}
+  //   console.log(users)
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div className=" px-4">
       <Helmet>
@@ -60,7 +61,10 @@ if(isLoading){
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
-              <Typography variant="h5"  className=" first-letter:capitalize text-primary-color">
+              <Typography
+                variant="h5"
+                className=" first-letter:capitalize text-primary-color"
+              >
                 {filterdata}
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
@@ -71,8 +75,13 @@ if(isLoading){
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div>
-              <select name="" id=""  className=" px-5 py-2 rounded border-primary-color border-2 " onChange={handleFilterUser} >
-                <option value="all user" >All Users</option>
+              <select
+                name=""
+                id=""
+                className=" px-5 py-2 rounded border-primary-color border-2 "
+                onChange={handleFilterUser}
+              >
+                <option value="all user">All Users</option>
                 <option value="users">Users</option>
                 <option value="admin">Admin</option>
               </select>
@@ -96,7 +105,10 @@ if(isLoading){
             </thead>
             <tbody className="">
               {users?.map((user, idx) => (
-                <tr key={user?._id} className={`${idx%2 === 1 && "bg-primary-color/5"} `}>
+                <tr
+                  key={user?._id}
+                  className={`${idx % 2 === 1 && "bg-primary-color/5"} `}
+                >
                   <td>{idx + 1}</td>
                   <td>
                     <div className="flex items-center gap-3">

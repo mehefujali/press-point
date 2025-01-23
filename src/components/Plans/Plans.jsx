@@ -14,7 +14,7 @@ const Plans = () => {
           "Basic statistics on user activity.",
           "Standard user experience with ads.",
         ]}
-        btnText="Start for Free" 
+        btnText="Upgrade to Short time plan" 
         time={1}
         timeName={'min'}
       />

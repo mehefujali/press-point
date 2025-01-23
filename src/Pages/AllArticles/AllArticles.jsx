@@ -10,8 +10,8 @@ import { cloneElement, useEffect, useState } from "react";
 const AllArticles = () => {
   const axiosPublic = useAxiosPublic();
   const [searchKey, setSearchKey] = useState("");
-  const [publisher,setPublisher] = useState('')
-  const [tag,setTag] = useState('')
+  const [publisher, setPublisher] = useState("");
+  const [tag, setTag] = useState("");
 
   const {
     refetch,
@@ -37,19 +37,17 @@ const AllArticles = () => {
 
   const handleSearch = (key) => {
     setSearchKey(key);
-    
   };
-  const handleFilterByTag = (tag) =>{
-    setTag(tag)
-  }
-  const handleFilterByPublisher = (publisher) =>{
-                //  console.log(publisher)
-                 setPublisher(publisher)
-                 
-  }
-  useEffect(()=>{
-    refetch()
-  },[publisher,refetch,searchKey,tag])
+  const handleFilterByTag = (tag) => {
+    setTag(tag);
+  };
+  const handleFilterByPublisher = (publisher) => {
+    //  console.log(publisher)
+    setPublisher(publisher);
+  };
+  useEffect(() => {
+    refetch();
+  }, [publisher, refetch, searchKey, tag]);
 
   if (isLoading) {
     return <Loader />;
@@ -91,7 +89,10 @@ const AllArticles = () => {
             </div>
           </div>
           <div className="hidden sm:flex">
-            <Select onChange={(e)=>handleFilterByTag(e)} label="Filter by tag " >
+            <Select
+              onChange={(e) => handleFilterByTag(e)}
+              label="Filter by tag "
+            >
               <Option value="">Filter by tag</Option>
               <Option value="nature">Nature</Option>
               <Option value="science">Science</Option>
@@ -99,14 +100,13 @@ const AllArticles = () => {
               <Option value="technology">Technology</Option>
               <Option value="social-issues">Social issues</Option>
               <Option value="breaking-news">Breaking news</Option>
-              
             </Select>
           </div>
           <div className=" hidden sm:flex">
             <Select
               className="w-full rounded"
               size="lg"
-              onChange={(e)=>handleFilterByPublisher(e)}
+              onChange={(e) => handleFilterByPublisher(e)}
               label="Filter by publisher"
               selected={(element) =>
                 element &&
