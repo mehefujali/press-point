@@ -6,7 +6,7 @@ import {
   IconButton,
   Avatar,
 } from "@material-tailwind/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
@@ -20,14 +20,16 @@ const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
   const { user, signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
-  const {isPremiumUser} = usePremiumUser()
-  console.log('premium',isPremiumUser)
-  React.useEffect(() => {
+  const { isPremiumUser} = usePremiumUser();
+  console.log("premium", isPremiumUser);
+  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+
+
 
   const handleLogOut = () => {
     Swal.fire({
@@ -192,20 +194,21 @@ const Navbar = () => {
                 <div className=" flex items-center gap-2">
                   {/* <UserProfileDropdown /> */}
                   <Link to="my-profile">
-                  <Button
-                    variant="text"
-                    color="blue-gray"
-                    className="flex items-center rounded-full p-0"
-                  >
-                    <Avatar
-                      variant="circular"
-                      alt={user?.displayName}
-                      withBorder={true}
+                    <Button
+                      variant="text"
                       color="blue-gray"
-                      className=" w-8 h-8 lg:w-10 lg:h-10 p-0.5"
-                      src={user?.photoURL}
-                    />
-                  </Button></Link>
+                      className="flex items-center rounded-full p-0"
+                    >
+                      <Avatar
+                        variant="circular"
+                        alt={user?.displayName}
+                        withBorder={true}
+                        color="blue-gray"
+                        className=" w-8 h-8 lg:w-10 lg:h-10 p-0.5"
+                        src={user?.photoURL}
+                      />
+                    </Button>
+                  </Link>
                   <HiOutlineLogout
                     onClick={handleLogOut}
                     className=" text-xl cursor-pointer md:text-2xl text-primary-color"

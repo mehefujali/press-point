@@ -1,13 +1,15 @@
 
-import { ScrollRestoration } from "react-router-dom";
+import { Navigate, ScrollRestoration } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
+import usePremiumUser from "../../Hooks/usePremiumUser";
 
 const PremiumArticle = () => {
   const axiosSecure = useAxiosSecure();
+  const {isPremiumUser,isPremiumLoading} = usePremiumUser()
   
   const {data:premiumArticle,isLoading} = useQuery({
     queryKey:["primium-articles"],
@@ -17,8 +19,11 @@ const PremiumArticle = () => {
     }
   })
 
-  if(isLoading){
+  if(isLoading||isPremiumLoading){
     return <Loader/>
+  }
+  if(!isPremiumUser){
+      return <Navigate to="/" replace></Navigate>
   }
   return (
     <div className="container mx-auto mt-6">

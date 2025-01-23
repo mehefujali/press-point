@@ -1,13 +1,14 @@
-import { Link, ScrollRestoration, useParams } from "react-router-dom";
+import { Link, Navigate, ScrollRestoration, useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import SocalLinks from "../../components/SocalLinks/SocalLinks";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
+import usePremiumUser from "../../Hooks/usePremiumUser";
 
 const ArticleDetails = () => {
   const { id } = useParams();
-
+  const {isPremiumUser,isPremiumLoading} = usePremiumUser()
   const axiosSecure = useAxiosSecure();
   const { data: article = {}, isLoading } = useQuery({
     queryKey: ["article-details", id],
@@ -26,10 +27,12 @@ const ArticleDetails = () => {
 
 
 
-  if (isLoading) {
+  if (isLoading||isPremiumLoading) {
     return <Loader />;
   }
-
+  if(article.isPremium && !isPremiumUser){
+    return <Navigate to="/" replace/>
+  }
   return (
     <div className=" pb-14">
       <Helmet>

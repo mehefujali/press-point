@@ -26,7 +26,7 @@ const Subscription = () => {
   }
   return (
     <div className=" container mx-auto">
-     { isPremiumUser&& <Confetti recycle={false}  className=" w-full h-screen" />}
+     { isPremiumUser&& <Confetti recycle={false}  className=" w-full h-screen " />}
       <div className=" py-3 px-7 lg:py-7 md:rounded bg-primary-color my-5 text-white text-center flex items-center justify-center flex-col gap-1 ">
         {" "}
         <img

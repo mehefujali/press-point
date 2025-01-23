@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "./../../Hooks/useAuth";
 import { PropTypes } from "prop-types";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import usePremiumUser from "../../Hooks/usePremiumUser";
 
 const CheckOutForm = ({ amount = 5 }) => {
@@ -14,6 +14,7 @@ const CheckOutForm = ({ amount = 5 }) => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
+  const [loading,setLoading] = useState(false)
   const { user } = useAuth();
   const {refetchPremium} = usePremiumUser()
   const navigate = useNavigate()
@@ -31,6 +32,7 @@ const CheckOutForm = ({ amount = 5 }) => {
 
   // payment
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     if (!stripe || !elements) {
       return;
@@ -78,7 +80,8 @@ const CheckOutForm = ({ amount = 5 }) => {
          .then(res => console.log(res.data))
         toast.success("Payment success")
         refetchPremium()
-        navigate('/');
+        navigate('/', { replace: true });
+        setLoading(false)
       }
       
     }
@@ -114,7 +117,7 @@ const CheckOutForm = ({ amount = 5 }) => {
           disabled={!stripe || !clientSecret}
           className=" w-full"
         >
-          <Button fullWidth className=" rounded bg-primary-color mt-11 ">
+          <Button loading={loading} fullWidth className=" justify-center rounded bg-primary-color mt-11 ">
             Pay ${amount}
           </Button>
         </button>

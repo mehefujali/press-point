@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function CheckIcon() {
   return (
@@ -27,7 +28,15 @@ function CheckIcon() {
   );
 }
 
-const PlanCard = ({ title, price, features = [], btnText, fill }) => {
+const PlanCard = ({
+  title,
+  price,
+  features = [],
+  btnText,
+  fill,
+  time,
+  timeName,
+}) => {
   return (
     <div>
       <Card
@@ -43,7 +52,6 @@ const PlanCard = ({ title, price, features = [], btnText, fill }) => {
           <Typography
             variant="paragraph"
             color={fill && "white"}
-
             className={`font-normal uppercase ${
               fill ? "text-white" : "text-primary-color"
             }`}
@@ -58,7 +66,12 @@ const PlanCard = ({ title, price, features = [], btnText, fill }) => {
             }`}
           >
             <span className="mt-2 text-2xl">$</span>
-            {price} <span className="self-end text-2xl">/mo</span>
+            {price}{" "}
+            <span className="self-end text-2xl font-bold">
+              {" "}
+              -/{time}
+              {timeName}
+            </span>
           </Typography>
         </CardHeader>
         <CardBody className="p-0">
@@ -82,19 +95,21 @@ const PlanCard = ({ title, price, features = [], btnText, fill }) => {
           </ul>
         </CardBody>
         <CardFooter className="mt-12 p-0">
-          <Button
-            size="md"
-            color={fill ? "gray" : "white"}
-            className={`hover:scale-[1.02] rounded focus:scale-[1.02] active:scale-100 ${
-              fill
-                ? "bg-white text-primary-color "
-                : "bg-primary-color text-white"
-            }`}
-            ripple={false}
-            fullWidth={true}
-          >
-            {btnText}
-          </Button>
+          <Link to="/purchase" state={{amount:price}}>
+            <Button
+              size="md"
+              color={fill ? "gray" : "white"}
+              className={`hover:scale-[1.02] rounded focus:scale-[1.02] active:scale-100 ${
+                fill
+                  ? "bg-white text-primary-color "
+                  : "bg-primary-color text-white"
+              }`}
+              ripple={false}
+              fullWidth={true}
+            >
+              {btnText}
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>
@@ -106,6 +121,8 @@ PlanCard.propTypes = {
   features: PropTypes.node.isRequired,
   btnText: PropTypes.node.isRequired,
   fill: PropTypes.node.isRequired,
+  time: PropTypes.node.isRequired,
+  timeName: PropTypes.node.isRequired,
 };
 
 export default PlanCard;
