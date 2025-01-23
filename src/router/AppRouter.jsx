@@ -18,6 +18,7 @@ import Error from "../Pages/Error/Error";
 import MyArticles from "../Pages/MyArticles/MyArticles";
 import MyProfile from "../Pages/MyProfile/MyProfile";
 import Subscription from "../Pages/Subscription/Subscription";
+import Purchase from "../Pages/Purchase/Purchase";
 
 const AppRouter = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const AppRouter = createBrowserRouter([
       {
         path:'subscription',
         element: <Subscription/>
+      },
+      {
+        path:"purchase",
+        element : <Purchase/>
       }
     ],
   },

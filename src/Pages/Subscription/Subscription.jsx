@@ -8,13 +8,21 @@ import {
 } from "@material-tailwind/react";
 import { CiCircleChevDown } from "react-icons/ci";
 import { BiPurchaseTagAlt } from "react-icons/bi";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 const Subscription = () => {
+  const [amount, setAmount] = useState(5);
+  const handleMenuItem = (amount = 5) => {
+    setAmount(parseFloat(amount));
+  };
+
+
   return (
     <div className=" container mx-auto">
-      <div className=" py-3 px-7 lg:py-7 rounded bg-primary-color my-5 text-white text-center flex items-center justify-center flex-col gap-1 ">
+      <div className=" py-3 px-7 lg:py-7 md:rounded bg-primary-color my-5 text-white text-center flex items-center justify-center flex-col gap-1 ">
         {" "}
         <img
-          className=" w-24"
+          className=" w-16 md:w-24"
           src="https://cdn-icons-png.flaticon.com/512/3649/3649801.png"
           alt=""
         />
@@ -33,15 +41,19 @@ const Subscription = () => {
           }}
         >
           <MenuHandler>
-            <Button size="lg" className=" rounded bg-primary-color flex items-center gap-2">
+            <Button
+              size="lg"
+              className=" rounded bg-primary-color flex items-center gap-2"
+            >
               Get Premium
-              <CiCircleChevDown  className=" text-lg font-bold" />
+              <CiCircleChevDown className=" text-lg font-bold" />
             </Button>
           </MenuHandler>
-          <MenuList  className=" ">
-            <div >
-                  Select package
-            </div>
+          <MenuList
+            onChange={(e) => handleMenuItem(e.target.value)}
+            className=" "
+          >
+            <div>Select package</div>
             <div className="border-b-2 border-b-primary-color/15 my-3 "></div>
             <MenuItem className="p-0">
               <label
@@ -49,14 +61,15 @@ const Subscription = () => {
                 className="flex cursor-pointer items-center gap-2 p-2"
               >
                 <Radio
-                defaultChecked
+                  defaultChecked
                   name="package"
                   ripple={false}
                   id="item-1"
+                  value={5}
                   containerProps={{ className: "p-0" }}
                   className="hover:before:content-none  "
                 />
-               <BiPurchaseTagAlt /> 1 minute / $5
+                <BiPurchaseTagAlt /> 1 minute / $5
               </label>
             </MenuItem>
             <MenuItem className="p-0">
@@ -70,8 +83,9 @@ const Subscription = () => {
                   id="item-2"
                   containerProps={{ className: "p-0" }}
                   className="hover:before:content-none"
+                  value={10}
                 />
-               <BiPurchaseTagAlt />  5 days / $10
+                <BiPurchaseTagAlt /> 5 days / $10
               </label>
             </MenuItem>
             <MenuItem className="p-0">
@@ -83,15 +97,16 @@ const Subscription = () => {
                   name="package"
                   ripple={false}
                   id="item-3"
+                  value={15}
                   containerProps={{ className: "p-0" }}
                   className="hover:before:content-none"
                 />
-                <BiPurchaseTagAlt />  10 days / $15
+                <BiPurchaseTagAlt /> 10 days / $15
               </label>
             </MenuItem>
-            <div className=" flex items-end justify-end mt-5">
-                  <Button className=" rounded bg-primary-color">purchase</Button>
-            </div>
+            <Link state={{amount}} to='/purchase' className=" flex items-end justify-end mt-5">
+              <Button className=" rounded bg-primary-color">purchase</Button>
+            </Link>
           </MenuList>
         </Menu>
       </div>
