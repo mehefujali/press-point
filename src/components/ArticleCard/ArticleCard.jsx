@@ -19,7 +19,7 @@ const ArticleCard = ({ news}) => {
                 /> */}
         </div>
 
-        <img className="  w-full md:w-64 xl:w-80" src={news?.image} alt="" />
+        <img className="   w-full md:w-64 xl:w-80" src={news?.image} alt="" />
         <div className="p-3 flex gap-2  flex-col lg:gap-1  justify-between ">
           
             <h3 className=" font-semibold text-sm md:text-xl flex items-end  flex-col lg:flex-row ">
