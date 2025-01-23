@@ -19,6 +19,7 @@ import UpdateArticleModal from "../../components/UpdateArticleModal/UpdateArticl
 import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
+import NoData from "../../components/NoData/NoData";
 
 const MyArticles = () => {
   const axiosSecure = useAxiosSecure();
@@ -69,6 +70,9 @@ const MyArticles = () => {
 
   if(isLoading){
     return <Loader/>
+  }
+  if(myArticles.length<1){
+    return <NoData/>
   }
 
   return (
