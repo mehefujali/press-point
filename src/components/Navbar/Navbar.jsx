@@ -15,11 +15,13 @@ import "./navbar.css";
 import useAdmin from "../../Hooks/useAdmin";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import usePremiumUser from "../../Hooks/usePremiumUser";
 const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
   const { user, signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
-
+  const {isPremiumUser} = usePremiumUser()
+  console.log('premium',isPremiumUser)
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -117,7 +119,7 @@ const Navbar = () => {
           </NavLink>
         </Typography>
       )}
-      {user && (
+      {user && isPremiumUser && (
         <Typography
           as="li"
           variant="small"

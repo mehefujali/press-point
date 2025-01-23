@@ -24,7 +24,7 @@ const ArticleDetails = () => {
     },
   });
 
-  console.log(suggestarticles);
+
 
   if (isLoading) {
     return <Loader />;

@@ -1,8 +1,10 @@
 import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
+import usePremiumUser from "../../Hooks/usePremiumUser";
 
 const ArticleCard = ({ news}) => {
+  const {isPremiumUser} = usePremiumUser()
   return (
     <div>
       <div className={` ${news.isPremium&&"md:border-r-4 border-r-golden-color"} text-start shadow-md flex flex-col md:flex-row bg-white  rounded relative overflow-hidden border-2 `}>
@@ -62,7 +64,7 @@ const ArticleCard = ({ news}) => {
           </p>
          
             <Button
-             disabled={news.isPremium}
+             disabled={news.isPremium && !isPremiumUser}
               size="sm"
               variant="text"
               className="flex rounded items-center gap-2 p-0 w-fit"
