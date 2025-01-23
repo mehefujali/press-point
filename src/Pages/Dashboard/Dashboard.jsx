@@ -47,6 +47,7 @@ const Dashboard = () => {
 
     legend: { position: "right", textStyle: { color: "blue", fontSize: 14 } },
     pieSliceText: "value",
+    
   };
   const areaChartOptions = {
     title: "Articles Created Over Time",

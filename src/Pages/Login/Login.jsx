@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { SininWithGoogle, user, emailLogin } = useAuth();
@@ -16,7 +17,7 @@ const Login = () => {
         email: res.user.email,
         photo: res.user.photoURL,
       })
-    });
+    }).catch(err=>console.log(err))
   };
 
   const handleEmailLogin = (e) => {
@@ -24,7 +25,11 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    emailLogin(email, password);
+    emailLogin(email, password).then().catch(err=> {
+      if(err.message === "Firebase: Error (auth/invalid-credential)."){
+        toast.error("Invalid username or password")
+      }
+    })
   };
 
  

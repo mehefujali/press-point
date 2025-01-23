@@ -32,7 +32,7 @@ const SignUp = () => {
         name: res.user.displayName,
         email: res.user.email,
         photo: res.user.photoURL,
-      })
+      });
     });
   };
   const handleEmailSignUp = async (e) => {
@@ -44,7 +44,27 @@ const SignUp = () => {
     const password = form.password?.value;
     const image = form.image?.files[0];
     // console.log({ name, email, password, image });
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[^a-zA-Z0-9]/.test(password);
+    if (!hasUppercase) {
+      toast.error("Password must contain at least one uppercase letter.");
+      return;
+    }
+    if (!hasLowercase) {
+      toast.error("Password must contain at least one lowercase letter.");
+      return;
+    }
+    if (!hasNumber) {
+      toast.error("Password must contain at least one number.");
+      return;
+    }
 
+    if (!hasSpecialChar) {
+      toast.error("Password must contain at least one special character.");
+      return;
+    }
     if (!name) {
       return toast.error("Please input your name");
     }
