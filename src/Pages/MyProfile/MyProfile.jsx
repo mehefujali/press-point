@@ -7,7 +7,7 @@ import axios from "axios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 import toast from "react-hot-toast";
-import { auth } from "../../Firebase/firebase.init";
+
 
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
@@ -44,10 +44,12 @@ const MyProfile = () => {
         displayName: newName || user.displayName,
         photoURL: NewImage || user.photoURL,
       };
-      updateUser(newProfile);
-      const updatedUser1 = { ...auth.currentUser };
-      setUser(updatedUser1);
-     
+      updateUser(newProfile).then(() => {
+        setUser({ ...user, displayName: newProfile.displayName , photoURL:newProfile.photoURL });
+      });
+      // const updatedUser1 = { ...auth.currentUser };
+      // setUser(updatedUser1);
+
       await axiosSecure
         .patch(`/user-update/${user?.email}`, {
           name: newName,

@@ -122,7 +122,7 @@ const Navbar = () => {
           </NavLink>
         </Typography>
       )}
-      {user && isPremiumUser && (
+      {user?.email  && isPremiumUser && (
         <Typography
           as="li"
           variant="small"
