@@ -6,10 +6,12 @@ import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
 import usePremiumUser from "../../Hooks/usePremiumUser";
 import useAuth from "../../Hooks/useAuth";
+import useAdmin from "../../Hooks/useAdmin";
 
 const ArticleDetails = () => {
   const { id } = useParams();
   const {isPremiumUser,isPremiumLoading} = usePremiumUser()
+  const {isAdmin,isAdminLoading} = useAdmin()
   const {user} = useAuth()
   const axiosSecure = useAxiosSecure();
   const { data: article = {}, isLoading } = useQuery({
@@ -29,10 +31,10 @@ const ArticleDetails = () => {
 
 
 
-  if (isLoading||isPremiumLoading) {
+  if (isLoading||isPremiumLoading || isAdminLoading) {
     return <Loader />;
   }
-  if(article.isPremium && !isPremiumUser && article?.author?.email !== user?.email){
+  if(article.isPremium && !isPremiumUser && article?.author?.email !== user?.email && !isAdmin){
     return <Navigate to="/" replace/>
   }
   return (

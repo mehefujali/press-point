@@ -34,7 +34,8 @@ const FAQ = () => {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
-    <div className=" container mx-auto my-12">
+    <div className=" container mx-auto my-14">
+       <h1 className=" text-xl md:text-2xl xl:text-3xl font-bold">Frequently Asked Questions (FAQ)</h1>
       <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
         <AccordionHeader onClick={() => handleOpen(1)}>
           1. What is Press Point?
