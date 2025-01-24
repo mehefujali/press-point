@@ -78,7 +78,9 @@ const CheckOutForm = ({ amount = 5 }) => {
           
          }
          axiosSecure.post('/save-payment' , paymentInfo )
-         .then(res => console.log(res.data))
+         .then(() => {
+          refetchPremium()
+         })
         toast.success("Payment success")
         refetchPremium()
         navigate('/', { replace: true });
