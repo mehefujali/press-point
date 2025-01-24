@@ -7,7 +7,7 @@ import {
   Radio,
 } from "@material-tailwind/react";
 
-import Confetti from 'react-confetti'
+import Confetti from "react-confetti";
 import { CiCircleChevDown } from "react-icons/ci";
 import { BiPurchaseTagAlt } from "react-icons/bi";
 import { useState } from "react";
@@ -20,13 +20,15 @@ const Subscription = () => {
   const handleMenuItem = (amount = 5) => {
     setAmount(parseFloat(amount));
   };
-  
+
   if (isPremiumLoading) {
     return <Loader />;
   }
   return (
     <div className=" container mx-auto">
-     { isPremiumUser&& <Confetti recycle={false}  className=" w-full h-screen " />}
+      {isPremiumUser && (
+        <Confetti recycle={false} className=" w-full h-screen " />
+      )}
       <div className=" py-3 px-7 lg:py-7 md:rounded bg-primary-color my-5 text-white text-center flex items-center justify-center flex-col gap-1 ">
         {" "}
         <img
@@ -46,7 +48,32 @@ const Subscription = () => {
           just pure content crafted for you.`}
         </p>
       </div>
-      {!isPremiumUser && (
+      {isPremiumUser ? (
+        <div className=" w-full flex justify-center">
+          <Link to="/premium-articles">
+            <Button
+              size="lg"
+              className=" rounded bg-primary-color flex items-center gap-2"
+            >
+              Browse Premium Articles
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+            </Button>
+          </Link>
+        </div>
+      ) : (
         <div className=" flex items-center justify-center mt-8">
           <Menu
             dismiss={{

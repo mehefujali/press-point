@@ -83,7 +83,7 @@ const CheckOutForm = ({ amount = 5 }) => {
          })
         toast.success("Payment success")
         refetchPremium()
-        navigate('/', { replace: true });
+        navigate('/subscription', { replace: true });
         setLoading(false)
       }
       refetchPremium()
