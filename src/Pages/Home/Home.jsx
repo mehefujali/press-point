@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { useEffect } from "react";
 import HomeModalSub from "../../components/HomeModalSub/HomeModalSub";
+import FAQ from "../../components/FAQ/FAQ";
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false); 
@@ -47,6 +48,9 @@ const Home = () => {
       </div>
       <div>
         <Plans />
+      </div>
+      <div>
+        <FAQ/>
       </div>
     </div>
   );
