@@ -74,15 +74,15 @@ const AppRouter = createBrowserRouter([
       },
       {
         path:'my-profile',
-        element: <MyProfile/>
+        element: <PrivateRoute><MyProfile/></PrivateRoute>
       },
       {
         path:'subscription',
-        element: <Subscription/>
+        element: <PrivateRoute><Subscription/></PrivateRoute>
       },
       {
         path:"purchase",
-        element : <Purchase/>
+        element : <PrivateRoute> <Purchase/></PrivateRoute>
       }
     ],
   },
