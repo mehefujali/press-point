@@ -4,12 +4,13 @@ import useAuth from "../../Hooks/useAuth";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const Login = () => {
   const { SininWithGoogle, user, emailLogin } = useAuth();
   const {state} = useLocation()
   const axiosPublic = useAxiosPublic()
-
+  const [loginLoding , setLoaingLoading] = useState(false)
   const handleGoogleSignIn = () => {
     SininWithGoogle().then((res) => {
       axiosPublic.post("/user", {
@@ -21,14 +22,19 @@ const Login = () => {
   };
 
   const handleEmailLogin = (e) => {
+    setLoaingLoading(true)
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    emailLogin(email, password).then().catch(err=> {
+    emailLogin(email, password).then(()=>{
+      toast.success('Login success')
+      setLoaingLoading(false)
+    }).catch(err=> {
       if(err.message === "Firebase: Error (auth/invalid-credential)."){
         toast.error("Invalid username or password")
       }
+      setLoaingLoading(false)
     })
   };
 
@@ -84,7 +90,7 @@ const Login = () => {
             </div>
 
             <button className=" w-full">
-              <Button className="mt-6 bg-primary-color rounded" fullWidth>
+              <Button loading={loginLoding} className="mt-6 justify-center bg-primary-color rounded" fullWidth>
                 Login
               </Button>
             </button>

@@ -28,21 +28,7 @@ const AllArticlesDashboard = () => {
             All article
           </h3>
           <div>
-            <label
-              className=" text-sm border rounded-md p-2 bg-white"
-              htmlFor=".filter-select"
-            >
-              Short by :
-              <select
-                name=""
-                id=""
-                className=" md:px-3 filter-select select select-sm  focus:border-none focus:outline-none"
-              >
-                <option value="All">New</option>
-                <option value="Easy">Old</option>
-                <option value="Medium">Top viewd</option>
-              </select>
-            </label>
+            
           </div>
         </div>
       </div>
