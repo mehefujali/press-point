@@ -5,10 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
 import usePremiumUser from "../../Hooks/usePremiumUser";
+import useAuth from "../../Hooks/useAuth";
 
 const ArticleDetails = () => {
   const { id } = useParams();
   const {isPremiumUser,isPremiumLoading} = usePremiumUser()
+  const {user} = useAuth()
   const axiosSecure = useAxiosSecure();
   const { data: article = {}, isLoading } = useQuery({
     queryKey: ["article-details", id],
@@ -30,7 +32,7 @@ const ArticleDetails = () => {
   if (isLoading||isPremiumLoading) {
     return <Loader />;
   }
-  if(article.isPremium && !isPremiumUser){
+  if(article.isPremium && !isPremiumUser && article?.author?.email !== user?.email){
     return <Navigate to="/" replace/>
   }
   return (

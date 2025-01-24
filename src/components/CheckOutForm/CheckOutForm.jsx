@@ -65,6 +65,7 @@ const CheckOutForm = ({ amount = 5 }) => {
     if (cardError) {
       console.log("errr", cardError);
       toast.error(cardError.message);
+      setLoading(false)
     } else {
  
       if (paymentIntent.status === "succeeded"){

@@ -221,6 +221,8 @@ const tagOptions = [
   { value: "success", label: "Success" },
   { value: "motivational-quotes", label: "Motivational quotes" },
   { value: "motivation", label: "Motivation" },
+  { value: "coding", label: "Coding" },
+  { value: "web-development", label: "Web development" },
 ];
 
 export default tagOptions;
