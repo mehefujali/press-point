@@ -23,7 +23,7 @@ const MyProfile = () => {
               {"👑Premium user"}
             </span>
           }
-          <div className=" relative bg-primary-color w-full " >
+          <div className=" relative bg-primary-color/10 w-full " >
             <img
               className=" h-32 rounded-full w-32 object-cover border-4 border-white outline-4 outline-primary-color  relative top-16 -right-1/2 -translate-x-1/2"
               src={user?.photoURL}

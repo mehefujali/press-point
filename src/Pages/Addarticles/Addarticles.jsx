@@ -23,6 +23,9 @@ const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
 import tagOptions from "../../../public/tagOptions";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
+import usePremiumUser from "../../Hooks/usePremiumUser";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const Addarticles = () => {
   const { user } = useAuth();
@@ -34,13 +37,70 @@ const Addarticles = () => {
   const navigate = useNavigate();
   const [publisher, setPublisher] = useState("");
   const { register, handleSubmit } = useForm();
+  const [uploadLimit, setUploadLimit] = useState(true);
+  const { isPremiumUser, isPremiumLoading } = usePremiumUser();
+  const {
+    refetch: refetchMy,
+    data: myArticles = {},
+    isLoading: articleLoading,
+  } = useQuery({
+    queryKey: ["my-articles-upload-limit"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/my-article-count/${user.email}`);
+      return data;
+    },
+  });
+
+  useEffect(() => {
+    refetchMy();
+
+    if (!isPremiumLoading && !articleLoading) {
+      if (isPremiumUser || (myArticles.count ?? 0) < 1) {
+        setUploadLimit(false);
+      } else if (!isPremiumUser && (myArticles.count ?? 0) >= 1) {
+        setUploadLimit(true);
+
+        if (!uploadLimit && !isPremiumUser && (myArticles.count ?? 0) >= 1) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "You have reached your article limit!",
+            text: "Upgrade to a premium plan to publish unlimited articles",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    }
+  }, [
+    isPremiumUser,
+    uploadLimit,
+    isPremiumLoading,
+    myArticles,
+    articleLoading,
+    refetchMy,
+  ]);
 
   const onSubmit = async (data) => {
     if (!articleImage) {
       toast.error("Please select an image to proceed.");
       return;
     }
-   
+    if (!isPremiumUser && (myArticles.count ?? 0) >= 1) {
+      setUploadLimit(true);
+
+      if (!uploadLimit && !isPremiumUser && (myArticles.count ?? 0) >= 1) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "You have reached your article limit!",
+          text: "Upgrade to a premium plan to publish unlimited articles",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    }
+
     const imageFile = { image: articleImage };
 
     try {
@@ -66,7 +126,7 @@ const Addarticles = () => {
           tags: selectedTags,
           description: data?.description,
         };
-   
+
         try {
           const res = await axiosSecure.post("/article", newArticle);
           if (res.data.insertedId) {
@@ -116,7 +176,7 @@ const Addarticles = () => {
       <Helmet>
         <title>Press point - Add article</title>
       </Helmet>
-      <ScrollRestoration/>
+      <ScrollRestoration />
       <div className="  p-3 rounded-md  lg:w-9/12 xl:w-7/12 2xl:w-6/12  flex flex-col justify-center items-center ">
         <Typography variant="h5" color="blue-gray">
           Create and Publish
@@ -154,7 +214,6 @@ const Addarticles = () => {
 
               <div className=" w-full">
                 <MtSelect
-                  
                   className="w-full rounded"
                   size="lg"
                   onChange={(e) => setPublisher(e)}
@@ -226,14 +285,21 @@ const Addarticles = () => {
                 />
               </div>
             </div>
-            <button className=" w-full ">
+            <button disabled={uploadLimit} className=" w-full ">
               <Button
+                disabled={uploadLimit}
                 size="lg"
                 loading={uplodLoading}
                 className="mt-6 bg-primary-color rounded items-center justify-center"
                 fullWidth
               >
-                {uplodLoading ? "uploading" : "upload article"}
+                {uplodLoading
+                  ? "uploading"
+                  : `${
+                      uploadLimit
+                        ? "You have reached your article limit!"
+                        : "upload article"
+                    }`}
               </Button>
             </button>
           </form>
