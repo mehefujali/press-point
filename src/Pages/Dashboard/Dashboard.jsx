@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet";
 import { Chart } from "react-google-charts";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Loader from "../../components/Loader/Loader";
 
 const Dashboard = () => {
   const axiosPublic = useAxiosPublic();
@@ -80,6 +81,9 @@ const Dashboard = () => {
       title: "Article",
     },
   };
+  if(publishersLoading || articlesLoading ){
+    return  <Loader/>
+  }
 
   return (
     <div>

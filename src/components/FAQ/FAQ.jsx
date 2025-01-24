@@ -34,10 +34,10 @@ const FAQ = () => {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
-    <div className=" container mx-auto my-14">
+    <div className=" container mx-auto my-14  w-11/12">
        <h1 className=" text-xl md:text-2xl xl:text-3xl font-bold">Frequently Asked Questions (FAQ)</h1>
       <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(1)}>
+        <AccordionHeader onClick={() => handleOpen(1)} className=" text-lg md:text-xl xl:text-2xl">
           1. What is Press Point?
         </AccordionHeader>
         <AccordionBody>
@@ -48,7 +48,7 @@ const FAQ = () => {
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(2)}>
+        <AccordionHeader onClick={() => handleOpen(2)} className=" text-lg md:text-xl xl:text-2xl">
           2. How do I create an account?
         </AccordionHeader>
         <AccordionBody>
@@ -60,7 +60,7 @@ const FAQ = () => {
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(3)}>
+        <AccordionHeader onClick={() => handleOpen(3)} className=" text-lg md:text-xl xl:text-2xl">
           3. How do I log in?
         </AccordionHeader>
         <AccordionBody>
@@ -71,7 +71,7 @@ const FAQ = () => {
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 4} icon={<Icon id={4} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(4)}>
+        <AccordionHeader onClick={() => handleOpen(4)} className=" text-lg md:text-xl xl:text-2xl">
         4. What is the difference between free and premium users?
         </AccordionHeader>
         <AccordionBody>
