@@ -5,10 +5,30 @@ import Plans from "../../components/Plans/Plans";
 import Statistic from "../../components/Statistic/Statistic";
 import TrendingSwiper from "../../components/TrendingSwiper/TrendingSwiper";
 import { Helmet } from "react-helmet";
+import { useState } from "react";
+import { useEffect } from "react";
+import HomeModalSub from "../../components/HomeModalSub/HomeModalSub";
 
 const Home = () => {
+  const [showModal, setShowModal] = useState(false); // Modal show state
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowModal(true);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
+
+
+
+
+
   return (
     <div>
+       <HomeModalSub open={showModal} setOpen={setShowModal}/>
       <Helmet>
         <title>Press point</title>
       </Helmet>
