@@ -21,21 +21,21 @@ const Statistic = () => {
           <h4 className=" text-2xl my-2 font-semibold">Total users</h4>
           <h1 className=" text-6xl text-primary-color font-bold">
             
-            <CountUp  delay={2} end={userCount.totalUser} /></h1>
+            <CountUp  delay={2} end={userCount?.totalUser} /></h1>
         </div>
         <div className="  bg-white p-7 rounded-md  flex flex-col justify-center items-center">
           <img className=" w-20 md:w-28 h-20 md:h-28" src="https://i.ibb.co/fx1SR1s/free-user.png" alt="" />
           <h4 className=" text-2xl my-2 font-semibold">Free Users</h4>
           <h1 className=" text-6xl text-primary-color font-bold">
             
-            <CountUp  delay={2} end={userCount.freeUserCount} /></h1>
+            <CountUp  delay={2} end={userCount?.freeUserCount} /></h1>
         </div>
         <div className="  bg-white p-7 rounded-md  flex flex-col justify-center items-center">
           <img className=" w-20 md:w-28 h-20 md:h-28" src="https://i.ibb.co/yNNmB9N/primium-user.png" alt="" />
           <h4 className=" text-2xl my-2 font-semibold">Primium Users</h4>
           <h1 className=" text-6xl text-primary-color font-bold">
             
-            <CountUp  delay={2} end={userCount.premiumUserCount} /></h1>
+            <CountUp  delay={2} end={userCount?.premiumUserCount} /></h1>
         </div>
       </div>
     </div>
