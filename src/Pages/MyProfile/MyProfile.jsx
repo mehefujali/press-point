@@ -1,10 +1,12 @@
 import { Helmet } from "react-helmet";
 import useAuth from "../../Hooks/useAuth";
 import usePremiumUser from "../../Hooks/usePremiumUser";
-import { Button } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
+import { useState } from "react";
 
 const MyProfile = () => {
   const { user } = useAuth();
+  const [updateProfile, setUpdateProfile] = useState(false);
   const { isPremiumUser } = usePremiumUser();
 
   return (
@@ -14,16 +16,69 @@ const MyProfile = () => {
       </Helmet>
 
       <div className=" h-full container mx-auto mt-2 flex justify-center items-center ">
-        <div className=" w-fit mt-7 text-center flex flex-col justify-center items-center shadow-md bg-white   rounded  relative">
-          { isPremiumUser &&
+        {updateProfile?<div className=" w-fit mt-7 text-center flex flex-col justify-center items-center shadow-md bg-white   rounded  relative">
+          {isPremiumUser && (
             <span
               className=" absolute top-3 right-3 text-sm font-normal ml-4 text-golden-color border-2 rounded-full border-golden-color  px-2 text-nowrap flex items-center gap-1 
           "
             >
               {"👑Premium user"}
             </span>
-          }
-          <div className=" relative bg-primary-color/10 w-full " >
+          )}
+          <div className=" relative bg-primary-color/10 w-full ">
+            <div className=" h-32 rounded-full w-32 object-cover border-4 overflow-hidden  cursor-pointer border-white outline-4 outline-primary-color  relative top-16 -right-1/2 -translate-x-1/2">
+              <label htmlFor="profile-update-img" className="cursor-pointer"> <img src={user?.photoURL} alt="" />
+             
+              <span className=" absolute bottom-2 translate-x-1/2 right-1/2 text-primary-color">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="size-6"
+                >
+                  <path d="M12 9a3.75 3.75 0 1 0 0 7.5A3.75 3.75 0 0 0 12 9Z" />
+                  <path
+                    fillRule="evenodd"
+                    d="M9.344 3.071a49.52 49.52 0 0 1 5.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 0 0 1.11-.71l.822-1.315a2.942 2.942 0 0 1 2.332-1.39ZM6.75 12.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Zm12-1.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+              </label>
+              <input
+                type="file"
+                name=""
+                className=" hidden"
+                id="profile-update-img"
+              />
+            </div>
+          </div>
+          <div className="p-8 md:p-14 mt-5 flex flex-col justify-center items-center gap-2">
+            <h2 className=" text-2xl font-bold mt-3">
+              <Input defaultValue={user?.displayName} label="Name"></Input>
+            </h2>
+            <p className=" flex items-center gap-2">
+              <Input label="Email" defaultValue={user?.email} size=""></Input>
+            </p>
+            <Button
+            fullWidth
+              size="md"
+              className=" justify-center mt-4 rounded bg-primary-color flex items-center gap-2"
+            >
+              Update
+            </Button>
+          </div>
+        </div>:
+        <div className=" w-fit mt-7 text-center flex flex-col justify-center items-center shadow-md bg-white   rounded  relative">
+          {isPremiumUser && (
+            <span
+              className=" absolute top-3 right-3 text-sm font-normal ml-4 text-golden-color border-2 rounded-full border-golden-color  px-2 text-nowrap flex items-center gap-1 
+          "
+            >
+              {"👑Premium user"}
+            </span>
+          )}
+          <div className=" relative bg-primary-color/10 w-full ">
             <img
               className=" h-32 rounded-full w-32 object-cover border-4 border-white outline-4 outline-primary-color  relative top-16 -right-1/2 -translate-x-1/2"
               src={user?.photoURL}
@@ -50,8 +105,10 @@ const MyProfile = () => {
               {user?.email}
             </p>
             <Button
-              size="sm"
-              className=" mt-4 rounded bg-primary-color flex items-center gap-2"
+              onClick={()=>setUpdateProfile(true)}
+              size="md"
+              fullWidth
+              className=" mt-4 justify-center rounded bg-primary-color flex items-center gap-2"
             >
               {" "}
               <svg
@@ -71,7 +128,7 @@ const MyProfile = () => {
               Update profile
             </Button>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

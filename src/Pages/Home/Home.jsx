@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import HomeModalSub from "../../components/HomeModalSub/HomeModalSub";
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(false); // Modal show state
+  const [showModal, setShowModal] = useState(false); 
 
   useEffect(() => {
     const timer = setTimeout(() => {

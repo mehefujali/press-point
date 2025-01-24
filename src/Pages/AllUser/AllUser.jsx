@@ -1,13 +1,13 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
+import { CardFooter, IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import {
   Card,
   CardHeader,
-  Input,
+
   Typography,
   Button,
   CardBody,
-  //   CardFooter,
   Avatar,
 } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
@@ -20,38 +20,68 @@ import { Helmet } from "react-helmet";
 const AllUser = () => {
   const [filterdata, setFilter] = useState("all user");
   const axiosSecure = useAxiosSecure();
+
+  const pageSize = 15; 
+  const [active, setActive] = useState(1); 
+
+  
+  const prev = () => {
+    if (active === 1) return; 
+    setActive(active - 1); 
+  };
+
+  
+  const next = () => {
+    if (active === totalPages) return; 
+    setActive(active + 1); 
+  };
+
+  
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => setActive(index), 
+  });
+
+  
   const {
     refetch,
-    data: users = [],
+    data: usersData = {},
     isLoading,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", filterdata, active], 
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/users?filter=${filterdata}`);
+      const { data } = await axiosSecure.get(
+        `/users?filter=${filterdata}&page=${active}&pageSize=${pageSize}`
+      );
       return data;
     },
   });
-  const handleMakeAdmin = async (email, name) => {
-    const { data } = await axiosSecure.patch(`/user/admin/${email}`);
-    refetch();
-    if (data.modifiedCount) {
-      toast.success(`${name} is admin now`);
-    }
-  };
+
+  const { users = [], totalPages = 1 } = usersData;
+
+  
   const handleFilterUser = (e) => {
     const filter = e.target.value;
     setFilter(filter);
   };
 
   useEffect(() => {
-    refetch();
-  }, [filterdata, refetch]);
+    refetch(); 
+  }, [filterdata, active, refetch]);
 
-  //   console.log(users)
+  const handleMakeAdmin = async (email, name) => {
+    const { data } = await axiosSecure.patch(`/user/admin/${email}`);
+    refetch();
+    if (data.modifiedCount) {
+      toast.success(`${name} is now an admin`);
+    }
+  };
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader />; 
   }
+
   return (
     <div className=" px-4">
       <Helmet>
@@ -60,20 +90,9 @@ const AllUser = () => {
       <Card className="h-full w-full  px-4 shadow-none">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
-            <div>
-              <Typography
-                variant="h5"
-                className=" first-letter:capitalize text-primary-color"
-              >
-                {filterdata}
-              </Typography>
-              <Typography color="gray" className="mt-1 font-normal">
-                See information and manage about {filterdata}
-              </Typography>
-            </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row"></div>
           </div>
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex border-b-2 pb-3 flex-col items-center justify-between gap-4 md:flex-row">
             <div>
               <select
                 name=""
@@ -87,15 +106,19 @@ const AllUser = () => {
               </select>
             </div>
             <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
+              <div>
+                <Typography
+                  variant="h5"
+                  className=" first-letter:capitalize text-primary-color"
+                >
+                  {filterdata}
+                </Typography>
+              </div>
             </div>
           </div>
         </CardHeader>
         <CardBody className=" overflow-auto px-0">
-          <table className="mt-4 w-full min-w-max table-auto text-left ">
+          <table className="w-full min-w-max table-auto text-left ">
             <thead className=" text-primary-color">
               <th>#</th>
 
@@ -173,19 +196,36 @@ const AllUser = () => {
             </tbody>
           </table>
         </CardBody>
-        {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
+        <CardFooter className="flex justify-between items-center">
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick={prev}
+            disabled={active === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <IconButton
+                color="#003366"
+                className=""
+                key={index}
+                {...getItemProps(index + 1)}
+              >
+                {index + 1}
+              </IconButton>
+            ))}
           </div>
-        </CardFooter> */}
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick={next}
+            disabled={active === totalPages}
+          >
+            Next <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </CardFooter>
       </Card>
     </div>
   );
