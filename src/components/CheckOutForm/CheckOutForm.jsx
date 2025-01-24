@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "./../../Hooks/useAuth";
 import { PropTypes } from "prop-types";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import usePremiumUser from "../../Hooks/usePremiumUser";
 
 const CheckOutForm = ({ amount = 5 }) => {
@@ -14,10 +14,10 @@ const CheckOutForm = ({ amount = 5 }) => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
-  const {refetchPremium} = usePremiumUser()
-  const navigate = useNavigate()
+  const { refetchPremium } = usePremiumUser();
+  const navigate = useNavigate();
   //  get client secret
   useEffect(() => {
     axiosSecure
@@ -32,7 +32,7 @@ const CheckOutForm = ({ amount = 5 }) => {
 
   // payment
   const handleSubmit = async (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     if (!stripe || !elements) {
       return;
@@ -48,7 +48,7 @@ const CheckOutForm = ({ amount = 5 }) => {
     // if (error) {
     //   toast.error(error.message);
     // }
-   
+
     // confirm payment
     const { paymentIntent, error: cardError } = await stripe.confirmCardPayment(
       clientSecret,
@@ -65,29 +65,22 @@ const CheckOutForm = ({ amount = 5 }) => {
     if (cardError) {
       console.log("errr", cardError);
       toast.error(cardError.message);
-      setLoading(false)
+      setLoading(false);
     } else {
- 
-      if (paymentIntent.status === "succeeded"){
-        
-         const paymentInfo = {
-           name: user.displayName ,
-           email : user.email ,
-           transactionId:  paymentIntent.id,
-           amount: parseFloat(paymentIntent.amount / 100)
-          
-         }
-         axiosSecure.post('/save-payment' , paymentInfo )
-         .then(() => {
-          refetchPremium()
-         })
-        toast.success("Payment success")
-        refetchPremium()
-        navigate('/subscription', { replace: true });
-        setLoading(false)
+      if (paymentIntent.status === "succeeded") {
+        const paymentInfo = {
+          name: user.displayName,
+          email: user.email,
+          transactionId: paymentIntent.id,
+          amount: parseFloat(paymentIntent.amount / 100),
+        };
+        axiosSecure.post("/save-payment", paymentInfo).then(() => {
+          refetchPremium();
+          setLoading(false);
+          navigate("/subscription", { replace: true });
+          toast.success("Payment success");
+        });
       }
-      refetchPremium()
-      
     }
   };
 
@@ -121,7 +114,11 @@ const CheckOutForm = ({ amount = 5 }) => {
           disabled={!stripe || !clientSecret}
           className=" w-full"
         >
-          <Button loading={loading} fullWidth className=" justify-center rounded bg-primary-color mt-11 ">
+          <Button
+            loading={loading}
+            fullWidth
+            className=" justify-center rounded bg-primary-color mt-11 "
+          >
             Pay ${amount}
           </Button>
         </button>
