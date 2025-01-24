@@ -81,9 +81,10 @@ const CheckOutForm = ({ amount = 5 }) => {
          .then(res => console.log(res.data))
         toast.success("Payment success")
         refetchPremium()
-        navigate('/', { replace: true });
+        navigate('/subscription', { replace: true });
         setLoading(false)
       }
+      refetchPremium()
       
     }
   };

@@ -21,13 +21,14 @@ const Navbar = () => {
   const { user, signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
   const { isPremiumUser} = usePremiumUser();
-  console.log("premium", isPremiumUser);
+
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+  
 
 
 

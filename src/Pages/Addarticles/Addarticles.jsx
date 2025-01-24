@@ -29,6 +29,7 @@ import Swal from "sweetalert2";
 
 const Addarticles = () => {
   const { user } = useAuth();
+ 
   const [uplodLoading, setUplodeLoading] = useState(false);
   const [fileName, setFileName] = useState("Upload image");
   const [articleImage, setImage] = useState(null);
@@ -277,6 +278,7 @@ const Addarticles = () => {
                 id="article-image"
                 className=" hidden"
                 name="image"
+                 accept="image/*"
               />
               <div className=" w-full">
                 <Textarea

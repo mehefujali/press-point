@@ -237,6 +237,7 @@ const UpdateArticleModal = ({
                   id="article-image"
                   className=" hidden"
                   name="image"
+                   accept="image/*"
                 />
                 <div className=" w-full">
                   <Textarea
