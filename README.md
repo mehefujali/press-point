@@ -1,7 +1,7 @@
-Here’s a detailed `README.md` template for your Newspaper FullStack Website project:
 
 
-# Newspaper FullStack Website
+
+# Press point
 
 ## Project Overview
 
