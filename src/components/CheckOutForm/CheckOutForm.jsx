@@ -88,9 +88,9 @@ const CheckOutForm = ({ amount = 5 }) => {
     <div className=" w-11/12 lg:w-5/12  xl:w-4/12 mx-auto">
       <form
         onSubmit={handleSubmit}
-        className="  p-10 bg-white shadow-md rounded"
+        className=" p-4  md:p-10 bg-white shadow-md rounded"
       >
-        <h1 className=" text-xl font-bold text-center mb-6">
+        <h1 className=" text-sm md:text-xl font-bold text-center mb-6">
           Your total payable amount is ${amount}
         </h1>
         <CardElement

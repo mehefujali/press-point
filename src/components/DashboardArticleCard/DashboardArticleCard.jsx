@@ -7,10 +7,12 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 
 const DashboardArticleCard = ({ news, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const [open, setOpen] = useState(false);
+  const {user} = useAuth()
   const handlePublish = () => {
     axiosSecure
       .patch(`/article/publish/${news._id}`)
@@ -49,6 +51,9 @@ const DashboardArticleCard = ({ news, refetch }) => {
   };
 
   const handleDeleteArticle = (id) => {
+    if(user?.email === "admin@press.com"){
+      return toast.error(`This user does not have permission to delete any articles.`)
+    }
     Swal.fire({
       title: "Are you sure?",
       text: "you want to delete this article?",

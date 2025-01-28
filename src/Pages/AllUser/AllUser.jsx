@@ -16,11 +16,12 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import { Helmet } from "react-helmet";
+import useAuth from "../../Hooks/useAuth";
 
 const AllUser = () => {
   const [filterdata, setFilter] = useState("all user");
   const axiosSecure = useAxiosSecure();
-
+  const {user} = useAuth()
   const pageSize = 15; 
   const [active, setActive] = useState(1); 
 
@@ -71,6 +72,9 @@ const AllUser = () => {
   }, [filterdata, active, refetch]);
 
   const handleMakeAdmin = async (email, name) => {
+    if(user?.email === "admin@press.com"){
+      return toast.error(`This user does not have permission to make someone an admin.`)
+    }
     const { data } = await axiosSecure.patch(`/user/admin/${email}`);
     refetch();
     if (data.modifiedCount) {

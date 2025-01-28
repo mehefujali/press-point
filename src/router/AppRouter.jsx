@@ -54,11 +54,7 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: "article-details/:id",
-        element: (
-          <PrivateRoute>
-            <ArticleDetails />,
-          </PrivateRoute>
-        ),
+        element: <ArticleDetails />,
       },
       {
         path: "premium-articles",
@@ -70,20 +66,37 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: "my-articles",
-        element: <PrivateRoute><MyArticles/></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <MyArticles />
+          </PrivateRoute>
+        ),
       },
       {
-        path:'my-profile',
-        element: <PrivateRoute><MyProfile/></PrivateRoute>
+        path: "my-profile",
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
       },
       {
-        path:'subscription',
-        element: <PrivateRoute><Subscription/></PrivateRoute>
+        path: "subscription",
+        element: (
+          <PrivateRoute>
+            <Subscription />
+          </PrivateRoute>
+        ),
       },
       {
-        path:"purchase",
-        element : <PrivateRoute> <Purchase/></PrivateRoute>
-      }
+        path: "purchase",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Purchase />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {

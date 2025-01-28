@@ -20,7 +20,7 @@ const Navbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
   const { user, signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
-  const { isPremiumUser} = usePremiumUser();
+  const { isPremiumUser } = usePremiumUser();
 
   useEffect(() => {
     window.addEventListener(
@@ -28,9 +28,6 @@ const Navbar = () => {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
-  
-
-
 
   const handleLogOut = () => {
     Swal.fire({
@@ -98,18 +95,7 @@ const Navbar = () => {
           </NavLink>
         </Typography>
       )}
-      {isAdmin && (
-        <Typography
-          as="li"
-          variant="small"
-          color="blue-gray"
-          className="p-1 font-normal"
-        >
-          <NavLink to={"/dashboard"} className="flex items-center">
-            Dashboard
-          </NavLink>
-        </Typography>
-      )}
+
       {user && (
         <Typography
           as="li"
@@ -122,7 +108,7 @@ const Navbar = () => {
           </NavLink>
         </Typography>
       )}
-      {user?.email  && isPremiumUser && (
+      {user?.email && isPremiumUser && (
         <Typography
           as="li"
           variant="small"
@@ -131,6 +117,18 @@ const Navbar = () => {
         >
           <NavLink to={"premium-articles"} className="flex items-center">
             Premium Articles
+          </NavLink>
+        </Typography>
+      )}
+      {isAdmin && (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <NavLink to={"/dashboard"} className="flex items-center">
+            Dashboard
           </NavLink>
         </Typography>
       )}
