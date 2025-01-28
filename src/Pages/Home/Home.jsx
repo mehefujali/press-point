@@ -9,27 +9,26 @@ import { useState } from "react";
 import { useEffect } from "react";
 import HomeModalSub from "../../components/HomeModalSub/HomeModalSub";
 import FAQ from "../../components/FAQ/FAQ";
+import usePremiumUser from "../../Hooks/usePremiumUser";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(false); 
-
+  const [showModal, setShowModal] = useState(false);
+  const { isPremiumUser  } = usePremiumUser();
+  const {isAdmin} = useAdmin()
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowModal(true);
+      if (!isPremiumUser && !isAdmin) {
+        setShowModal(true);
+      }
     }, 10000);
 
     return () => clearTimeout(timer);
-  }, []);
-
-
-
-
-
-
+  }, [isPremiumUser,isAdmin]);
 
   return (
     <div>
-       <HomeModalSub open={showModal} setOpen={setShowModal}/>
+      <HomeModalSub open={showModal} setOpen={setShowModal} />
       <Helmet>
         <title>Press point</title>
       </Helmet>
@@ -50,7 +49,7 @@ const Home = () => {
         <Plans />
       </div>
       <div>
-        <FAQ/>
+        <FAQ />
       </div>
     </div>
   );

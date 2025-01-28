@@ -196,7 +196,7 @@ const AllUser = () => {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className="flex justify-between items-center">
+        <CardFooter className="flex justify-between items-center overflow-x-auto">
           <Button
             variant="text"
             className="flex items-center gap-2"
@@ -209,7 +209,7 @@ const AllUser = () => {
             {Array.from({ length: totalPages }).map((_, index) => (
               <IconButton
                 color="#003366"
-                className=""
+                className=" p-0"
                 key={index}
                 {...getItemProps(index + 1)}
               >

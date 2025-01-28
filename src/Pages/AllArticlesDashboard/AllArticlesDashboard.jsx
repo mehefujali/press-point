@@ -78,7 +78,7 @@ const AllArticlesDashboard = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between mt-4">
+      <div className="flex items-center justify-between mt-4 overflow-x-auto">
         <Button
           variant="text"
           className="flex items-center gap-2"
@@ -89,7 +89,7 @@ const AllArticlesDashboard = () => {
         </Button>
 
         {/* Page Number Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           {Array.from({ length: totalPages }).map((_, index) => (
             <IconButton
               color="#003366"
