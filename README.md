@@ -141,6 +141,110 @@ You can access the live version of the website at the following URL:
     "vite": "^6.0.5"
   }
 ```
+### ✅ **How to Run the Project Locally**  
+
+```md
+# 🚀 Vite React Project  
+
+This is a **Vite + React** project. Follow the steps below to **run the project locally** on your machine.  
+
+---
+
+## 📌 **Prerequisites**  
+Before running the project, ensure you have the following installed:  
+- **Node.js** (LTS version recommended) → [Download Node.js](https://nodejs.org/)  
+- **Git** (To clone the repository) → [Download Git](https://git-scm.com/)  
+
+---
+
+## 🔥 **How to Run the Project Locally**  
+
+### 1️⃣ **Clone the Repository**  
+Open your terminal and run:  
+```bash
+git clone https://github.com/mehefujali/project-name.git
+```
+Replace `project-name` with your actual repository name.  
+
+### 2️⃣ **Navigate to the Project Directory**  
+```bash
+cd project-name
+```
+
+### 3️⃣ **Install Dependencies**  
+```bash
+npm install
+# OR
+yarn install
+# OR
+pnpm install
+```
+
+### 4️⃣ **Start the Development Server**  
+```bash
+npm run dev
+# OR
+yarn dev
+# OR
+pnpm dev
+```
+Once the server starts, you will see an output like this:  
+```
+VITE v4.0.0 ready in 300ms
+Local: http://localhost:5173/
+```
+👉 **Now open `http://localhost:5173/` in your browser to view the project!** 🎉  
+
+---
+
+## 🏗 **Build for Production**  
+To generate an optimized production build, run:  
+```bash
+npm run build
+```
+This will create a `dist/` folder with the built files.  
+
+---
+
+## 💡 **Additional Commands**  
+- 🔄 **Format Code:** `npm run format` *(if Prettier is configured)*  
+- 🧹 **Lint Code:** `npm run lint` *(if ESLint is configured)*  
+- ✅ **Run Tests:** `npm run test` *(if tests are available)*  
+
+---
+
+## 🎯 **Project Structure**  
+```
+project-name/
+│── public/        # Static assets  
+│── src/           # Source code  
+│   ├── components/  # Reusable components  
+│   ├── pages/       # Page components  
+│   ├── App.jsx      # Main App component  
+│   ├── main.jsx     # Entry file  
+│── package.json    # Project dependencies  
+│── vite.config.js  # Vite configuration  
+│── README.md       # Project documentation  
+```
+
+---
+
+## 📝 **Contributing**  
+If you want to contribute, fork this project and submit a pull request.  
+
+---
+
+## 📜 **License**  
+This project is licensed under the **MIT License**.  
+
+---
+
+Now, place this `README.md` file in your project root directory! 🚀  
+Let me know if you need any modifications! 😊  
+```  
+
+
+
 ## Contact
 
 If you have any questions or need further assistance, feel free to reach out to us at:  
