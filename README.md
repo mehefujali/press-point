@@ -94,6 +94,9 @@ You can access the live version of the website at the following URL:
 - **MongoDB**: For database management.
 - **Firebase**: For user authentication.
 - **SweetAlert2**: For custom notifications.
+
+  
+## Dependencies
 ```
 "dependencies": {
     "@heroicons/react": "^2.2.0",
