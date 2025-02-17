@@ -11,6 +11,7 @@ import HomeModalSub from "../../components/HomeModalSub/HomeModalSub";
 import FAQ from "../../components/FAQ/FAQ";
 import usePremiumUser from "../../Hooks/usePremiumUser";
 import useAdmin from "../../Hooks/useAdmin";
+import Newslatter from "../../components/NewsLatter/NewsLatter";
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -50,6 +51,9 @@ const Home = () => {
       </div>
       <div>
         <FAQ />
+      </div>
+      <div>
+        <Newslatter/>
       </div>
     </div>
   );
