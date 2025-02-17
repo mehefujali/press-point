@@ -19,6 +19,7 @@ import MyArticles from "../Pages/MyArticles/MyArticles";
 import MyProfile from "../Pages/MyProfile/MyProfile";
 import Subscription from "../Pages/Subscription/Subscription";
 import Purchase from "../Pages/Purchase/Purchase";
+import About from "../Pages/About/About";
 
 const AppRouter = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const AppRouter = createBrowserRouter([
             <Addarticles />
           </PrivateRoute>
         ),
+      },
+      {
+        path: 'about',
+        element: <About/> 
       },
       {
         path: "articles",

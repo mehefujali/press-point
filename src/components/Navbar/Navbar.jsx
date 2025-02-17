@@ -83,6 +83,16 @@ const Navbar = () => {
           All Articles
         </NavLink>
       </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <NavLink to="/about" className="flex items-center">
+          About
+        </NavLink>
+      </Typography>
       {user && (
         <Typography
           as="li"
