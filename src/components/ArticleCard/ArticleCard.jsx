@@ -7,7 +7,7 @@ const ArticleCard = ({ news}) => {
   const {isPremiumUser} = usePremiumUser()
   return (
     <div>
-      <div className={` ${news.isPremium&&"md:border-r-4 border-r-golden-color"} text-start shadow-md flex flex-col md:flex-row bg-white  rounded relative overflow-hidden border-2 `}>
+      <div className={` ${news.isPremium&&"md:border-r-4 border-r-golden-color"}  md:h-64 lg:h-52 text-start shadow-md flex flex-col md:flex-row bg-white  rounded relative overflow-hidden border-2 `}>
         <div className="text-sm absolute right-2 top-1 ">
           {/* <Chip
                 
@@ -21,14 +21,14 @@ const ArticleCard = ({ news}) => {
                 /> */}
         </div>
 
-        <img className="   w-full md:w-64 xl:w-80" src={news?.image} alt="" />
+        <img className="   w-full  md:w-64 xl:w-72" src={news?.image} alt="" />
         <div className="p-3 flex gap-2  flex-col lg:gap-1  justify-between ">
           
-            <h3 className=" font-semibold text-sm md:text-xl flex items-end  flex-col lg:flex-row ">
+            <h3 className=" font-semibold text-sm md:text-lg flex  flex-col lg:flex-row ">
               {news?.title}{" "}
               {news.isPremium && (
                 <span
-                  className=" text-sm font-normal ml-4 text-golden-color border-2 rounded-full border-golden-color  px-2 text-nowrap flex items-center gap-1 
+                  className=" text-sm font-normal ml-4 w-fit text-golden-color border-2 rounded-full border-golden-color  px-2 text-nowrap flex items-center gap-1 
           "  
                 >
                   
@@ -59,7 +59,7 @@ const ArticleCard = ({ news}) => {
               </p>
             ))}
           </p>
-          <p className=" text-xs md:text-sm text-gray-600">
+          <p className=" text-xs xl:text-sm text-gray-600">
             {news?.description?.slice(0, 200)}...
           </p>
          
