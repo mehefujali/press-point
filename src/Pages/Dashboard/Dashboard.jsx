@@ -7,6 +7,13 @@ import Loader from "../../components/Loader/Loader";
 const Dashboard = () => {
   const axiosPublic = useAxiosPublic();
 
+  const {data:userCount} = useQuery({
+    queryKey : ["user-count"],
+    queryFn : async()=>{
+       const {data} = await axiosPublic.get('/user-count')
+       return data
+    }
+  })
   const { data: articles = [], isLoading: articlesLoading } = useQuery({
     queryKey: ["published-articles"],
     queryFn: async () => {
@@ -90,6 +97,32 @@ const Dashboard = () => {
       <Helmet>
         <title>Press Point - Dashboard</title>
       </Helmet>
+
+      <div className=" mx-10 mt-8 flex flex-wrap gap-6 ">
+        <div  className=" flex gap-5 flex-grow p-6 rounded-md bg-primary-color text-white border-2 w-fit">
+          <img className="  w-14" src="https://cdn-icons-png.flaticon.com/128/2965/2965879.png" alt="" />
+          <div>
+            <h1 className=" text-lg lg:text-2xl font-bold">Total news</h1> 
+            <p className=" text-lg">{articles.length}</p>
+          </div>
+        </div>
+        <div  className=" flex gap-5 flex-grow p-6 rounded-md bg-teal-900 text-white border-2 w-fit">
+          <img className="  w-14" src="https://cdn-icons-png.flaticon.com/128/3559/3559259.png" alt="" />
+          <div>
+            <h1 className=" text-lg lg:text-2xl font-bold"> Total Publishers</h1> 
+            <p className=" text-lg">{publishers.length}</p>
+          </div>
+        </div>
+        <div  className=" flex gap-5 flex-grow p-6 rounded-md bg-primary-color text-white border-2 w-fit">
+          <img className="  w-14" src="https://cdn-icons-png.flaticon.com/128/476/476863.png" alt="" />
+          <div>
+            <h1 className=" text-lg lg:text-2xl font-bold">Total Users</h1> 
+            <p className=" text-lg">{userCount.totalUser}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className=" border-b-2 border-b-primary-color/5 my-5"></div>
 
       <div className=" flex flex-col lg:flex-row-reverse">
         <div className=" flex-1">

@@ -12,6 +12,7 @@ const Statistic = () => {
     }
   })
 
+  
 
   return (
     <div className=" my-14">
