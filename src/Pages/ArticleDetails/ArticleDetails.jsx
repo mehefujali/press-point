@@ -10,9 +10,9 @@ import useAdmin from "../../Hooks/useAdmin";
 
 const ArticleDetails = () => {
   const { id } = useParams();
-  const {isPremiumUser,isPremiumLoading} = usePremiumUser()
-  const {isAdmin,isAdminLoading} = useAdmin()
-  const {user} = useAuth()
+  const { isPremiumUser, isPremiumLoading } = usePremiumUser();
+  const { isAdmin, isAdminLoading } = useAdmin();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: article = {}, isLoading } = useQuery({
     queryKey: ["article-details", id],
@@ -21,7 +21,7 @@ const ArticleDetails = () => {
       return data;
     },
   });
-  const { data: suggestarticles = [] , isLoading:sugIsLoding } = useQuery({
+  const { data: suggestarticles = [], isLoading: sugIsLoding } = useQuery({
     queryKey: ["suggested-article-indetails"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/tag-article/${article.tags[0]}`);
@@ -29,19 +29,32 @@ const ArticleDetails = () => {
     },
   });
 
-
-
-  if (isLoading||isPremiumLoading || isAdminLoading) {
+  if (isLoading || isPremiumLoading || isAdminLoading) {
     return <Loader />;
   }
-  if(article.isPremium && !isPremiumUser && article?.author?.email !== user?.email && !isAdmin){
-    return <Navigate to="/" replace/>
+  if (
+    article.isPremium &&
+    !isPremiumUser &&
+    article?.author?.email !== user?.email &&
+    !isAdmin
+  ) {
+    return <Navigate to="/" replace />;
   }
   return (
     <div className=" pb-14">
       <Helmet>
         <title>Press point - {article.title}</title>
+        <meta name="description" content={article.description} />
+        {/* Open Graph Meta Tags */}
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.description} />
+        <meta property="og:image" content={article.image} />
+        <meta property="og:url" content={window.location.href} />{" "}
+        
+        {/* Ensure the correct URL */}
+        <meta property="og:type" content="article" />
       </Helmet>
+
       <ScrollRestoration />
       <div className=" w-11/12 md:w-full container mx-auto my-14 flex flex-col md:flex-row gap-5 relative">
         <div className=" md:w-8/12 mx-auto space-y-4">
@@ -95,24 +108,28 @@ const ArticleDetails = () => {
         </div>
         <div className=" md:w-3/12 sticky top-[63px] h-fit">
           <SocalLinks />
-          {!sugIsLoding&&<div className=" w-11/12 mx-auto mt-2 flex flex-col gap-2">
-            {suggestarticles.slice(0,3)?.map((article) => (
-              <Link
-                key={article._id}
-                to={`/article-details/${article?._id}`}
-                className="text-white"
-              >
-                <div
-                  className="  flex  min-h-32  items-end justify-start p-2 rounded  bg-cover bg-center"
-                  style={{
-                    backgroundImage: `linear-gradient(0deg, black,transparent), url(${article?.image})`,
-                  }}
+          {!sugIsLoding && (
+            <div className=" w-11/12 mx-auto mt-2 flex flex-col gap-2">
+              {suggestarticles.slice(0, 3)?.map((article) => (
+                <Link
+                  key={article._id}
+                  to={`/article-details/${article?._id}`}
+                  className="text-white"
                 >
-                  <h1 className=" text-sm   font-semibold">{article?.title}</h1>
-                </div>
-              </Link>
-            ))}
-          </div>}
+                  <div
+                    className="  flex  min-h-32  items-end justify-start p-2 rounded  bg-cover bg-center"
+                    style={{
+                      backgroundImage: `linear-gradient(0deg, black,transparent), url(${article?.image})`,
+                    }}
+                  >
+                    <h1 className=" text-sm   font-semibold">
+                      {article?.title}
+                    </h1>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -106,7 +106,7 @@ const Dashboard = () => {
             <p className=" text-lg">{articles.length}</p>
           </div>
         </div>
-        <div  className=" flex gap-5 flex-grow p-6 rounded-md bg-teal-900 text-white border-2 w-fit">
+        <div  className=" flex gap-5 flex-grow p-6 rounded-md bg-primary-color text-white border-2 w-fit">
           <img className="  w-14" src="https://cdn-icons-png.flaticon.com/128/3559/3559259.png" alt="" />
           <div>
             <h1 className=" text-lg lg:text-2xl font-bold"> Total Publishers</h1> 
