@@ -12,6 +12,7 @@ import FAQ from "../../components/FAQ/FAQ";
 import usePremiumUser from "../../Hooks/usePremiumUser";
 import useAdmin from "../../Hooks/useAdmin";
 import Newslatter from "../../components/NewsLatter/NewsLatter";
+import WhySection from "../../components/WhySection/WhySection";
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -51,6 +52,9 @@ const Home = () => {
       </div>
       <div>
         <FAQ />
+      </div>
+      <div>
+        <WhySection/>
       </div>
       <div>
         <Newslatter/>
