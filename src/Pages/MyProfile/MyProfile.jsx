@@ -2,12 +2,11 @@ import { Helmet } from "react-helmet";
 import useAuth from "../../Hooks/useAuth";
 import usePremiumUser from "../../Hooks/usePremiumUser";
 import { Button, Input } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 import toast from "react-hot-toast";
-
 
 const imageHostingApi = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_IMAGE_BB_API_KEY
@@ -21,7 +20,7 @@ const MyProfile = () => {
   const axiosSecure = useAxiosSecure();
   const [newPhoto, setNewPhoto] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
-
+  const [userCountry, setUserCountry] = useState(null);
   const { updateUser } = useAuth();
   const handleUpdateProfile = async () => {
     setUpdateLoading(true);
@@ -45,7 +44,11 @@ const MyProfile = () => {
         photoURL: NewImage || user.photoURL,
       };
       updateUser(newProfile).then(() => {
-        setUser({ ...user, displayName: newProfile.displayName , photoURL:newProfile.photoURL });
+        setUser({
+          ...user,
+          displayName: newProfile.displayName,
+          photoURL: newProfile.photoURL,
+        });
       });
       // const updatedUser1 = { ...auth.currentUser };
       // setUser(updatedUser1);
@@ -72,6 +75,41 @@ const MyProfile = () => {
     //   photoURL: NewImage || user.photoURL,
     // });
   };
+  // Get the user's country based on their locale
+
+  useEffect(() => {
+    
+    const currentDate = new Date();
+
+    
+    const timeZoneOffset = currentDate.getTimezoneOffset(); 
+
+    
+    const offsetInHours = -timeZoneOffset / 60;
+
+    
+    const countryByTimeZone = {
+      '5.5': 'India',  
+      '-5': 'United States (Eastern)',  
+      '-4': 'United States (Atlantic)', 
+      '0': 'United Kingdom',  
+      '1': 'Germany',  
+      '6': 'Bangladesh',
+      '9': 'Japan',  
+      '8': 'China',  
+      '3': 'Saudi Arabia',  
+      '2': 'South Africa',  
+      '-8': 'United States (Pacific)',  
+      '-7': 'United States (Mountain)',  
+      '-6': 'United States (Central)',  
+      '10': 'Australia (Eastern)',
+    };
+
+   
+    setUserCountry(countryByTimeZone[offsetInHours] || 'Unknown Country');
+  }, []);
+
+  
 
   return (
     <div>
@@ -189,8 +227,10 @@ const MyProfile = () => {
                 alt=""
               />
             </div>
+
             <div className="p-8 md:p-14 mt-5 flex flex-col justify-center items-center gap-2">
               <h2 className=" text-2xl font-bold mt-3">{user?.displayName}</h2>
+              <p>{userCountry}</p>
               <p className=" flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
