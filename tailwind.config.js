@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const withMT = require("@material-tailwind/react/utils/withMT");
- 
+ import daisyui from "daisyui";
 module.exports = withMT({
   content: [
     "./index.html",
@@ -19,5 +19,5 @@ module.exports = withMT({
       }
     },
   },
-  plugins: [],
+  plugins: [daisyui],
 });
